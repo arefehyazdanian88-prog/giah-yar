@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نقشه سلامت گیاهان | گیاه‌یار</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Tahoma, Arial, sans-serif;
+    background: #f3f7f2;
+    color: #203a2b;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* سربرگ اصلی */
+.hero {
+    background: linear-gradient(130deg, #153e2c, #32865a);
+    color: white;
+    padding: 32px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 12px 30px #183f2b20;
+}
+
+.hero h1 {
+    font-size: 27px;
+    margin: 0 0 12px;
+}
+
+.hero p {
+    color: #e1f4e6;
+    line-height: 2;
+    margin: 0;
+}
+
+.hero-icon {
+    font-size: 64px;
+}
+
+/* آمار */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.stat {
+    background: white;
+    border: 1px solid #e1ebe0;
+    padding: 22px;
+    border-radius: 19px;
+}
+
+.stat-icon {
+    font-size: 27px;
+}
+
+.stat p {
+    color: #718075;
+    font-size: 13px;
+}
+
+.stat strong {
+    font-size: 28px;
+    color: #276b43;
+}
+
+/* دکمه‌ها */
+.btn {
+    border: 0;
+    padding: 12px 17px;
+    border-radius: 11px;
+    font-size: 13px;
+}
+
+.btn-primary {
+    color: white;
+    background: #28784b;
+}
+
+.btn-light {
+    background: #e9f4e8;
+    color: #286340;
+}
+
+.btn-danger {
+    background: #fff0ec;
+    color: #b74a3d;
+}
+
+/* چیدمان نقشه و گزارش‌ها */
+.main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.panel {
+    background: white;
+    border: 1px solid #e2ebe0;
+    border-radius: 21px;
+    padding: 22px;
+    min-width: 0;
+}
+
+.panel-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.panel-title h2 {
+    margin: 0;
+    font-size: 19px;
+}
+
+#map {
+    height: 470px;
+    width: 100%;
+    border-radius: 16px;
+    z-index: 1;
+    background: #e7efe4;
+}
+
+.map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 16px 0 0;
+    color: #69796d;
+    font-size: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.green {
+    background: #27965a;
+}
+
+.orange {
+    background: #e6a23c;
+}
+
+.red {
+    background: #d95757;
+}
+
+/* فیلترها */
+.filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.filters input,
+.filters select,
+.form-control {
+    width: 100%;
+    border: 1px solid #dce6da;
+    background: #fbfdfb;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    min-width: 0;
+}
+
+.search-box {
+    grid-column: 1 / -1;
+}
+
+.report-list {
+    display: grid;
+    gap: 13px;
+}
+
+.report-card {
+    border: 1px solid #e4ece2;
+    padding: 16px;
+    border-radius: 15px;
+    transition: 0.2s;
+}
+
+.report-card:hover {
+    border-color: #8fbea0;
+    background: #fbfdf9;
+}
+
+.report-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.report-head h3 {
+    font-size: 14px;
+    margin: 0 0 9px;
+}
+
+.report-card p {
+    color: #758176;
+    font-size: 12px;
+    line-height: 1.9;
+    margin: 7px 0;
+}
+
+.status {
+    padding: 7px 9px;
+    border-radius: 9px;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.status.verified {
+    color: #237344;
+    background: #e5f6e8;
+}
+
+.status.pending {
+    color: #96600e;
+    background: #fff3d9;
+}
+
+.status.rejected {
+    color: #a83c3c;
+    background: #ffebeb;
+}
+.report-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.report-actions button {
+    flex: 1;
+}
+
+.small-btn {
+    border: 0;
+    border-radius: 9px;
+    padding: 9px;
+    font-size: 11px;
+    background: #edf5e9;
+    color: #28643e;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: #758176;
+    line-height: 2;
+    font-size: 13px;
+}
+
+/* فرم ثبت گزارش */
+.form-panel {
+    margin-top: 22px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.hint {
+    background: #eef7e9;
+    padding: 14px;
+    border-radius: 12px;
+    color: #45684a;
+    font-size: 12px;
+    line-height: 2;
+    margin-top: 15px;
+}
+
+/* پنجره پیام */
+#toast {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    max-width: 420px;
+    margin: auto;
+    background: #214e35;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* نمایش موبایل */
+@media (max-width: 950px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.stats,
+.main-grid,
+.form-panel {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stats,
+.main-grid {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.report-list {
+    display: grid;
+    gap: 13px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-left: 6px;
+}
+.main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr);
+    gap: 20px;
+    align-items: stretch;   /* به جای start */
+}
+
+/* کادر لیست گزارش‌ها هم‌قد نقشه بشه */
+.main-grid .panel:nth-child(2) {
+    height: 0;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.report-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: grid;
+    gap: 13px;
+    align-content: start;
+}
+@media (max-width: 520px) {
+    .page {
+        padding: 12px;
+    }
+
+    .hero {
+        padding: 23px;
+    }
+
+    .hero h1 {
+        font-size: 21px;
+    }
+
+    .hero-icon {
+        font-size: 43px;
+    }
+
+    .stats {
+        gap: 10px;
+    }
+
+    .stat {
+        padding: 15px;
+    }
+
+    .stat strong {
+        font-size: 23px;
+    }
+
+    .panel {
+        padding: 14px;
+    }
+
+    #map {
+        height: 350px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+}
+</style>
+ <link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+
+<main class="page">
+
+    <!-- معرفی نقشه سلامت -->
+   <div id="site-header"></div>
+
+
+    <!-- آمار گزارش‌ها -->
+    <section class="stats">
+        <div class="stat">
+            <span class="stat-icon">📋</span>
+            <p>کل گزارش‌ها</p>
+            <strong id="totalCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span class="stat-icon">✅</span>
+            <p>گزارش‌های تأییدشده</p>
+            <strong id="verifiedCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span class="stat-icon">⏳</span>
+            <p>در انتظار بررسی</p>
+            <strong id="pendingCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span class="stat-icon">📍</span>
+            <p>مناطق دارای گزارش</p>
+            <strong id="regionCount">0</strong>
+        </div>
+    </section>
+
+    <div class="main-grid">
+
+        <!-- نقشه تعاملی -->
+        <section class="panel">
+            <div class="panel-title">
+                <h2>📍 پراکندگی گزارش‌ها</h2>
+                <button class="btn btn-light" id="resetMap">
+                    نمایش کل نقشه
+                </button>
+            </div>
+
+            <div id="map"></div>
+
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="dot green"></span>
+                    تأییدشده
+                </div>
+                <div class="legend-item">
+                    <span class="dot orange"></span>
+                    در انتظار بررسی
+                </div>
+                <div class="legend-item">
+                    <span class="dot red"></span>
+                    ردشده
+                </div>
+            </div>
+            <div class="hint">
+                💡 روی هر نشانگر نقشه بزن تا جزئیات گزارش و وضعیت بررسی آن را ببینی.
+                داده‌های اولیه این نقشه صرفاً نمونه هستند.
+            </div>
+        </section>
+
+        <!-- فهرست گزارش‌ها -->
+        <section class="panel">
+            <div class="panel-title">
+                <h2>📑 فهرست گزارش‌ها</h2>
+            </div>
+
+            <div class="filters">
+                <input class="search-box" id="searchInput"
+                       placeholder="جست‌وجوی بیماری یا منطقه...">
+
+                <select id="regionFilter">
+                    <option value="all">همه مناطق</option>
+                </select>
+
+                <select id="statusFilter">
+                    <option value="all">همه وضعیت‌ها</option>
+                    <option value="verified">تأییدشده</option>
+                    <option value="pending">در انتظار بررسی</option>
+                    <option value="rejected">ردشده</option>
+                </select>
+            </div>
+
+            <div class="report-list" id="reportList"></div>
+        </section>
+    </div>
+
+    <!-- ثبت گزارش جدید -->
+    <section class="panel form-panel">
+        <div class="panel-title">
+            <h2>➕ ثبت گزارش جدید</h2>
+        </div>
+
+        <p style="color:#758176;font-size:13px;line-height:2">
+            اگر روی گیاهی علائم مشکوک دیدی، گزارش ثبت کن تا پس از بررسی
+            بتوان از آن برای شناخت وضعیت سلامت گیاهان منطقه استفاده کرد.
+        </p>
+
+        <form id="reportForm">
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="plantType">نوع گیاه</label>
+                    <select id="plantType" class="form-control" required>
+                        <option value="گیاه آپارتمانی">گیاه آپارتمانی</option>
+                        <option value="درخت میوه">درخت میوه</option>
+                        <option value="سبزی و صیفی">سبزی و صیفی</option>
+                        <option value="گیاه زینتی">گیاه زینتی</option>
+                        <option value="محصول کشاورزی">محصول کشاورزی</option>
+                        <option value="سایر">سایر</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="diseaseType">بیماری یا علامت احتمالی</label>
+                    <select id="diseaseType" class="form-control" required>
+                        <option value="لکه‌های برگ">لکه‌های برگ</option>
+                        <option value="زردی برگ">زردی برگ</option>
+                        <option value="سفیدک احتمالی">سفیدک احتمالی</option>
+                        <option value="پوسیدگی ریشه احتمالی">پوسیدگی ریشه احتمالی</option>
+                        <option value="آفت مشاهده‌شده">آفت مشاهده‌شده</option>
+                        <option value="پژمردگی">پژمردگی</option>
+                        <option value="علائم نامشخص">علائم نامشخص</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportRegion">منطقه تقریبی</label>
+                    <select id="reportRegion" class="form-control" required>
+                        <option value="تهران">تهران</option>
+                        <option value="اصفهان">اصفهان</option>
+                        <option value="شیراز">شیراز</option>
+                        <option value="مشهد">مشهد</option>
+                        <option value="تبریز">تبریز</option>
+                        <option value="رشت">رشت</option>
+                        <option value="اهواز">اهواز</option>
+                        <option value="ساری">ساری</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="severity">شدت علائم مشاهده‌شده</label>
+                    <select id="severity" class="form-control" required>
+                        <option value="کم">کم</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="زیاد">زیاد</option>
+                    </select>
+                </div>
+
+                <div class="form-group full">
+                    <label for="description">توضیحات گزارش</label>
+                    <textarea id="description" class="form-control"
+                              placeholder="علائم، زمان مشاهده و شرایط گیاه را بنویس..."></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <button type="submit" class="btn btn-primary">
+                        ثبت گزارش برای بررسی
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="hint">
+            🔒 گزارش تازه به‌صورت «در انتظار بررسی» ثبت می‌شود.
+            تأیید گزارش باید پس از بررسی معتبر انجام شود؛
+            ثبت یک گزارش به‌تنهایی نشانه شیوع بیماری نیست.
+        </div>
+    </section>
+<div id="site-footer"></div>
+
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+/* مختصات نمونه شهرها برای نمایش روی نقشه */
+const regions = {
+    "تهران": [35.6892, 51.3890],
+    "اصفهان": [32.6546, 51.6680],
+    "شیراز": [29.5918, 52.5837],
+    "مشهد": [36.2605, 59.6168],
+    "تبریز": [38.0962, 46.2738],
+    "رشت": [37.2808, 49.5832],
+    "اهواز": [31.3183, 48.6706],
+    "ساری": [36.5659, 53.0586]
+};
+
+/* گزارش‌های نمونه؛ داده واقعی باید بعداً از دیتابیس بیاید */
+const initialReports = [
+    {
+        id: 101,
+        region: "تهران",
+        plant: "گیاه آپارتمانی",
+        disease: "لکه‌های برگ",
+        severity: "متوسط",
+        status: "verified",
+        description: "نمونه گزارش تأییدشده برای نمایش امکانات نقشه.",
+        date: "2026-10-12"
+    },
+    {
+        id: 102,
+        region: "اصفهان",
+        plant: "درخت میوه",
+        disease: "زردی برگ",
+        severity: "کم",
+        status: "pending",
+        description: "نمونه گزارش در انتظار بررسی.",
+        date: "2026-10-14"
+    },
+    {
+        id: 103,
+        region: "شیراز",
+        plant: "محصول کشاورزی",
+        disease: "سفیدک احتمالی",
+        severity: "زیاد",
+        status: "verified",
+        description: "نمونه گزارش جهت آزمایش نمایش نقشه.",
+        date: "2026-10-13"
+    },
+    {
+        id: 104,
+        region: "مشهد",
+        plant: "گیاه زینتی",
+        disease: "پژمردگی",
+        severity: "متوسط",
+        status: "pending",
+        description: "علائم نیاز به بررسی بیشتر دارند.",
+        date: "2026-10-15"
+    },
+    {
+        id: 105,
+        region: "رشت",
+        plant: "سبزی و صیفی",
+        disease: "لکه‌های برگ",
+        severity: "کم",
+        status: "rejected",
+        description: "نمونه گزارش ردشده برای آزمایش فیلتر.",
+        date: "2026-10-11"
+    },
+    {
+        id: 106,
+        region: "تبریز",
+        plant: "درخت میوه",
+        disease: "آفت مشاهده‌شده",
+        severity: "متوسط",
+        status: "verified",
+        description: "نمونه گزارش تأییدشده.",
+        date: "2026-10-10"
+    }
+];
+
+function loadReports() {
+    try {
+        const stored = localStorage.getItem("giyahy ar_map_reports");
+        return stored ? JSON.parse(stored) : initialReports;
+    } catch (error) {
+        return initialReports;
+    }
+}
+
+let reports = loadReports();
+let markers = [];
+
+const map = L.map("map").setView([32.5, 53.5], 5);
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 18,
+    attribution: "&copy; OpenStreetMap"
+}).addTo(map);
+
+/* ذخیره اطلاعات نمونه در مرورگر */
+function saveReports() {
+    try {
+        localStorage.setItem("giyahy ar_map_reports", JSON.stringify(reports));
+    } catch (error) {
+        showToast("ذخیره اطلاعات در مرورگر امکان‌پذیر نبود.");
+    }
+}
+/* جلوگیری از ورود متن کاربر به HTML به‌صورت ناامن */
+function safeText(value) {
+    return String(value).replace(/[&<>"']/g, function (character) {
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\"": "&quot;",
+            "'": "&#39;"
+        };
+
+        return entities[character];
+    });
+}
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    setTimeout(function () {
+        toast.style.display = "none";
+    }, 2800);
+}
+
+function getStatusText(status) {
+    const labels = {
+        "verified": "تأییدشده",
+        "pending": "در انتظار بررسی",
+        "rejected": "ردشده"
+    };
+
+    return labels[status] || "نامشخص";
+}
+
+function getStatusClass(status) {
+    if (status === "verified") return "verified";
+    if (status === "rejected") return "rejected";
+    return "pending";
+}
+
+function getMarkerColor(status) {
+    const colors = {
+        "verified": "#27965a",
+        "pending": "#e6a23c",
+        "rejected": "#d95757"
+    };
+
+    return colors[status] || "#7b8790";
+}
+
+/* ساخت فهرست استان‌ها و مناطق موجود */
+function renderRegionOptions() {
+    const selector = document.getElementById("regionFilter");
+    const selected = selector.value;
+
+    selector.innerHTML = "<option value=\"all\">همه مناطق</option>";
+
+    Object.keys(regions).forEach(function (region) {
+        const option = document.createElement("option");
+        option.value = region;
+        option.textContent = region;
+        selector.appendChild(option);
+    });
+
+    selector.value = selected;
+}
+
+/* محاسبه آمار گزارش‌ها */
+function renderStats() {
+    const uniqueRegions = new Set(
+        reports.map(function (report) {
+            return report.region;
+        })
+    );
+
+    document.getElementById("totalCount").textContent = reports.length;
+
+    document.getElementById("verifiedCount").textContent =
+        reports.filter(function (report) {
+            return report.status === "verified";
+        }).length;
+
+    document.getElementById("pendingCount").textContent =
+        reports.filter(function (report) {
+            return report.status === "pending";
+        }).length;
+
+    document.getElementById("regionCount").textContent = uniqueRegions.size;
+}
+
+/* اعمال فیلترها روی گزارش‌ها */
+function getFilteredReports() {
+    const search = document.getElementById("searchInput").value
+        .trim().toLowerCase();
+
+    const region = document.getElementById("regionFilter").value;
+    const status = document.getElementById("statusFilter").value;
+
+    return reports.filter(function (report) {
+        const text = (
+            report.region + " " +
+            report.disease + " " +
+            report.plant + " " +
+            report.description
+        ).toLowerCase();
+
+        const matchesSearch = text.includes(search);
+        const matchesRegion = region === "all" || report.region === region;
+        const matchesStatus = status === "all" || report.status === status;
+
+        return matchesSearch && matchesRegion && matchesStatus;
+    });
+}
+
+/* نمایش گزارش‌ها روی نقشه */
+function renderMap(filteredReports) {
+    markers.forEach(function (marker) {
+        map.removeLayer(marker);
+    });
+
+    markers = [];
+
+    filteredReports.forEach(function (report) {
+        const coordinates = regions[report.region];
+
+        if (!coordinates) return;
+
+        const marker = L.circleMarker(coordinates, {
+            radius: 9,
+            color: "#ffffff",
+            weight: 2,
+            fillColor: getMarkerColor(report.status),
+            fillOpacity: 0.95
+        }).addTo(map);
+
+        const popup =
+            "<div style=\"font-family:Tahoma;line-height:2;min-width:170px\">" +
+            "<strong>" + safeText(report.disease) + "</strong><br>" +
+            "منطقه: " + safeText(report.region) + "<br>" +
+            "گیاه: " + safeText(report.plant) + "<br>" +
+            "شدت علائم: " + safeText(report.severity) + "<br>" +
+            "وضعیت: " + safeText(getStatusText(report.status)) + "<br>" +
+            "تاریخ: " + safeText(report.date) +
+            "</div>";
+
+        marker.bindPopup(popup);
+
+        marker.on("click", function () {
+            highlightReport(report.id);
+        });
+
+        markers.push(marker);
+    });
+}
+
+/* انتخاب گزارش از فهرست */
+function focusReport(id) {
+    const report = reports.find(function (item) {
+        return String(item.id) === String(id);
+    });
+
+    if (!report || !regions[report.region]) return;
+
+    map.setView(regions[report.region], 9);
+
+    const marker = markers.find(function (item) {
+        const popup = item.getPopup();
+        return popup && popup.getContent().includes(
+            safeText(report.disease)
+        ) && popup.getContent().includes(
+            safeText(report.region)
+        );
+    });
+
+    if (marker) {
+        marker.openPopup();
+    }
+}
+
+function highlightReport(id) {
+    const cards = document.querySelectorAll("[data-report-card]");
+
+    cards.forEach(function (card) {
+        card.style.borderColor =
+            String(card.dataset.reportCard) === String(id) ?
+            "#41945b" : "#e4ece2";
+    });
+}
+
+/* نمایش کارت‌های گزارش */
+function renderList(filteredReports) {
+    const list = document.getElementById("reportList");
+    list.innerHTML = "";
+
+    if (filteredReports.length === 0) {
+        list.innerHTML =
+            "<div class=\"empty\">گزارشی با این مشخصات پیدا نشد. 🌱</div>";
+        return;
+    }
+
+    filteredReports.forEach(function (report) {
+        const card = document.createElement("article");
+        card.className = "report-card";
+        card.dataset.reportCard = report.id;
+
+        card.innerHTML =
+            "<div class=\"report-head\">" +
+                "<div><h3>" + safeText(report.disease) + "</h3>" +
+                "<p>📍 " + safeText(report.region) + "</p></div>" +
+                "<span class=\"status " + getStatusClass(report.status) +
+                "\">" + getStatusText(report.status) + "</span>" +
+            "</div>" +
+            "<p>🌿 نوع گیاه: " + safeText(report.plant) + "</p>" +
+            "<p>🔎 شدت علائم: " + safeText(report.severity) + "</p>" +
+            "<p>📅 تاریخ ثبت: " + safeText(report.date) + "</p>" +
+            "<p>" + safeText(report.description) + "</p>" +
+            "<div class=\"report-actions\">" +
+                "<button class=\"small-btn\" data-focus-report=\"" +
+                safeText(report.id) + "\">مشاهده روی نقشه</button>" +
+            "</div>";
+
+        list.appendChild(card);
+    });
+}
+
+/* به‌روزرسانی هم‌زمان نقشه، فهرست و آمار */
+function renderAll() {
+    renderRegionOptions();
+    renderStats();
+
+    const filteredReports = getFilteredReports();
+
+    renderList(filteredReports);
+    renderMap(filteredReports);
+}
+
+/* فیلترها */
+document.getElementById("searchInput").addEventListener("input", renderAll);
+document.getElementById("regionFilter").addEventListener("change", renderAll);
+document.getElementById("statusFilter").addEventListener("change", renderAll);
+
+/* بازگشت به نمای کلی ایران */
+document.getElementById("resetMap").addEventListener("click", function () {
+    map.setView([32.5, 53.5], 5);
+});
+
+/* مشاهده گزارش روی نقشه */
+document.addEventListener("click", function (event) {
+    const button = event.target.closest("[data-focus-report]");
+
+    if (button) {
+        focusReport(button.dataset.focusReport);
+    }
+});
+
+/* ثبت گزارش جدید با وضعیت اولیه در انتظار بررسی */
+document.getElementById("reportForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const region = document.getElementById("reportRegion").value;
+    const report = {
+        id: Date.now(),
+        region: region,
+        plant: document.getElementById("plantType").value,
+        disease: document.getElementById("diseaseType").value,
+        severity: document.getElementById("severity").value,
+        status: "pending",
+        description:
+            document.getElementById("description").value.trim() ||
+            "توضیحات بیشتری ثبت نشده است.",
+        date: new Date().toISOString().slice(0, 10)
+    };
+
+    reports.unshift(report);
+    saveReports();
+
+    this.reset();
+
+    renderAll();
+    map.setView(regions[region], 8);
+
+    showToast("گزارش ثبت شد و در انتظار بررسی است. 🌿");
+});
+
+/* شروع صفحه */
+renderAll();
+
+setTimeout(function () {
+    map.invalidateSize();
+}, 300);
+</script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

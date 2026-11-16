@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تشخیص تنش گیاه از صدا | گیاه‌یار</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg:#071912;
+  --card:#10291f;
+  --green:#9af5b9;
+  --muted:#a1b9aa;
+  --border:#284638;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:
+    radial-gradient(ellipse at 10% 0%,#1c5035 0,transparent 35%),
+    radial-gradient(ellipse at 100% 50%,#153e35 0,transparent 30%),
+    var(--bg);
+  color:#f2fff5;
+  font-family:'Vazirmatn',sans-serif;
+}
+
+button,input { font:inherit; }
+
+button {
+  cursor:pointer;
+  border:0;
+  border-radius:12px;
+  padding:12px 17px;
+  font-size:12px;
+  font-weight:700;
+  transition:.2s;
+}
+
+button:hover:not(:disabled) { transform:translateY(-2px); }
+button:disabled { opacity:.4;cursor:not-allowed; }
+
+
+
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:20px;
+  font-weight:800;
+}
+
+.logo {
+  display:grid;
+  place-items:center;
+  width:48px;height:48px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#183d2b;
+  font-size:25px;
+}
+
+.brand small {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:400;
+}
+
+.back {
+  color:var(--green);
+  text-decoration:none;
+  border:1px solid var(--border);
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:11px;
+}
+.hero,
+.layout {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.hero { text-align:center;margin-bottom:36px; }
+
+.tag {
+  display:inline-block;
+  color:var(--green);
+  background:#183c2b;
+  border:1px solid #315b41;
+  padding:8px 15px;
+  border-radius:30px;
+  font-size:11px;
+}
+
+h1 {
+  font-size:clamp(28px,5vw,45px);
+  line-height:1.6;
+  margin:18px 0 10px;
+}
+
+h1 span { color:var(--green); }
+
+.hero p {
+  max-width:640px;
+  margin:auto;
+  color:var(--muted);
+  font-size:13px;
+  line-height:2.2;
+}
+
+.layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(280px,.8fr);
+  gap:18px;
+  align-items:start;
+}
+
+.card {
+  min-width:0;
+  background:rgba(16,41,31,.93);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 15px 45px #0002;
+  animation:show .5s ease both;
+}
+
+.cardhead {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.icon {
+  width:44px;height:44px;
+  display:grid;place-items:center;
+  background:#1d4530;
+  border-radius:14px;
+  font-size:22px;
+}
+
+h2 { font-size:15px;margin:0 0 5px; color: #effff3;}
+.subtitle { color:var(--muted);font-size:10px;line-height:2; }
+
+.recorder {
+  text-align:center;
+  background:#091d15;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:23px 14px;
+}
+
+.mic {
+  width:82px;height:82px;
+  display:grid;place-items:center;
+  margin:auto;
+  border-radius:50%;
+  border:1px solid #52845e;
+  background:radial-gradient(circle,#356a46,#122c1e);
+  font-size:35px;
+}
+
+.recording .mic { animation:pulse 1.2s infinite; }
+
+.timer {
+  font-size:30px;
+  font-weight:800;
+  margin:10px 0 4px;
+  font-variant-numeric:tabular-nums;
+}
+
+.hint { color:var(--muted);font-size:11px;line-height:2; }
+
+.actions {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+  margin-top:15px;
+}
+
+.primary { background:var(--green);color:#092418; }
+.secondary { background:#1a3829;color:#e9fff0;border:1px solid var(--border); }
+.stop { background:#482d2c;color:#ffdcdc;border:1px solid #70403c; }
+
+.upload {
+  display:block;
+  margin-top:14px;
+  border:1px dashed #538361;
+  border-radius:16px;
+  padding:22px 12px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.upload:hover { background:#183b29; }
+.upload .big { font-size:29px;display:block;margin-bottom:8px; }
+.upload strong { font-size:12px; }
+.upload small { display:block;color:var(--muted);font-size:10px;margin-top:7px;line-height:2; }
+.upload input { display:none; }
+.fileinfo {
+  margin-top:12px;
+  color:var(--green);
+  font-size:11px;
+  overflow-wrap:anywhere;
+}
+
+audio { display:block;width:100%;margin-top:12px; }
+audio[hidden] { display:none; }
+
+.chart {
+  width:100%;
+  height:175px;
+  overflow:hidden;
+  border:1px solid #294638;
+  border-radius:14px;
+  background-color:#091d15;
+  background-image:
+    linear-gradient(#ffffff08 1px,transparent 1px),
+    linear-gradient(90deg,#ffffff08 1px,transparent 1px);
+  background-size:24px 24px;
+}
+
+canvas { display:block;width:100%;height:100%; }
+
+.legend {
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:9px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.legend span:first-child { color:var(--green); }
+
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.metric {
+  background:#0b2117;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  min-width:0;
+}
+
+.metric small { display:block;color:var(--muted);font-size:10px;margin-bottom:8px; }
+.metric strong { color:var(--green);font-size:21px;overflow-wrap:anywhere; }
+.unit { color:var(--muted);font-size:10px;font-weight:400;margin-right:4px; }
+
+.ai-result {
+  border:1px solid #3e6247;
+  border-radius:17px;
+  padding:16px;
+  background:linear-gradient(140deg,#183b29,#10251b);
+}
+
+.ai-title { color:var(--green);font-weight:800;font-size:13px; }
+.ai-result p { color:#c1d5c7;font-size:11px;line-height:2.3; }
+
+.ai-status {
+  display:inline-block;
+  margin-top:5px;
+  padding:7px 10px;
+  border-radius:9px;
+  color:#ffdfa0;
+  background:#49391e;
+  font-size:10px;
+}
+
+.notice {
+  border:1px solid #345143;
+  border-radius:13px;
+  background:#0b2117;
+  color:var(--muted);
+  padding:13px;
+  font-size:10px;
+  line-height:2.2;
+  margin-top:14px;
+}
+
+.notice strong { color:var(--green); }
+
+.help { color:var(--muted);font-size:11px;line-height:2.4; }
+.help strong { color:#effff3; }
+
+
+#message {
+  min-height:20px;
+  margin-top:12px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:2;
+}
+
+@keyframes pulse {
+  50% { box-shadow:0 0 0 12px #9af5b900; }
+}
+@keyframes show {
+  from { opacity:0;transform:translateY(10px); }
+  to { opacity:1;transform:translateY(0); }
+}
+
+@media(max-width:780px) {
+  .layout { grid-template-columns:1fr; }
+  header { margin-bottom:32px; }
+}
+
+</style>
+ <link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+  
+<main class="page">
+
+<div id="site-header"></div>
+
+
+<section class="hero">
+  
+  <h1>صدای گیاهت رو بررسی کن؛<br><span>تنش را بشناس</span></h1>
+  <p>
+    صدای گیاه را ضبط کن یا فایل صوتی بارگذاری کن .سیستم ویژگی های صوتی را تحلیل می کند و بعد از اتصال مدل،
+    می تواند تنش هایی مثل کم آبی را تخمین بزند.
+  </p>
+</section>
+
+<div class="layout">
+  <div>
+
+    <section class="card">
+      <div class="cardhead">
+        <div class="icon">🎙️</div>
+        <div>
+          <h2>ضبط یا بارگذاری صدا</h2>
+          <div class="subtitle">برای شروع، صدا رو ضبط کن یا فایل انتخاب کن.</div>
+        </div>
+      </div>
+
+      <div class="recorder" id="recorder">
+        <div class="mic">🎙️</div>
+        <div class="timer" id="timer">00:00</div>
+        <div class="hint" id="recordHint">آماده‌ی ضبط صدای موردنظر</div>
+        <div class="actions">
+          <button class="primary" id="startBtn">● شروع ضبط</button>
+          <button class="stop" id="stopBtn" disabled>■ توقف ضبط</button>
+        </div>
+      </div>
+      <label class="upload" for="audioFile">
+        <span class="big">📁</span>
+        <strong>انتخاب فایل صوتی</strong>
+        <small>برای نمونه‌برداری از صدا، فایل مناسب را انتخاب کن.<br>فرمت‌های قابل‌پشتیبانی به مرورگر بستگی دارند.</small>
+        <input id="audioFile" type="file" accept="audio/*">
+      </label>
+
+      <div class="fileinfo" id="fileName">هنوز فایلی انتخاب نشده است.</div>
+      <audio id="player" controls hidden></audio>
+
+      <div class="actions">
+        <button class="secondary" id="reanalyze" disabled>↻ تحلیل دوباره</button>
+        <button class="secondary" id="downloadBtn" disabled>↓ ذخیره صدا</button>
+        <button class="secondary" id="clearBtn" disabled>پاک‌کردن</button>
+      </div>
+      <div id="message">برای شروع، یک فایل صوتی انتخاب کن یا ضبط رو شروع کن.</div>
+    </section>
+
+    <section class="card">
+      <div class="cardhead">
+        <div class="icon">〰️</div>
+        <div>
+          <h2>شکل موج صدا</h2>
+          <div class="subtitle">نمایش تغییرات سیگنال صوتی در طول زمان</div>
+        </div>
+      </div>
+      <div class="chart"><canvas id="wave"></canvas></div>
+      <div class="legend"><span>● شکل موج</span><span>دامنه‌ی صدا</span></div>
+    </section>
+
+    <section class="card">
+      <div class="cardhead">
+        <div class="icon">📈</div>
+        <div>
+          <h2>تحلیل فرکانس</h2>
+          <div class="subtitle">بررسی فرکانس‌های موجود در فایل صوتی</div>
+        </div>
+      </div>
+      <div class="chart"><canvas id="spectrum"></canvas></div>
+      <div class="legend"><span>● طیف فرکانسی</span><span>فرکانس بر حسب هرتز</span></div>
+    </section>
+
+  </div>
+
+  <aside>
+    <section class="card">
+      <div class="cardhead">
+        <div class="icon">📊</div>
+        <div>
+          <h2>گزارش صوت</h2>
+          <div class="subtitle">ویژگی‌های محاسبه‌شده از فایل</div>
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <small>مدت فایل</small>
+          <strong id="duration">--</strong><span class="unit">ثانیه</span>
+        </div>
+        <div class="metric">
+          <small>نرخ نمونه‌برداری</small>
+          <strong id="sampleRate">--</strong><span class="unit">Hz</span>
+        </div>
+        <div class="metric">
+          <small>شدت نسبی سیگنال</small>
+          <strong id="intensity">--</strong><span class="unit">%</span>
+        </div>
+        <div class="metric">
+          <small>فرکانس غالب</small>
+          <strong id="dominant">--</strong><span class="unit">Hz</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardhead">
+        <div class="icon">🤖</div>
+        <div>
+          <h2>نتیجه بررسی هوش مصنوعی</h2>
+          <div class="subtitle">ارزیابی احتمالی سلامت گیاه</div>
+        </div>
+      </div>
+
+      <div class="ai-result">
+        <div class="ai-title">🌿 وضعیت تشخیص</div>
+        <p id="aiText">
+          هنوز مدلی به این بخش متصل نشده ابتدا یک صدا بارگذاری کن تا تحلیل صوتی انجام شود.
+        </p>
+        <span class="ai-status" id="aiStatus">مدل هوش مصنوعی متصل نیست</span>
+      </div>
+
+      <div class="notice">
+        <strong>مهم:</strong>
+        تحلیل فرکانس به تنهایی تنش یا بیماری گیاه را مشخص نمی کند.
+        صدای گیاه اولتراسونیک است و میکروفون لب تاپ و گوشی آن را نمی گیرد،برای نتیجه دقیق 
+        به میکروفون اولتراسونیک نیاز است. این بخش آزمایشی است.
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardhead">
+        <div class="icon">🔬</div>
+        <div>
+          <h2>چطور از این صفحه استفاده کنم؟</h2>
+        </div>
+      </div>
+      <div class="help">
+        <p><strong>۱.</strong> صدا را ضبط یا فایل را انتخاب کن.</p>
+        <p><strong>۲.</strong> شکل موج و ویژگی‌های صوتی را بررسی کن.</p>
+        <p><strong>۳.</strong>برای تخمین تنش، باید مدل آموزش دیده به این صفحه متصل شود .</p>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<div id="site-footer"></div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const startBtn = $("startBtn");
+const stopBtn = $("stopBtn");
+const audioFile = $("audioFile");
+const player = $("player");
+const wave = $("wave");
+const spectrum = $("spectrum");
+const wctx = wave.getContext("2d");
+const sctx = spectrum.getContext("2d");
+
+let audioContext = null;
+let mediaRecorder = null;
+let mediaStream = null;
+let chunks = [];
+let currentBlob = null;
+let objectURL = null;
+let audioBuffer = null;
+let timer = null;
+let startTime = 0;
+let loadToken = 0;
+
+function setMessage(text) {
+  $("message").textContent = text;
+}
+
+function timeString(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+}
+
+function setMetric(id, value) {
+  $(id).textContent = value;
+}
+
+async function getAudioContext() {
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) throw new Error("مرورگر از پردازش صوت پشتیبانی نمی‌کند.");
+    audioContext = new AudioContextClass();
+  }
+  if (audioContext.state === "suspended") await audioContext.resume();
+  return audioContext;
+}
+
+function resizeCanvas(canvas, ctx) {
+  const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.round(rect.width * dpr);
+  const height = Math.round(rect.height * dpr);
+
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function emptyCanvas(canvas, ctx, message) {
+  resizeCanvas(canvas, ctx);
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = "#a1b9aa";
+  ctx.font = "12px Vazirmatn, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(message, w / 2, h / 2);
+}
+
+function drawWave(samples) {
+  resizeCanvas(wave, wctx);
+  const w = wave.clientWidth;
+  const h = wave.clientHeight;
+  wctx.clearRect(0, 0, w, h);
+
+  if (!samples || !samples.length) {
+    emptyCanvas(wave, wctx, "هنوز صدایی دریافت نشده است");
+    return;
+  }
+
+  const mid = h / 2;
+  wctx.strokeStyle = "#31513f";
+  wctx.beginPath();
+  wctx.moveTo(0, mid);
+  wctx.lineTo(w, mid);
+  wctx.stroke();
+
+  const gradient = wctx.createLinearGradient(0, 0, w, 0);
+  gradient.addColorStop(0, "#65e9e2");
+  gradient.addColorStop(1, "#9af5b9");
+
+  wctx.beginPath();
+  for (let x = 0; x < w; x++) {
+    const index = Math.min(samples.length - 1,
+      Math.floor(x * samples.length / w));
+    const y = mid - samples[index] * h * 0.44;
+    if (x === 0) wctx.moveTo(x, y);
+    else wctx.lineTo(x, y);
+  }
+
+  wctx.strokeStyle = gradient;
+  wctx.lineWidth = 1.6;
+  wctx.stroke();
+}
+
+function drawSpectrum(values, sampleRate, fftSize) {
+  resizeCanvas(spectrum, sctx);
+  const w = spectrum.clientWidth;
+  const h = spectrum.clientHeight;
+  sctx.clearRect(0, 0, w, h);
+
+  if (!values || !values.length) {
+    emptyCanvas(spectrum, sctx, "طیفی برای نمایش وجود ندارد");
+    return;
+  }
+
+  const left = 32, right = 8, top = 12, bottom = 24;
+  const usableW = w - left - right;
+  const usableH = h - top - bottom;
+  const nyquist = sampleRate / 2;
+  const minHz = Math.min(20, nyquist);
+  const maxHz = nyquist;
+  const bins = values.length;
+  const barCount = Math.min(100, Math.floor(usableW / 3));
+
+  const gradient = sctx.createLinearGradient(0, top, 0, top + usableH);
+  gradient.addColorStop(0, "#65e9e2");
+  gradient.addColorStop(1, "#398c62");
+  sctx.fillStyle = gradient;
+
+  for (let i = 0; i < barCount; i++) {
+    const a = i / barCount;
+    const b = (i + 1) / barCount;
+    const hzA = minHz * Math.pow(maxHz / minHz, a);
+    const hzB = minHz * Math.pow(maxHz / minHz, b);
+
+    const first = Math.max(0, Math.floor(hzA * fftSize / sampleRate));
+    const last = Math.min(bins - 1,
+      Math.max(first, Math.floor(hzB * fftSize / sampleRate)));
+
+    let value = 0;
+    for (let j = first; j <= last; j++) value = Math.max(value, values[j]);
+    const barH = Math.max(1, value * usableH);
+    const x = left + a * usableW;
+    sctx.fillRect(x, top + usableH - barH,
+      Math.max(1, usableW / barCount - 1), barH);
+  }
+
+  sctx.fillStyle = "#a1b9aa";
+  sctx.font = "10px Vazirmatn, sans-serif";
+  sctx.textAlign = "center";
+  sctx.fillText("20 Hz", left + 12, h - 6);
+  sctx.fillText("میانه طیف", left + usableW / 2, h - 6);
+  sctx.fillText("Nyquist", w - 25, h - 6);
+}
+
+function analyzeBuffer(buffer) {
+  const sr = buffer.sampleRate;
+  const channels = buffer.numberOfChannels;
+  const length = buffer.length;
+  const duration = buffer.duration;
+
+  const samples = new Float32Array(length);
+
+  for (let ch = 0; ch < channels; ch++) {
+    const data = buffer.getChannelData(ch);
+    for (let i = 0; i < length; i++) {
+      samples[i] += data[i] / channels;
+    }
+  }
+
+  let sumSquares = 0;
+  for (const value of samples) sumSquares += value * value;
+  const rms = Math.sqrt(sumSquares / Math.max(1, length));
+  const intensity = Math.min(100, Math.round(rms * 100));
+
+  setMetric("duration", duration.toFixed(2));
+  setMetric("sampleRate", sr.toLocaleString("fa-IR"));
+  setMetric("intensity", intensity.toLocaleString("fa-IR"));
+
+  const displayCount = Math.min(5000, length);
+  const display = new Float32Array(displayCount);
+  const step = length / displayCount;
+
+  for (let i = 0; i < displayCount; i++) {
+    display[i] = samples[Math.min(length - 1, Math.floor(i * step))];
+  }
+  drawWave(display);
+
+  // انتخاب یک قطعه کوتاه و اعمال پنجره برای کاهش اثر لبه‌ها
+  const n = Math.min(2048, 2 ** Math.floor(Math.log2(length)));
+  const segment = new Float32Array(n);
+  const offset = Math.max(0, Math.floor((length - n) / 2));
+
+  for (let i = 0; i < n; i++) {
+    const windowValue = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / Math.max(1, n - 1));
+    segment[i] = samples[offset + i] * windowValue;
+  }
+
+  // تبدیل فوریه گسسته برای محاسبه طیف قطعه کوتاه
+  const bins = Math.floor(n / 2);
+  const magnitudes = new Float32Array(bins);
+  let peakMagnitude = 0;
+  let peakIndex = 0;
+
+  for (let k = 0; k < bins; k++) {
+    let real = 0;
+    let imaginary = 0;
+
+    for (let t = 0; t < n; t++) {
+      const angle = 2 * Math.PI * k * t / n;
+      real += segment[t] * Math.cos(angle);
+      imaginary -= segment[t] * Math.sin(angle);
+    }
+
+    const magnitude = Math.sqrt(real * real + imaginary * imaginary);
+    magnitudes[k] = magnitude;
+
+    if (k > 0 && magnitude > peakMagnitude) {
+      peakMagnitude = magnitude;
+      peakIndex = k;
+    }
+  }
+
+  const normalized = new Float32Array(bins);
+  if (peakMagnitude > 0) {
+    for (let i = 0; i < bins; i++) normalized[i] = magnitudes[i] / peakMagnitude;
+  }
+
+  const dominantHz = peakIndex * sr / n;
+  setMetric("dominant", Math.round(dominantHz).toLocaleString("fa-IR"));
+  drawSpectrum(normalized, sr, n);
+
+  // عمداً بیماری یا نتیجه ساختگی تولید نمی‌کنیم.
+  $("aiText").textContent =
+"ویژگی های صوتی محاسبه شدند ، اما برای تخمین تنش گیاه، مدل آموش دیده با داده های معتبر لازم است.";
+  $("aiStatus").textContent = "در انتظار اتصال مدل هوش مصنوعی";
+}
+
+async function loadAudio(blob, name) {
+  const token = ++loadToken;
+  currentBlob = blob;
+
+  if (objectURL) URL.revokeObjectURL(objectURL);
+  objectURL = URL.createObjectURL(blob);
+
+  player.src = objectURL;
+  player.hidden = false;
+  $("fileName").textContent = name;
+  $("timer").textContent = "00:00";
+  $("recordHint").textContent = "فایل برای بررسی آماده است.";
+
+  $("reanalyze").disabled = false;
+  $("downloadBtn").disabled = false;
+  $("clearBtn").disabled = false;
+  setMessage("در حال خواندن و تحلیل فایل صوتی...");
+
+  try {
+    const ctx = await getAudioContext();
+    const arrayBuffer = await blob.arrayBuffer();
+    const decoded = await ctx.decodeAudioData(arrayBuffer);
+
+    if (token !== loadToken) return;
+    audioBuffer = decoded;
+    $("timer").textContent = timeString(decoded.duration);
+    analyzeBuffer(decoded);
+    setMessage("تحلیل صوتی انجام شد. تشخیص تخمین تنش هنوز به مدل هوش مصنوعی نیاز دارد.");
+  } catch (error) {
+    if (token !== loadToken) return;
+    audioBuffer = null;
+    emptyCanvas(wave, wctx, "فایل قابل تحلیل نیست");
+    emptyCanvas(spectrum, sctx, "طیف در دسترس نیست");
+    setMessage("فایل پخش شدنی است، اما مرورگر نتوانست آن را تحلیل کند. فایل WAV یا MP3 دیگری امتحان کن.");
+    console.error(error);
+  }
+}
+
+async function startRecording() {
+  if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+    setMessage("برای ضبط میکروفون از localhost یا HTTPS استفاده کن.");
+    return;
+  }
+
+  try {
+    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    chunks = [];
+
+    let options = {};
+    if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+      options.mimeType = "audio/webm;codecs=opus";
+    }
+
+    mediaRecorder = new MediaRecorder(mediaStream, options);
+
+    mediaRecorder.ondataavailable = event => {
+      if (event.data?.size) chunks.push(event.data);
+    };
+
+    mediaRecorder.onstop = async () => {
+      const blob = new Blob(chunks, {
+        type: mediaRecorder.mimeType || "audio/webm"
+      });
+
+      mediaStream?.getTracks().forEach(track => track.stop());
+      mediaStream = null;
+
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      $("recorder").classList.remove("recording");
+      clearInterval(timer);
+
+      if (blob.size) await loadAudio(blob, "صدای ضبط‌شده");
+      setMessage("ضبط پایان یافت.");
+    };
+
+    mediaRecorder.start();
+    startTime = Date.now();
+
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    $("recorder").classList.add("recording");
+    $("recordHint").textContent = "در حال ضبط...";
+
+    timer = setInterval(() => {
+      $("timer").textContent = timeString((Date.now() - startTime) / 1000);
+    }, 250);
+
+    setMessage("در حال ضبط صدا هستی.");
+  } catch (error) {
+    mediaStream?.getTracks().forEach(track => track.stop());
+    mediaStream = null;
+    setMessage("میکروفون در دسترس نیست. اجازه‌ی دسترسی و تنظیمات مرورگر را بررسی کن.");
+    console.error(error);
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    mediaRecorder.stop();
+  }
+}
+
+function clearAll() {
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    mediaRecorder.onstop = null;
+    mediaRecorder.stop();
+  }
+
+  mediaStream?.getTracks().forEach(track => track.stop());
+  mediaStream = null;
+  clearInterval(timer);
+  loadToken++;
+
+  if (objectURL) URL.revokeObjectURL(objectURL);
+  objectURL = null;
+  currentBlob = null;
+  audioBuffer = null;
+  chunks = [];
+
+  player.pause();
+  player.removeAttribute("src");
+  player.load();
+  player.hidden = true;
+  audioFile.value = "";
+
+  $("timer").textContent = "00:00";
+  $("fileName").textContent = "هنوز فایلی انتخاب نشده است.";
+  $("recordHint").textContent = "آماده‌ی ضبط صدای موردنظر";
+  $("recorder").classList.remove("recording");
+
+  ["duration","sampleRate","intensity","dominant"].forEach(id => setMetric(id, "--"));
+
+  $("aiText").textContent = "هنوز مدلی برای تشخیص بیماری به سایت متصل نشده است.";
+  $("aiStatus").textContent ="هنوز مدلی به این بخش متصل نشده است .";
+  $("reanalyze").disabled = true;
+  $("downloadBtn").disabled = true;
+  $("clearBtn").disabled = true;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+
+  setMessage("برای شروع، یک فایل صوتی انتخاب کن یا ضبط رو شروع کن.");
+  emptyCanvas(wave, wctx, "هنوز صدایی دریافت نشده است");
+  emptyCanvas(spectrum, sctx, "طیفی برای نمایش وجود ندارد");
+}
+
+startBtn.addEventListener("click", startRecording);
+stopBtn.addEventListener("click", stopRecording);
+
+audioFile.addEventListener("change", async () => {
+  const file = audioFile.files?.[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("audio/")) {
+    setMessage("لطفاً یک فایل صوتی انتخاب کن.");
+    audioFile.value = "";
+    return;
+  }
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    setMessage("ابتدا ضبط را متوقف کن.");
+    audioFile.value = "";
+    return;
+  }
+
+  await loadAudio(file, file.name);
+});
+
+$("reanalyze").addEventListener("click", async () => {
+  if (currentBlob) await loadAudio(currentBlob, $("fileName").textContent);
+});
+
+$("downloadBtn").addEventListener("click", () => {
+  if (!currentBlob || !objectURL) return;
+  const link = document.createElement("a");
+  link.href = objectURL;
+  link.download = "plant-yar-sound";
+  link.click();
+});
+
+$("clearBtn").addEventListener("click", clearAll);
+
+window.addEventListener("resize", () => {
+  if (audioBuffer) analyzeBuffer(audioBuffer);
+  else {
+    emptyCanvas(wave, wctx, "هنوز صدایی دریافت نشده است");
+    emptyCanvas(spectrum, sctx, "طیفی برای نمایش وجود ندارد");
+  }
+});
+
+emptyCanvas(wave, wctx, "هنوز صدایی دریافت نشده است");
+emptyCanvas(spectrum, sctx, "طیفی برای نمایش وجود ندارد");
+</script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

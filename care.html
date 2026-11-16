@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مراقبت در زمان مناسب | گیاه‌یار</title>
+
+<style>
+/* تنظیمات کلی صفحه */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Tahoma, Arial, sans-serif;
+    background: #f4f8f3;
+    color: #203c2c;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.care-page {
+    max-width: 1250px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* سربرگ صفحه */
+.care-header {
+    background: linear-gradient(135deg, #174f37, #36845b);
+    color: white;
+    padding: 32px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 10px 30px #174f371c;
+}
+
+.care-header h1 {
+    margin: 0 0 12px;
+    font-size: 27px;
+}
+
+.care-header p {
+    margin: 0;
+    line-height: 2;
+    color: #e2f4e7;
+}
+
+.header-icon {
+    font-size: 65px;
+}
+
+/* کارت‌های آماری */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 22px;
+    border: 1px solid #e4eee4;
+}
+
+.stat-card .icon {
+    font-size: 28px;
+}
+
+.stat-card p {
+    color: #718276;
+    margin-bottom: 10px;
+}
+
+.stat-card strong {
+    font-size: 28px;
+    color: #246b43;
+}
+
+/* عنوان بخش‌ها */
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 30px 0 18px;
+}
+
+.section-title h2 {
+    font-size: 21px;
+    margin: 0;
+}
+
+/* کارت‌های گیاه */
+.plant-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.plant-card {
+    background: white;
+    border-radius: 20px;
+    padding: 22px;
+    border: 1px solid #e4eee4;
+}
+
+.plant-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.plant-emoji {
+    background: #edf7ed;
+    border-radius: 15px;
+    width: 65px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    font-size: 36px;
+    flex-shrink: 0;
+}
+
+.plant-card h3 {
+    margin: 0 0 8px;
+}
+
+.plant-card p {
+    color: #738175;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.plant-info {
+    background: #f5f9f3;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.plant-card button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* دکمه‌ها */
+.btn {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 17px;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: #287849;
+    color: white;
+}
+
+.btn-light {
+    background: #eaf5e9;
+    color: #23623b;
+}
+
+.btn-danger {
+    background: #fff0ed;
+    color: #b34c3d;
+}
+
+/* فرم ثبت کار */
+.task-form {
+    background: white;
+    padding: 25px;
+    border-radius: 22px;
+    border: 1px solid #e4eee4;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #dce7dc;
+    border-radius: 11px;
+    background: #fbfdfb;
+    font-size: 13px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #398b57;
+}
+
+.form-full {
+    grid-column: 1 / -1;
+}
+
+/* فهرست کارهای مراقبتی */
+.task-list {
+    display: grid;
+    gap: 13px;
+}
+
+.task-item {
+    background: white;
+    border: 1px solid #e4eee4;
+    border-radius: 17px;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.task-item.completed {
+    opacity: 0.7;
+    background: #f0f7ef;
+}
+.task-item.completed .task-name {
+    text-decoration: line-through;
+}
+
+.task-details {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.task-icon {
+    font-size: 28px;
+    background: #eef7eb;
+    padding: 12px;
+    border-radius: 13px;
+}
+
+.task-name {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.task-meta {
+    color: #758477;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 30px;
+    color: #718276;
+    background: white;
+    border-radius: 18px;
+}
+
+/* نکته مراقبتی */
+.care-tip {
+    background: #e8f5e6;
+    border-right: 5px solid #45975b;
+    padding: 22px;
+    border-radius: 16px;
+    margin-top: 28px;
+    line-height: 2.1;
+}
+
+.care-tip h3 {
+    margin-top: 0;
+}
+
+#message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    max-width: 400px;
+    margin: auto;
+    background: #214e35;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 12px;
+    display: none;
+    z-index: 10;
+}
+
+/* نمایش مناسب در موبایل */
+@media (max-width: 800px) {
+    .plant-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .care-header {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 520px) {
+    .care-page {
+        padding: 13px;
+    }
+
+    .plant-grid,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .care-header h1 {
+        font-size: 22px;
+    }
+
+    .header-icon {
+        font-size: 45px;
+    }
+
+    .task-actions {
+        width: 100%;
+    }
+
+    .task-actions button {
+        flex: 1;
+    }
+
+    .form-full {
+        grid-column: auto;
+    }
+}
+</style>
+ <link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+   <div id="site-header"></div>
+
+<main class="care-page">
+
+    <!-- سربرگ بخش مراقبت -->
+ 
+
+    <!-- آمار کارهای مراقبتی -->
+    <section class="stats">
+        <div class="stat-card">
+            <span class="icon">🪴</span>
+            <p>تعداد گیاهان من</p>
+            <strong id="plantCount">3</strong>
+        </div>
+
+        <div class="stat-card">
+            <span class="icon">💧</span>
+            <p>کارهای باقی‌مانده</p>
+            <strong id="pendingCount">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span class="icon">✅</span>
+            <p>کارهای انجام‌شده</p>
+            <strong id="doneCount">0</strong>
+        </div>
+    </section>
+
+    <!-- معرفی گیاهان -->
+    <section>
+        <div class="section-title">
+            <h2>🌿 گیاهان من</h2>
+            <button class="btn btn-light" id="addPlantButton">
+                + افزودن گیاه
+            </button>
+        </div>
+
+        <div class="plant-grid" id="plantGrid"></div>
+    </section>
+
+    <!-- فرم اضافه کردن گیاه -->
+    <section id="plantFormSection" hidden>
+        <div class="section-title">
+            <h2>افزودن گیاه جدید</h2>
+        </div>
+
+        <form class="task-form" id="plantForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="plantName">نام گیاه</label>
+                    <input id="plantName" required
+                           placeholder="مثلاً پتوس">
+                </div>
+
+                <div class="form-group">
+                    <label for="plantType">نوع گیاه</label>
+                    <select id="plantType">
+                        <option value="🌿">گیاه آپارتمانی</option>
+                        <option value="🌵">کاکتوس و ساکولنت</option>
+                        <option value="🌸">گل زینتی</option>
+                        <option value="🥬">گیاه خوراکی</option>
+                        <option value="🌳">درخت و درختچه</option>
+                    </select>
+                </div>
+                <div class="form-group form-full">
+                    <button class="btn btn-primary" type="submit">
+                        ثبت گیاه جدید
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- ثبت برنامه مراقبتی -->
+    <section>
+        <div class="section-title">
+            <h2>🗓️ تنظیم یادآوری جدید</h2>
+        </div>
+
+        <form class="task-form" id="taskForm">
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="taskPlant">انتخاب گیاه</label>
+                    <select id="taskPlant" required></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskType">نوع مراقبت</label>
+                    <select id="taskType" required>
+                        <option value="آبیاری">💧 آبیاری</option>
+                        <option value="کوددهی">🧪 کوددهی</option>
+                        <option value="بررسی برگ‌ها">🍃 بررسی برگ‌ها</option>
+                        <option value="تمیز کردن برگ‌ها">🧽 تمیز کردن برگ‌ها</option>
+                        <option value="بررسی خاک">🌱 بررسی خاک</option>
+                        <option value="تعویض گلدان">🪴 تعویض گلدان</option>
+                        <option value="سایر">📌 سایر کارها</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDate">تاریخ انجام کار</label>
+                    <input type="date" id="taskDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskTime">ساعت یادآوری</label>
+                    <input type="time" id="taskTime" value="09:00" required>
+                </div>
+
+                <div class="form-group form-full">
+                    <label for="taskNote">توضیحات</label>
+                    <textarea id="taskNote" rows="3"
+                              placeholder="مثلاً ابتدا رطوبت خاک را بررسی کن..."></textarea>
+                </div>
+
+                <div class="form-group form-full">
+                    <button class="btn btn-primary" type="submit">
+                        + ثبت برنامه مراقبتی
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </section>
+
+    <!-- فهرست برنامه‌ها -->
+    <section>
+        <div class="section-title">
+            <h2>⏰ برنامه مراقبت من</h2>
+            <select id="taskFilter" aria-label="فیلتر برنامه‌ها"
+                    style="padding:10px;border:1px solid #dce7dc;border-radius:10px">
+                <option value="all">همه کارها</option>
+                <option value="pending">انجام‌نشده</option>
+                <option value="completed">انجام‌شده</option>
+            </select>
+        </div>
+
+        <div class="task-list" id="taskList"></div>
+    </section>
+
+    <!-- توصیه مراقبتی -->
+    <aside class="care-tip">
+        <h3>🌼 نکته امروز گیاه‌یار</h3>
+        <p id="dailyTip">
+            قبل از آبیاری، رطوبت خاک را بررسی کن.
+            نیاز آبی هر گیاه به نوع آن، فصل، نور و شرایط محیط بستگی دارد.
+            آبیاری را فقط بر اساس تقویم انجام نده.
+        </p>
+    </aside>
+
+</main>
+  <div id="site-footer"></div>
+
+<div id="message" role="status" aria-live="polite"></div>
+
+<script>
+/* اطلاعات اولیه برای نمایش در اولین اجرا */
+const initialPlants = [
+    {
+        id: 1,
+        name: "پتوس",
+        type: "🌿",
+        note: "قبل از آبیاری، رطوبت خاک را بررسی کن."
+    },
+    {
+        id: 2,
+        name: "سانسوریا",
+        type: "🪴",
+        note: "خاک باید بین آبیاری‌ها فرصت خشک شدن داشته باشد."
+    },
+    {
+        id: 3,
+        name: "کاکتوس",
+        type: "🌵",
+        note: "از آبیاری بیش از اندازه خودداری کن."
+    }
+];
+
+/* خواندن اطلاعات ذخیره‌شده */
+function loadData(key, fallback) {
+    try {
+        const saved = localStorage.getItem(key);
+        return saved ? JSON.parse(saved) : fallback;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+let plants = loadData("giyahy ar_plants", initialPlants);
+let tasks = loadData("giyahy ar_tasks", []);
+/* ذخیره اطلاعات در همین مرورگر */
+function saveData() {
+    try {
+        localStorage.setItem("giyahy ar_plants", JSON.stringify(plants));
+        localStorage.setItem("giyahy ar_tasks", JSON.stringify(tasks));
+    } catch (error) {
+        showMessage("ذخیره اطلاعات در مرورگر امکان‌پذیر نبود.");
+    }
+}
+
+/* نمایش پیام کوتاه */
+function showMessage(text) {
+    const box = document.getElementById("message");
+    box.textContent = text;
+    box.style.display = "block";
+
+    setTimeout(function () {
+        box.style.display = "none";
+    }, 2500);
+}
+
+/* ساخت تاریخ امروز برای ورودی فرم */
+function getToday() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+
+    return year + "-" + month + "-" + day;
+}
+
+document.getElementById("taskDate").value = getToday();
+
+/* تبدیل متن به شکل امن برای نمایش در صفحه */
+function safeText(value) {
+    return String(value).replace(/[&<>"']/g, function (character) {
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\"": "&quot;",
+            "'": "&#39;"
+        };
+
+        return entities[character];
+    });
+}
+
+/* نمایش گیاهان و انتخاب آن‌ها در فرم */
+function renderPlants() {
+    const grid = document.getElementById("plantGrid");
+    const selector = document.getElementById("taskPlant");
+
+    grid.innerHTML = "";
+    selector.innerHTML = "";
+
+    plants.forEach(function (plant) {
+        const card = document.createElement("article");
+        card.className = "plant-card";
+
+        card.innerHTML =
+            "<div class=\"plant-top\">" +
+                "<div class=\"plant-emoji\">" + safeText(plant.type) + "</div>" +
+                "<div><h3>" + safeText(plant.name) + "</h3>" +
+                "<p>عضو باغچه گیاه‌یار</p></div>" +
+            "</div>" +
+            "<div class=\"plant-info\">" + safeText(plant.note) + "</div>" +
+            "<button class=\"btn btn-light\" type=\"button\" data-care-plant=\"" +
+                safeText(plant.id) + "\">تنظیم مراقبت</button>";
+
+        grid.appendChild(card);
+
+        const option = document.createElement("option");
+        option.value = plant.id;
+        option.textContent = plant.name;
+        selector.appendChild(option);
+    });
+
+    document.getElementById("plantCount").textContent = plants.length;
+
+    if (plants.length === 0) {
+        grid.innerHTML =
+            "<div class=\"empty-message\">هنوز گیاهی ثبت نکرده‌ای. اولین گیاهت را اضافه کن.</div>";
+    }
+}
+
+/* نمایش برنامه‌های مراقبتی */
+function renderTasks() {
+    const list = document.getElementById("taskList");
+    const filter = document.getElementById("taskFilter").value;
+
+    list.innerHTML = "";
+
+    const filteredTasks = tasks
+        .filter(function (task) {
+            if (filter === "pending") return !task.completed;
+            if (filter === "completed") return task.completed;
+            return true;
+        })
+        .sort(function (a, b) {
+            return (a.date + " " + a.time).localeCompare(b.date + " " + b.time);
+        });
+
+    filteredTasks.forEach(function (task) {
+        const plant = plants.find(function (item) {
+            return String(item.id) === String(task.plantId);
+        });
+
+        const plantName = plant ? plant.name : "گیاه حذف‌شده";
+        const icons = {
+            "آبیاری": "💧",
+            "کوددهی": "🧪",
+            "بررسی برگ‌ها": "🍃",
+            "تمیز کردن برگ‌ها": "🧽",
+            "بررسی خاک": "🌱",
+            "تعویض گلدان": "🪴",
+            "سایر": "📌"
+        };
+
+        const item = document.createElement("article");
+        item.className = "task-item" + (task.completed ? " completed" : "");
+
+        item.innerHTML =
+            "<div class=\"task-details\">" +
+                "<div class=\"task-icon\">" + (icons[task.type] || "🌱") + "</div>" +
+                "<div>" +
+                    "<div class=\"task-name\">" + safeText(task.type) +
+                    " — " + safeText(plantName) + "</div>" +
+                    "<div class=\"task-meta\">📅 " + safeText(task.date) +
+                    " | 🕒 " + safeText(task.time) + "</div>" +
+                    "<div class=\"task-meta\">" +
+                    safeText(task.note || "بدون توضیحات") + "</div>" +
+                "</div>" +
+            "</div>" +
+            "<div class=\"task-actions\">" +
+                "<button class=\"btn " +
+                    (task.completed ? "btn-light" : "btn-primary") +
+                    "\" data-toggle-task=\"" + safeText(task.id) + "\">" +
+                    (task.completed ? "برگرداندن" : "انجام شد ✓") +
+                "</button>" +
+                "<button class=\"btn btn-danger\" data-delete-task=\"" +
+                    safeText(task.id) + "\">حذف</button>" +
+            "</div>";
+
+        list.appendChild(item);
+    });
+
+    if (filteredTasks.length === 0) {
+        list.innerHTML =
+            "<div class=\"empty-message\">برای این بخش برنامه‌ای وجود ندارد. می‌توانی یک برنامه جدید ثبت کنی. 🌱</div>";
+    }
+
+    document.getElementById("pendingCount").textContent =
+        tasks.filter(function (task) {
+            return !task.completed;
+        }).length;
+
+    document.getElementById("doneCount").textContent =
+        tasks.filter(function (task) {
+            return task.completed;
+        }).length;
+}
+
+/* به‌روزرسانی کل صفحه */
+function renderAll() {
+    renderPlants();
+    renderTasks();
+}
+
+/* باز و بسته کردن فرم افزودن گیاه */
+document.getElementById("addPlantButton").addEventListener("click", function () {
+    const section = document.getElementById("plantFormSection");
+    section.hidden = !section.hidden;
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+/* ثبت گیاه جدید */
+document.getElementById("plantForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("plantName").value.trim();
+    const type = document.getElementById("plantType").value;
+
+    if (!name) {
+        showMessage("نام گیاه را وارد کن.");
+        return;
+    }
+
+    plants.push({
+        id: Date.now(),
+        name: name,
+        type: type,
+        note: "برنامه مراقبتی گیاهت را تنظیم کن."
+    });
+
+    saveData();
+    renderAll();
+
+    this.reset();
+    document.getElementById("plantFormSection").hidden = true;
+    showMessage("گیاه جدید با موفقیت اضافه شد 🌱");
+});
+
+/* ثبت برنامه مراقبتی */
+document.getElementById("taskForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (plants.length === 0) {
+        showMessage("ابتدا یک گیاه اضافه کن.");
+        return;
+    }
+
+    const date = document.getElementById("taskDate").value;
+    const time = document.getElementById("taskTime").value;
+
+    tasks.push({
+        id: Date.now(),
+        plantId: document.getElementById("taskPlant").value,
+        type: document.getElementById("taskType").value,
+        date: date,
+        time: time,
+        note: document.getElementById("taskNote").value.trim(),
+        completed: false
+    });
+
+    saveData();
+    renderTasks();
+
+    document.getElementById("taskNote").value = "";
+    showMessage("برنامه مراقبتی ثبت شد 🌿");
+});
+
+/* مدیریت کلیک‌های کارت‌ها و کارها */
+document.addEventListener("click", function (event) {
+    const careButton = event.target.closest("[data-care-plant]");
+
+    if (careButton) {
+        document.getElementById("taskPlant").value = careButton.dataset.carePlant;
+        document.getElementById("taskForm").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+        return;
+    }
+
+    const toggleButton = event.target.closest("[data-toggle-task]");
+
+    if (toggleButton) {
+        const task = tasks.find(function (item) {
+            return String(item.id) === toggleButton.dataset.toggleTask;
+        });
+        if (task) {
+            task.completed = !task.completed;
+            saveData();
+            renderTasks();
+            showMessage(task.completed ?
+                "آفرین! کار مراقبتی انجام شد ✅" :
+                "کار به فهرست انجام‌نشده‌ها برگشت.");
+        }
+
+        return;
+    }
+
+    const deleteButton = event.target.closest("[data-delete-task]");
+
+    if (deleteButton) {
+        const confirmed = confirm("این برنامه مراقبتی حذف شود؟");
+
+        if (confirmed) {
+            tasks = tasks.filter(function (item) {
+                return String(item.id) !== deleteButton.dataset.deleteTask;
+            });
+
+            saveData();
+            renderTasks();
+            showMessage("برنامه حذف شد.");
+        }
+    }
+});
+
+/* تغییر فیلتر برنامه‌ها */
+document.getElementById("taskFilter").addEventListener("change", renderTasks);
+
+/* نمایش اطلاعات اولیه */
+renderAll();
+</script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

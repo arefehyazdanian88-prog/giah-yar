@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کارآگاه بیماری | گیاه‌یار</title>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bg: #08150f;
+  --card: #10251a;
+  --line: #294735;
+  --green: #a8e66d;
+  --text: #f2f8ef;
+  --muted: #a9bcae;
+  --yellow: #e8c66d;
+  --red: #ef8d85;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Vazirmatn, Tahoma, sans-serif;
+  background: radial-gradient(ellipse at top, #1b3d29, var(--bg) 60%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+button, select, textarea { font: inherit; }
+
+button:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+.container { width: min(1120px, 92%); margin: auto; }
+
+
+
+.logo { color: var(--green); font-size: 23px; font-weight: 800; }
+
+nav { display: flex; gap: 15px; flex-wrap: wrap; }
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+nav a:hover { color: var(--green); }
+
+.hero {
+  padding: 38px 0 25px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 25px;
+  align-items: center;
+}
+
+.badge {
+  color: var(--green);
+  border: 1px solid #a8e66d55;
+  background: #a8e66d12;
+  border-radius: 30px;
+  padding: 7px 13px;
+  display: inline-block;
+  font-size: 13px;
+}
+
+h1 { font-size: clamp(29px, 5vw, 45px); line-height: 1.6; margin: 16px 0 8px; }
+h1 span { color: var(--green); }
+.description, .sub { color: var(--muted); line-height: 2.1; }
+.sub { font-size: 13px; }
+
+.plant-art {
+  min-height: 190px;
+  display: grid;
+  place-items: center;
+  font-size: 85px;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  background: linear-gradient(145deg, #193b27, #0c1b12);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 15px 0 22px;
+}
+
+.step {
+    background: #10251b;
+    border: 1px solid #42634a;
+    padding: 12px 7px;
+    border-radius: 13px;
+    color: #dce8d6;
+    text-align: center;
+    font-size: 13px;
+    transition: all 0.25s ease;
+}
+
+.step.active { color: var(--green); border-color: var(--green); background: #a8e66d10; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 20px;
+  margin-bottom: 40px;
+  align-items: start;
+}
+
+.card, .side-card {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, #174B32, #10251B);
+  border-radius: 22px;
+  padding: 24px;
+  min-width: 0;
+}
+
+.side { display: grid; gap: 15px; }
+.side-card h3 { color: #eaeee7 !important; margin-top: 0; }
+.side-card p { color: #f3f9f4 !important; font-size: 12px; line-height: 2; }
+h2 { font-size: 22px; line-height: 1.8; margin-top: 0; }
+
+.field { margin: 22px 0; }
+label.title { display: block; margin-bottom: 10px; font-weight: 700; line-height: 1.9; }
+
+select, textarea {
+  width: 100%;
+  padding: 14px;
+  background: #10251B;
+  color: #F2F8EF;
+  border: 1px solid #6C9B70;
+  border-radius: 12px;
+}
+
+textarea { resize: vertical; line-height: 2; }
+option { background: #10251B;
+color: #F2F8EF; }
+
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.choice {
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: #10251B;
+  color: #F2F8EF;
+  padding: 13px 6px;
+  border-radius: 15px;
+  cursor: pointer;
+  line-height: 1.9;
+}
+
+.choice:hover, .answer:hover { border-color: #d9e9dc;border-color: #eadc82;color: #eadc82; }
+.choice.selected { border: 2px solid var(#A8D5A0); background: #286748; color: var(#ffffff); }
+.emoji { display: block; font-size: 25px; margin-bottom: 5px; }
+.choice small { display: block; color: var(--muted); font-size: 11px; }
+
+.question { padding: 16px 0; }
+.question + .question { border-top: 1px solid #ffffff14; }
+.question p { font-weight: 700; line-height: 2; margin-top: 0; }
+.answers { display: flex; gap: 8px; flex-wrap: wrap; }
+.answer {
+  background: #08150f;
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 11px;
+  padding: 9px 12px;
+  cursor: pointer;
+  line-height: 1.8;
+}
+.answer.selected { border-color: var(--green); color: var(--green); background: #a8e66d15; }
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #ffffff15;
+}
+
+.btn {
+  padding: 11px 16px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  line-height: 1.8;
+}
+.primary {
+    background: #a8e66d;
+    color: #102415;
+    border: 1px solid #d4f5a5;
+    box-shadow: 0 4px 14px #a8e66d25;
+    transition: all 0.25s ease;
+}
+
+.primary:hover {
+    background: #c2f28f;
+    color: #08150f;
+    box-shadow: 0 0 18px #a8e66d55;
+    transform: translateY(-2px);
+}
+.secondary { background: transparent; border: 1px solid var(--line); color: white; }
+.hidden { display: none !important; }
+
+.message {
+    padding: 12px;
+    border-radius: 12px;
+    background: #10251b;
+    border: 1px solid #d7f688;
+    color: #eaff83;
+    font-weight: 700;
+    line-height: 1.8;
+}
+
+.warning {
+  border: 1px solid #d5a44b55;
+  background: #d5a44b10;
+  color: #f2d59b;
+  padding: 13px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 2.1;
+  margin-top: 20px;
+}
+
+.result-label {
+  color: var(--green);
+  background: #a8e66d12;
+  border: 1px solid #a8e66d40;
+  padding: 15px;
+  border-radius: 14px;
+  margin: 15px 0;
+  line-height: 2;
+}
+
+.result-card {
+  background: #09170f;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 13px 0;
+}
+
+.result-card.top-result { border-color: #a8e66d80; }
+
+.result-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.result-heading h3 { margin: 0; font-size: 16px; color: var(--green); }
+.percent { color: var(--green); font-weight: 800; font-size: 18px; white-space: nowrap; }
+
+.progress-track {
+  height: 9px;
+  background: #263b2d;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 14px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6baf48, #b8ee83);
+  border-radius: 20px;
+}
+
+.result-card p { color: var(--muted); font-size: 13px; line-height: 2; }
+
+.evidence-list {
+  padding-right: 20px;
+  color: #d8e7d9;
+  font-size: 12px;
+  line-height: 2.1;
+}
+
+.result-section { margin-top: 25px; }
+.result-section h3 { color: var(--green); }
+.care-list { padding-right: 22px; }
+.care-list li { margin: 9px 0; color: #d9e9dc; line-height: 2; }
+
+.case-summary {
+  background: #08150f;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 15px;
+  line-height: 2.2;
+  overflow-wrap: anywhere;
+}
+
+.empty-state {
+  padding: 15px;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  color: var(--muted);
+  line-height: 2;
+}
+
+
+@media(max-width: 820px) {
+  .hero, .layout { grid-template-columns: 1fr; }
+  .plant-art { min-height: 130px; font-size: 70px; }
+  .side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media(max-width: 520px) {
+  
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .side { grid-template-columns: 1fr; }
+  .card, .side-card { padding: 16px; }
+  .actions { flex-wrap: wrap; }
+  .actions .btn { flex: 1; }
+}
+
+@media print {
+  body { background: white !important; color: #17271b !important; }
+  header, .hero, .steps, .side, footer, .actions, .no-print,
+  #formStep, #questionStep, #reviewStep { display: none !important; }
+  .container, .layout, .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    border: 0 !important;
+    background: white !important;
+    color: #17271b !important;
+    }
+  #resultStep { display: block !important; }
+  .result-card, .case-summary, .result-label, .warning {
+    background: white !important;
+    color: #17271b !important;
+    border-color: #b8c8bb !important;
+    break-inside: avoid;
+  }
+  .result-card p, .evidence-list, .care-list li,
+  .result-heading h3, .percent { color: #589567 !important; }
+  .progress-fill { background: #8dbf69 !important; print-color-adjust: exact; }
+}
+/* روشن کردن عنوان‌های فرم */
+#formStep h2,
+
+#formStep label.title {
+    color: #F2F8EF !important;
+}
+</style>
+ <link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+
+<div id="site-header"></div>
+
+<main class="container">
+
+  <section class="hero">
+    <div>
+      <span class="badge">🕵️ آزمایشگاه عیب‌یابی گیاه</span>
+      <h1>هر برگ، یک <span>سرنخ</span> دارد.</h1>
+      <p class="description">
+        علائم گیاهت رو ثبت کن، به پرسش‌های تکمیلی جواب بده
+        و علت‌های احتمالی رو همراه با امتیاز و پیشنهاد مراقبتی ببین.
+      </p>
+    </div>
+    
+  </section>
+
+  <div class="steps">
+    <div class="step active" id="step1">۱. پرونده گیاه</div>
+    <div class="step" id="step2">۲. پرسش‌های بیشتر</div>
+    <div class="step" id="step3">۳. بررسی سرنخ‌ها</div>
+    <div class="step" id="step4">۴. گزارش نهایی</div>
+  </div>
+
+  <div class="layout">
+    <section class="card">
+
+      <!-- مرحله اول: ثبت گیاه و علائم -->
+      <div id="formStep">
+        <h2>🗂️ پرونده جدید تشکیل بده</h2>
+        <p class="sub">نوع گیاه رو انتخاب کن و تمام علائمی رو که مشاهده کردی علامت بزن.</p>
+
+        <div class="field">
+          <label class="title" for="plant">نوع گیاه</label>
+          <select id="plant">
+            <option value="">نوع گیاه رو انتخاب کن</option>
+            <option value="گیاه آپارتمانی">گیاه آپارتمانی</option>
+            <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+            <option value="خیار">خیار</option>
+            <option value="فلفل">فلفل</option>
+            <option value="رز">رز</option>
+            <option value="کاکتوس و ساکولنت">کاکتوس و ساکولنت</option>
+            <option value="گیاه دیگر">گیاه دیگر</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="title">نشانه‌های مشاهده‌شده</label>
+          <div class="choices" id="symptoms">
+
+            <button type="button" class="choice" data-symptom="yellow" aria-pressed="false"><span class="emoji">🍂</span>زرد شدن برگ<small>تغییر رنگ</small></button>
+            <button type="button" class="choice" data-symptom="spots" aria-pressed="false"><span class="emoji">🟤</span>لکه قهوه‌ای<small>لکه روی برگ</small></button>
+            <button type="button" class="choice" data-symptom="wilt" aria-pressed="false"><span class="emoji">🥀</span>پژمردگی<small>افتادگی برگ</small></button>
+            <button type="button" class="choice" data-symptom="curl" aria-pressed="false"><span class="emoji">🍃</span>پیچ‌خوردگی<small>تغییر شکل برگ</small></button>
+            <button type="button" class="choice" data-symptom="growth" aria-pressed="false"><span class="emoji">🌱</span>رشد کم<small>رشد کند گیاه</small></button>
+            <button type="button" class="choice" data-symptom="white" aria-pressed="false"><span class="emoji">⚪</span>لایه سفید<small>پوشش سفید</small></button>
+            <button type="button" class="choice" data-symptom="dryEdge" aria-pressed="false"><span class="emoji">🥬</span>خشکی لبه برگ<small>لبه خشک</small></button>
+            <button type="button" class="choice" data-symptom="drop" aria-pressed="false"><span class="emoji">🍃</span>ریزش برگ<small>افتادن برگ‌ها</small></button>
+            <button type="button" class="choice" data-symptom="holes" aria-pressed="false"><span class="emoji">🕳️</span>سوراخ برگ<small>آسیب برگ</small></button>
+            <button type="button" class="choice" data-symptom="insect" aria-pressed="false"><span class="emoji">🐛</span>وجود حشره<small>حشره روی گیاه</small></button>
+            <button type="button" class="choice" data-symptom="black" aria-pressed="false"><span class="emoji">⚫</span>لکه سیاه<small>نقاط تیره</small></button>
+            <button type="button" class="choice" data-symptom="web" aria-pressed="false"><span class="emoji">🕸️</span>تار نازک<small>تار بین برگ‌ها</small></button>
+            <button type="button" class="choice" data-symptom="sticky" aria-pressed="false"><span class="emoji">💧</span>برگ چسبناک<small>سطح چسبنده</small></button>
+            <button type="button" class="choice" data-symptom="odor" aria-pressed="false"><span class="emoji">👃</span>بوی بد خاک<small>بوی نامطبوع</small></button>
+
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="title" for="details">توضیحات بیشتر (اختیاری)</label>
+          <textarea id="details" rows="3" maxlength="1500" placeholder="مثلاً علائم از هفته پیش شروع شدن و بیشتر روی برگ‌های پایینی هستن..."></textarea>
+        </div>
+
+        <div id="imageClue" class="message hidden" role="status"></div>
+        <div id="formMessage" class="message hidden" role="status"></div>
+
+        <div class="actions">
+          <span></span>
+          <button type="button" class="btn primary" id="next">شروع پرسش‌ها ←</button>
+        </div>
+      </div>
+
+      <!-- مرحله دوم: پاسخ به پرسش‌های تکمیلی -->
+      <div id="questionStep" class="hidden">
+        <h2>🔎 پرسش‌های بیشتر</h2>
+        <p class="sub">اگر جواب رو نمی‌دونی، «نمی‌دونم» رو انتخاب کن. این گزینه امتیاز مثبت یا منفی ندارد.</p>
+        <div id="questions"></div>
+        <div id="questionMessage" class="message hidden" role="status"></div>
+        <div class="actions">
+          <button type="button" class="btn secondary" id="back">برگشت</button>
+          <button type="button" class="btn primary" id="analyze">بررسی سرنخ‌ها ←</button>
+        </div>
+      </div>
+
+      <!-- مرحله سوم: مرور پرونده -->
+      <div id="reviewStep" class="hidden">
+        <h2>🧪 بررسی سرنخ‌ها</h2>
+        <p class="sub">اطلاعات ثبت‌شده رو مرور کن؛ اگر چیزی اشتباهه می‌تونی برگردی و اصلاحش کنی.</p>
+        <div id="reviewSummary" class="case-summary"></div>
+        <div class="warning">این بررسی بر اساس قوانین ساده و امتیازدهی انجام می‌شه و جای تشخیص قطعی متخصص گیاه‌پزشکی رو نمی‌گیره.</div>
+        <div class="actions">
+          <button type="button" class="btn secondary" id="reviewBack">ویرایش اطلاعات</button>
+          <button type="button" class="btn primary" id="makeReport">ساخت گزارش نهایی</button>
+        </div>
+      </div>
+
+      <!-- مرحله چهارم: نمایش گزارش -->
+      <div id="resultStep" class="hidden">
+        <h2>📋 گزارش نهایی کارآگاه</h2>
+        <p class="sub" id="summary"></p>
+        <div id="reportDetails" class="case-summary"></div>
+
+        <div class="result-label">
+          🌿 رتبه‌بندی علت‌های احتمالی
+          <p class="sub">درصدها سهم نسبی هر علت از امتیازهای این بررسی هستند؛ احتمال علمی یا اطمینان قطعی به بیماری نیستند.</p>
+        </div>
+
+        <div id="results"></div>
+        <div id="uncertainNote" class="warning hidden"></div>
+
+        <section class="result-section">
+          <h3>🧤 پیشنهادهای مراقبتی</h3>
+          <ul class="care-list" id="care"></ul>
+        </section>
+
+        <section class="result-section">
+          <h3>🖼️ سرنخ تشخیص تصویری</h3>
+          <div id="imageReport" class="empty-state">نتیجه تصویری برای این پرونده ثبت نشده است.</div>
+        </section>
+
+        <section class="result-section">
+          <h3>📝 توضیحات ثبت‌شده</h3>
+          <div id="detailsReport" class="case-summary"></div>
+        </section>
+
+        <div id="saveMessage" class="message hidden" role="status"></div>
+        <div class="actions">
+          <button type="button" class="btn secondary" id="editAgain">ویرایش پاسخ‌ها</button>
+          <button type="button" class="btn secondary" id="printReport">چاپ گزارش</button>
+          <button type="button" class="btn primary" id="saveReport">ذخیره گزارش</button>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn secondary" id="newCase">تشکیل پرونده جدید</button>
+          <button type="button" class="btn secondary" id="historyLink">مشاهده تاریخچه</button>
+        </div>
+      </div>
+
+    </section>
+
+    <aside class="side">
+      <div class="side-card">
+        <h3>🌿 روش کار</h3>
+        <p>۱. گیاه و علائم رو ثبت کن.</p>
+        <p>۲. به پرسش‌های تکمیلی جواب بده.</p>
+        <p>۳. رتبه‌بندی علت‌ها رو بررسی کن.</p>
+        <p>۴. پیشنهادهای مراقبتی رو بخون.</p>
+      </div>
+
+      <div class="side-card">
+        <h3>💡 نکته مهم</h3>
+        <p>قبل از آبیاری مجدد، رطوبت خاک رو بررسی کن. زردی یا پژمردگی به‌تنهایی نشانه قطعی کم‌آبی نیست.</p>
+      </div>
+
+      <div class="side-card">
+        <h3>🔬 درباره امتیازها</h3>
+        <p>امتیازها برای مرتب کردن سرنخ‌ها هستن؛ مدل آموزش‌دیده یا تشخیص قطعی محسوب نمی‌شن.</p>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+"use strict";
+
+/* داده‌های پرونده فعلی */
+const state = {
+  plant: "",
+  symptoms: [],
+  answers: {},
+  details: "",
+  imageClue: null,
+  report: null,
+  saved: false
+};
+
+/* تعریف پرسش‌ها و گزینه‌های هر پرسش */
+const questionData = [
+  {
+    id: "soil",
+    title: "وضعیت خاک در حال حاضر چطوره؟",
+    options: [
+      { value: "dry", label: "خشک" },
+      { value: "moist", label: "کمی مرطوب" },
+      { value: "wet", label: "خیلی خیس" },
+      { value: "unknown", label: "نمی‌دونم" }
+    ]
+  },
+  {
+    id: "watering",
+    title: "معمولاً چطور آبیاری می‌کنی؟",
+    options: [
+      { value: "rare", label: "کم یا با فاصله زیاد" },
+      { value: "regular", label: "منظم" },
+      { value: "often", label: "خیلی زیاد" },
+      { value: "unknown", label: "نمی‌دونم" }
+    ]
+  },
+  {
+    id: "light",
+    title: "نور محل نگهداری چطوره؟",
+    options: [
+      { value: "low", label: "کم" },
+      { value: "indirect", label: "غیرمستقیم" },
+      { value: "direct", label: "مستقیم و شدید" },
+      { value: "unknown", label: "نمی‌دونم" }
+    ]
+  },
+  {
+    id: "duration",
+    title: "علائم از چه زمانی شروع شدن؟",
+    options: [
+      { value: "recent", label: "تازه" },
+      { value: "weeks", label: "چند هفته" },
+      { value: "long", label: "مدت طولانی" },
+      { value: "unknown", label: "نمی‌دونم" }
+    ]
+  },
+  {
+    id: "leafAge",
+    title: "بیشتر کدام برگ‌ها درگیر هستن؟",
+    options: [
+      { value: "old", label: "برگ‌های قدیمی" },
+      { value: "young", label: "برگ‌های جوان" },
+      { value: "both", label: "هر دو" },
+      { value: "unknown", label: "نمی‌دونم" }
+    ]
+  },
+  {
+    id: "spread",
+    title: "علائم چقدر از گیاه رو درگیر کردن؟",
+    options: [
+      { value: "one", label: "یک برگ" },
+      { value: "few", label: "چند برگ" },
+      { value: "whole", label: "بیشتر گیاه" },
+      { value: "unknown", label: "نمی‌دونم" }
+    ]
+  },
+  {
+    id: "neighbors",
+    title: "گیاه‌های اطراف هم علائم مشابه دارن؟",
+    options: [
+      { value: "yes", label: "بله" },
+      { value: "no", label: "خیر" },
+      { value: "unknown", label: "بررسی نکردم" }
+    ]
+  },
+  {
+    id: "humidity",
+    title: "محیط نگهداری چطوره؟",
+    options: [
+      { value: "humid", label: "مرطوب و کم‌تهویه" },
+      { value: "normal", label: "تهویه معمولی" },
+      { value: "dry", label: "خشک" },
+      { value: "unknown", label: "نمی‌دونم" }
+    ]
+  }
+];
+
+/* نام و توضیح علت‌های قابل بررسی */
+const causeInfo = {
+  powdery: {
+    name: "احتمال سفیدک سطحی",
+    description: "لایه سفید همراه با رطوبت بالا یا تهویه نامناسب می‌تونه این احتمال رو مطرح کنه.",
+    tips: [
+      "برگ‌ها رو از نزدیک بررسی کن تا مشخص بشه لایه سفید شبیه پودر هست یا نه.",
+      "تهویه ملایم رو بهتر کن و برگ‌ها رو برای مدت طولانی خیس نگه ندار.",
+      "اگر لکه‌ها گسترش پیدا کردن، از راهنمای تخصصی بیماری همان نوع گیاه کمک بگیر."
+    ]
+  },
+  underwater: {
+    name: "احتمال کم‌آبی",
+    description: "خشکی خاک، فاصله زیاد بین آبیاری‌ها و خشکی لبه برگ می‌تونن با کمبود آب سازگار باشن.",
+    tips: [
+      "رطوبت خاک رو در عمق مناسب برای همان گیاه بررسی کن.",
+      "اگر خاک واقعاً خشکه، مطابق نیاز همان گیاه آبیاری کن و اجازه بده آب اضافی خارج بشه.",
+      "از برنامه ثابت آبیاری بدون بررسی خاک استفاده نکن."
+    ]
+  },
+  overwater: {
+    name: "احتمال آبیاری بیش از حد",
+    description: "خاک خیس، بوی نامطبوع، زردی یا پژمردگی ممکنه با آبیاری زیاد و اختلال ریشه مرتبط باشن.",
+    tips: [
+      "قبل از آبیاری بعدی رطوبت خاک رو بررسی کن.",
+      "مطمئن شو گلدان سوراخ خروج آب داره و آب در زیرگلدانی جمع نمی‌شه.",
+      "اگر خاک مدت زیادی خیس می‌مونه یا بوی بد ادامه داره، ریشه و وضعیت خاک رو بررسی کن."
+    ]
+  },
+  pests: {
+    name: "احتمال آفت حشره‌ای",
+    description: "وجود حشره، برگ چسبناک، تار نازک یا سوراخ‌شدگی می‌تونه نشانه حضور آفات باشه.",
+    tips: [
+      "پشت برگ‌ها، محل اتصال برگ و ساقه و جوانه‌های تازه رو بررسی کن.",
+      "اگر امکان داره گیاه مشکوک رو موقتاً از گیاهان دیگر جدا کن.",
+      "قبل از استفاده از هر محصول کنترل آفت، نوع آفت و دستور مصرف محصول رو بررسی کن."
+    ]
+  },
+  fungal: {
+    name: "احتمال بیماری لکه‌برگی",
+    description: "لکه‌های قهوه‌ای یا سیاه، به‌خصوص در صورت گسترش، می‌تونن با بیماری لکه‌برگی مرتبط باشن.",
+    tips: [
+      "بررسی کن لکه‌ها در حال افزایش هستن یا نه و از آن‌ها عکس بگیر.",
+      "از خیس ماندن طولانی برگ‌ها و تماس برگ‌های بیمار با گیاهان دیگر جلوگیری کن.",
+      "لکه سیاه به‌تنهایی نوع بیماری رو مشخص نمی‌کنه؛ در صورت گسترش، تشخیص تخصصی لازمه."
+    ]
+  },
+  light: {
+    name: "احتمال نامناسب بودن نور",
+    description: "نور نامتناسب با نیاز گیاه ممکنه با رشد کم، ریزش یا تغییر رنگ برگ همراه باشه.",
+    tips: [
+      "نیاز نوری همان گونه گیاهی رو بررسی کن.",
+      "تغییر محل نگهداری رو تدریجی انجام بده تا گیاه ناگهانی در معرض نور شدید قرار نگیره.",
+      "اگر مشکل ادامه داشت، وضعیت آبیاری و ریشه رو هم بررسی کن."
+    ]
+  },
+  nutrition: {
+    name: "احتمال مشکل تغذیه‌ای",
+    description: "زردی، رشد کند و برخی تغییرات برگ ممکنه با کمبود عناصر یا اختلال جذب مرتبط باشن.",
+    tips: [
+      "الگوی زردی برگ‌های قدیمی و جوان رو با راهنمای همان گونه مقایسه کن.",
+      "پیش از افزودن کود، شرایط خاک، ریشه و آبیاری رو بررسی کن.",
+      "کوددهی بیشتر لزوماً مشکل رو حل نمی‌کنه و ممکنه به گیاه آسیب بزنه."
+    ]
+  },
+  environment: {
+    name: "احتمال تنش محیطی",
+    description: "تغییر دما، جابه‌جایی، جریان هوای نامناسب یا تغییر شرایط نگهداری می‌تونه به گیاه تنش وارد کنه.",
+    tips: [
+      "تغییرات اخیر دما، محل گیاه یا شرایط نگهداری رو مرور کن.",
+      "از تغییر ناگهانی چند عامل نگهداری به‌صورت هم‌زمان پرهیز کن.",
+      "اگر نشانه‌ها بیشتر می‌شن، ریشه، آبیاری و احتمال آفت رو هم بررسی کن."
+    ]
+  }
+};
+
+/* دریافت سرنخ تصویری ذخیره‌شده، در صورت وجود */
+function getImageClue() {
+  const keys = ["imageDiagnosisResult", "imageResult", "plantDiagnosisResult"];
+
+  for (const key of keys) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (raw) {
+        return { key: key, value: raw };
+      }
+    } catch (error) {
+      return null;
+    }
+  }
+
+  return null;
+}
+
+/* نمایش متن به‌صورت امن */
+function setText(id, value) {
+  document.getElementById(id).textContent = value;
+}
+
+/* ساخت عناصر HTML با استفاده از textContent */
+function addTextElement(parent, tag, value, className) {
+  const element = document.createElement(tag);
+  element.textContent = value;
+
+  if (className) {
+    element.className = className;
+  }
+
+  parent.appendChild(element);
+  return element;
+}
+
+/* انتخاب و حذف انتخاب علائم */
+document.querySelectorAll("[data-symptom]").forEach(function(button) {
+  button.addEventListener("click", function() {
+    const symptom = button.dataset.symptom;
+    if (state.symptoms.includes(symptom)) {
+      state.symptoms = state.symptoms.filter(function(item) {
+        return item !== symptom;
+      });
+      button.classList.remove("selected");
+      button.setAttribute("aria-pressed", "false");
+    } else {
+      state.symptoms.push(symptom);
+      button.classList.add("selected");
+      button.setAttribute("aria-pressed", "true");
+    }
+  });
+});
+
+/* ساخت پرسش‌ها و دکمه‌های پاسخ */
+function renderQuestions() {
+  const container = document.getElementById("questions");
+  container.replaceChildren();
+
+  questionData.forEach(function(question, index) {
+    const section = document.createElement("div");
+    section.className = "question";
+
+    addTextElement(section, "p", (index + 1) + ". " + question.title);
+
+    const answers = document.createElement("div");
+    answers.className = "answers";
+
+    question.options.forEach(function(option) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "answer";
+      button.textContent = option.label;
+      button.setAttribute("aria-pressed", "false");
+
+      if (state.answers[question.id] === option.value) {
+        button.classList.add("selected");
+        button.setAttribute("aria-pressed", "true");
+      }
+
+      button.addEventListener("click", function() {
+        state.answers[question.id] = option.value;
+
+        answers.querySelectorAll(".answer").forEach(function(other) {
+          other.classList.remove("selected");
+          other.setAttribute("aria-pressed", "false");
+        });
+
+        button.classList.add("selected");
+        button.setAttribute("aria-pressed", "true");
+      });
+
+      answers.appendChild(button);
+    });
+
+    section.appendChild(answers);
+    container.appendChild(section);
+  });
+}
+
+/* جابه‌جایی بین چهار مرحله */
+function showStep(number) {
+  const ids = ["formStep", "questionStep", "reviewStep", "resultStep"];
+
+  ids.forEach(function(id) {
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById(ids[number - 1]).classList.remove("hidden");
+
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById("step" + i).classList.toggle("active", i === number);
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* بررسی پرونده و رفتن به پرسش‌ها */
+document.getElementById("next").addEventListener("click", function() {
+  const message = document.getElementById("formMessage");
+  message.classList.add("hidden");
+
+  state.plant = document.getElementById("plant").value;
+  state.details = document.getElementById("details").value.trim();
+
+  if (!state.plant) {
+    setText("formMessage", "لطفاً اول نوع گیاه رو انتخاب کن.");
+    message.classList.remove("hidden");
+    return;
+  }
+
+  if (state.symptoms.length === 0) {
+    setText("formMessage", "حداقل یک نشانه رو انتخاب کن.");
+    message.classList.remove("hidden");
+    return;
+  }
+
+  state.imageClue = getImageClue();
+  const imageBox = document.getElementById("imageClue");
+
+  if (state.imageClue) {
+    imageBox.textContent = "یک داده در sessionStorage پیدا شد. در گزارش، متن این داده به‌عنوان سرنخ خام نمایش داده می‌شه؛ برای تفسیر دقیق، باید با قالب نتیجه صفحه تشخیص تصویری هماهنگ بشه.";
+    imageBox.classList.remove("hidden");
+  } else {
+    imageBox.classList.add("hidden");
+  }
+
+  renderQuestions();
+  showStep(2);
+});
+
+/* برگشت به پرونده */
+document.getElementById("back").addEventListener("click", function() {
+  showStep(1);
+});
+
+/* محاسبه امتیاز علت‌های احتمالی */
+function calculateCauses() {
+  const scores = {
+    powdery: 0,
+    underwater: 0,
+    overwater: 0,
+    pests: 0,
+    fungal: 0,
+    light: 0,
+    nutrition: 0,
+    environment: 0
+  };
+
+  const evidence = {
+    powdery: [],
+    underwater: [],
+    overwater: [],
+    pests: [],
+    fungal: [],
+    light: [],
+    nutrition: [],
+    environment: []
+  };
+
+  function add(cause, points, reason) {
+    if (points <= 0) return;
+    scores[cause] += points;
+    evidence[cause].push(reason + " (+" + points + ")");
+  }
+
+  const s = state.symptoms;
+  const a = state.answers;
+  /* سفیدک سطحی: لایه سفید، رطوبت بالا و نور کم */
+  if (s.includes("white")) add("powdery", 4, "وجود لایه سفید");
+  if (a.humidity === "humid") add("powdery", 2, "محیط مرطوب و کم‌تهویه");
+  if (a.light === "low") add("powdery", 1, "نور کم");
+
+  /* کم‌آبی: خشکی خاک، آبیاری کم و خشکی لبه برگ */
+  if (a.soil === "dry") add("underwater", 4, "خشکی خاک");
+  if (a.watering === "rare") add("underwater", 2, "آبیاری با فاصله زیاد");
+  if (s.includes("dryEdge")) add("underwater", 2, "خشکی لبه برگ");
+  if (s.includes("wilt")) add("underwater", 1, "پژمردگی");
+  if (s.includes("drop")) add("underwater", 1, "ریزش برگ");
+
+  /* آبیاری زیاد؛ برای کاکتوس و ساکولنت، خاک خیس وزن بیشتری دارد */
+  if (a.soil === "wet") {
+    add("overwater", state.plant === "کاکتوس و ساکولنت" ? 6 : 4, "خاک خیلی خیس");
+  }
+  if (a.watering === "often") add("overwater", 2, "آبیاری زیاد");
+  if (s.includes("odor")) add("overwater", 4, "بوی نامطبوع خاک");
+  if (s.includes("yellow")) add("overwater", 1, "زردی برگ");
+  if (s.includes("wilt")) add("overwater", 1, "پژمردگی");
+
+  /* آفات: حشره، تار، برگ چسبناک و سوراخ‌شدگی */
+  if (s.includes("insect")) add("pests", 5, "مشاهده حشره");
+  if (s.includes("web")) add("pests", 4, "تار نازک روی برگ");
+  if (s.includes("sticky")) add("pests", 4, "برگ چسبناک");
+  if (s.includes("holes")) add("pests", 3, "سوراخ‌شدگی برگ");
+  if (s.includes("curl")) add("pests", 1, "پیچ‌خوردگی برگ");
+
+  /* بیماری‌های لکه‌برگی */
+  if (s.includes("spots")) add("fungal", 3, "لکه قهوه‌ای");
+  if (s.includes("black")) add("fungal", 4, "لکه سیاه");
+  if (s.includes("drop")) add("fungal", 1, "ریزش برگ");
+  if (a.neighbors === "yes") add("fungal", 2, "علائم مشابه در گیاهان اطراف");
+  if (a.humidity === "humid") add("fungal", 1, "رطوبت بالا");
+
+  /* نور نامناسب */
+  if (a.light === "low") add("light", 3, "نور کم");
+  if (a.light === "direct") add("light", 2, "نور مستقیم و شدید");
+  if (s.includes("growth")) add("light", 1, "رشد کم");
+  if (s.includes("dryEdge") && a.light === "direct") add("light", 2, "نور شدید همراه خشکی لبه برگ");
+
+  /* مشکل تغذیه‌ای */
+  if (s.includes("yellow")) add("nutrition", 2, "زردی برگ");
+  if (s.includes("growth")) add("nutrition", 2, "رشد کم");
+  if (a.leafAge === "old" && s.includes("yellow")) add("nutrition", 1, "زردی برگ‌های قدیمی");
+
+  /* تنش محیطی */
+  if (a.duration === "recent") add("environment", 1, "شروع تازه علائم");
+  if (s.includes("drop")) add("environment", 1, "ریزش برگ");
+  if (s.includes("curl")) add("environment", 1, "پیچ‌خوردگی برگ");
+
+  /* تشدید نشانه‌ها در چند بخش گیاه */
+  if (a.spread === "whole") {
+    add("overwater", 1, "درگیری بیشتر گیاه");
+    add("environment", 1, "درگیری بیشتر گیاه");
+  }
+
+  /* تبدیل امتیازها به درصد نسبی */
+  const total = Object.values(scores).reduce(function(sum, value) {
+    return sum + value;
+  }, 0);
+
+  const causes = Object.keys(scores)
+    .filter(function(key) {
+      return scores[key] > 0;
+    })
+    .map(function(key) {
+      return {
+        id: key,
+        name: causeInfo[key].name,
+        score: scores[key],
+        percent: total > 0 ? Math.round(scores[key] / total * 100) : 0,
+        description: causeInfo[key].description,
+        tips: causeInfo[key].tips,
+        evidence: evidence[key]
+      };
+    })
+    .sort(function(first, second) {
+      return second.score - first.score;
+    });
+
+  /* تنظیم درصدها برای اینکه مجموع نمایش دقیقاً ۱۰۰ شود */
+  if (causes.length > 0 && total > 0) {
+    const sumPercent = causes.reduce(function(sum, cause) {
+      return sum + cause.percent;
+    }, 0);
+
+    causes[0].percent += 100 - sumPercent;
+  }
+
+  return { causes: causes, total: total };
+}
+
+/* آماده‌سازی خلاصه برای مرور پرونده */
+function buildReview() {
+  const box = document.getElementById("reviewSummary");
+  box.replaceChildren();
+
+  addTextElement(box, "p", "نوع گیاه: " + state.plant);
+  addTextElement(box, "p", "علائم: " + state.symptoms.length + " مورد ثبت شده");
+  const symptomNames = Array.from(document.querySelectorAll("[data-symptom]"))
+    .filter(function(button) {
+      return state.symptoms.includes(button.dataset.symptom);
+    })
+    .map(function(button) {
+      return button.childNodes.length ? button.textContent.trim().split("\n")[0] : "";
+    });
+
+  addTextElement(box, "p", "نشانه‌ها: " + symptomNames.join("، "));
+
+  const answerLabels = [];
+
+  questionData.forEach(function(question) {
+    const chosen = question.options.find(function(option) {
+      return option.value === state.answers[question.id];
+    });
+
+    answerLabels.push(question.title + " " + (chosen ? chosen.label : "پاسخ داده نشده"));
+  });
+
+  addTextElement(box, "p", answerLabels.join(" | "));
+
+  if (state.imageClue) {
+    addTextElement(box, "p", "سرنخ تصویری خام: " + state.imageClue.value);
+  }
+}
+
+/* رفتن به مرحله بررسی */
+document.getElementById("analyze").addEventListener("click", function() {
+  const message = document.getElementById("questionMessage");
+  message.classList.add("hidden");
+
+  const unanswered = questionData.filter(function(question) {
+    return !state.answers[question.id];
+  });
+
+  if (unanswered.length > 0) {
+    setText("questionMessage", "لطفاً به همه پرسش‌ها جواب بده؛ برای پاسخ‌های نامشخص گزینه «نمی‌دونم» رو انتخاب کن.");
+    message.classList.remove("hidden");
+    return;
+  }
+
+  buildReview();
+  showStep(3);
+});
+
+document.getElementById("reviewBack").addEventListener("click", function() {
+  showStep(2);
+});
+
+/* ساخت کارت علت‌ها و نمایش سرنخ‌ها */
+function renderResults(causes) {
+  const container = document.getElementById("results");
+  container.replaceChildren();
+
+  if (causes.length === 0) {
+    addTextElement(container, "div",
+      "سرنخ کافی برای رتبه‌بندی علت‌ها وجود نداره. پاسخ‌ها و علائم رو دوباره بررسی کن.",
+      "empty-state");
+    return;
+  }
+
+  causes.forEach(function(cause, index) {
+    const card = document.createElement("article");
+    card.className = "result-card" + (index === 0 ? " top-result" : "");
+
+    const heading = document.createElement("div");
+    heading.className = "result-heading";
+
+    addTextElement(heading, "h3", (index + 1) + ". " + cause.name);
+    addTextElement(heading, "span", cause.percent + "%", "percent");
+    card.appendChild(heading);
+
+    const track = document.createElement("div");
+    track.className = "progress-track";
+
+    const fill = document.createElement("div");
+    fill.className = "progress-fill";
+    fill.style.width = cause.percent + "%";
+    track.appendChild(fill);
+    card.appendChild(track);
+
+    addTextElement(card, "p", cause.description);
+
+    if (cause.evidence.length > 0) {
+      addTextElement(card, "strong", "سرنخ‌های مؤثر:");
+      const list = document.createElement("ul");
+      list.className = "evidence-list";
+
+      cause.evidence.forEach(function(item) {
+        addTextElement(list, "li", item);
+      });
+
+      card.appendChild(list);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+/* ساخت توصیه‌های مراقبتی بدون تکرار */
+function renderCare(causes) {
+  const container = document.getElementById("care");
+  container.replaceChildren();
+
+  if (causes.length === 0) {
+    addTextElement(container, "li", "ابتدا شرایط خاک، ریشه، نور و نشانه‌های روی برگ رو بررسی کن.");
+    return;
+  }
+
+  const seen = new Set();
+  let count = 0;
+
+  causes.forEach(function(cause) {
+    cause.tips.forEach(function(tip) {
+      if (!seen.has(tip) && count < 8) {
+        seen.add(tip);
+        addTextElement(container, "li", tip);
+        count++;
+      }
+    });
+  });
+}
+
+/* نمایش سرنخ تصویری در گزارش */
+function renderImageReport() {
+  const box = document.getElementById("imageReport");
+  box.replaceChildren();
+
+  if (!state.imageClue) {
+    addTextElement(box, "p", "نتیجه تصویری پیدا نشد. برای اتصال واقعی، صفحه image.html باید نتیجه را با یک قالب مشخص ذخیره کند.");
+    return;
+  }
+
+  addTextElement(box, "p", "داده پیدا شده از کلید: " + state.imageClue.key);
+  addTextElement(box, "p", state.imageClue.value);
+  addTextElement(box, "p", "این داده فعلاً به‌صورت متن خام نمایش داده شده و هنوز به امتیاز علت‌ها اضافه نشده است.");
+}/* ساخت گزارش نهایی */
+document.getElementById("makeReport").addEventListener("click", function() {
+  const calculated = calculateCauses();
+
+  state.report = {
+    id: "plant-" + Date.now(),
+    date: new Date().toLocaleString("fa-IR"),
+    plant: state.plant,
+    symptoms: state.symptoms.slice(),
+    answers: Object.assign({}, state.answers),
+    details: state.details,
+    imageClue: state.imageClue ? state.imageClue.value : null,
+    causes: calculated.causes,
+    totalScore: calculated.total
+  };
+
+  setText("summary", "زمان بررسی: " + state.report.date);
+
+  const reportDetails = document.getElementById("reportDetails");
+  reportDetails.replaceChildren();
+
+  addTextElement(reportDetails, "p", "نوع گیاه: " + state.plant);
+  addTextElement(reportDetails, "p", "تعداد علائم ثبت‌شده: " + state.symptoms.length);
+
+  if (calculated.causes.length > 0) {
+    addTextElement(reportDetails, "p", "بالاترین رتبه: " + calculated.causes[0].name);
+  } else {
+    addTextElement(reportDetails, "p", "نتیجه: سرنخ کافی برای رتبه‌بندی وجود ندارد.");
+  }
+
+  renderResults(calculated.causes);
+  renderCare(calculated.causes);
+  renderImageReport();
+
+  const detailsBox = document.getElementById("detailsReport");
+  detailsBox.textContent = state.details || "توضیح اضافی ثبت نشده است.";
+
+  const uncertain = document.getElementById("uncertainNote");
+
+  if (calculated.causes.length === 0 || calculated.causes[0].percent < 40) {
+    uncertain.textContent = "سرنخ‌ها برای تعیین یک علت غالب کافی نیستند. این گزارش را قطعی در نظر نگیر و در صورت ادامه یا گسترش علائم، بررسی دقیق‌تری انجام بده.";
+    uncertain.classList.remove("hidden");
+  } else {
+    uncertain.textContent = "علت رتبه اول فقط با توجه به امتیاز سرنخ‌های ثبت‌شده در رتبه بالاتری قرار گرفته و تشخیص قطعی محسوب نمی‌شود.";
+    uncertain.classList.remove("hidden");
+  }
+
+  state.saved = false;
+  document.getElementById("saveMessage").classList.add("hidden");
+  showStep(4);
+});
+
+/* ذخیره گزارش در مرورگر */
+document.getElementById("saveReport").addEventListener("click", function() {
+  const message = document.getElementById("saveMessage");
+
+  if (!state.report) {
+    message.textContent = "هنوز گزارشی برای ذخیره وجود ندارد.";
+    message.classList.remove("hidden");
+    return;
+  }
+
+  try {
+    const key = "plantYarHistory";
+    const existing = JSON.parse(localStorage.getItem(key) || "[]");
+    const history = Array.isArray(existing) ? existing : [];
+
+    const alreadySaved = history.some(function(item) {
+      return item.id === state.report.id;
+    });
+
+    if (!alreadySaved) {
+      history.unshift(state.report);
+      localStorage.setItem(key, JSON.stringify(history));
+    }
+
+    state.saved = true;
+    message.textContent = "گزارش در حافظه همین مرورگر ذخیره شد. برای مشاهده آن، صفحه تاریخچه باید همین کلید plantYarHistory را بخواند.";
+    message.classList.remove("hidden");
+  } catch (error) {
+    message.textContent = "ذخیره انجام نشد. ممکنه مرورگر اجازه ذخیره‌سازی محلی نداده باشه.";
+    message.classList.remove("hidden");
+  }
+});
+
+/* چاپ گزارش */
+document.getElementById("printReport").addEventListener("click", function() {
+  window.print();
+});
+
+/* ویرایش پرونده */
+document.getElementById("editAgain").addEventListener("click", function() {
+  showStep(2);
+});
+
+/* شروع پرونده جدید */
+document.getElementById("newCase").addEventListener("click", function() {
+  state.plant = "";
+  state.symptoms = [];
+  state.answers = {};
+  state.details = "";
+  state.imageClue = null;
+  state.report = null;
+  state.saved = false;
+
+  document.getElementById("plant").value = "";
+  document.getElementById("details").value = "";
+
+  document.querySelectorAll("[data-symptom]").forEach(function(button) {
+    button.classList.remove("selected");
+    button.setAttribute("aria-pressed", "false");
+  });
+
+  document.getElementById("formMessage").classList.add("hidden");
+  document.getElementById("questionMessage").classList.add("hidden");
+  document.getElementById("imageClue").classList.add("hidden");
+  document.getElementById("saveMessage").classList.add("hidden");
+
+  renderQuestions();
+  showStep(1);
+});
+/* رفتن به صفحه تاریخچه */
+document.getElementById("historyLink").addEventListener("click", function() {
+  window.location.href = "history.html";
+});
+
+/* آماده‌سازی اولیه صفحه */
+renderQuestions();
+</script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

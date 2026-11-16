@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>با گیاه گفت‌وگو کن | گیاه‌یار</title>
+
+    <style>
+        /* تنظیمات اصلی صفحه */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f5f8f3;
+            color: #26382b;
+            line-height: 1.9;
+        }
+
+        button, input, select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+       
+
+        /* بخش معرفی */
+        .hero {
+            text-align: center;
+            padding: 38px 20px 24px;
+        }
+
+        .hero-icon {
+            font-size: 48px;
+            margin-bottom: 5px;
+        }
+
+        .hero h1 {
+            color: #245e3a;
+            font-size: clamp(25px, 4vw, 36px);
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #718074;
+            max-width: 650px;
+            margin: auto;
+            font-size: 15px;
+        }
+
+        .notice {
+            max-width: 900px;
+            margin: 0 auto 22px;
+            padding: 12px 18px;
+            background: #fff8e8;
+            border: 1px solid #f1e4bd;
+            border-radius: 13px;
+            color: #795c21;
+            font-size: 13px;
+        }
+
+        /* چیدمان اصلی */
+        .main-container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 0 20px 45px;
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e7eee5;
+            border-radius: 20px;
+            padding: 23px;
+            box-shadow: 0 8px 25px rgba(39, 78, 46, 0.04);
+        }
+
+        .card h2 {
+            color: #285e3c;
+            font-size: 18px;
+            margin-bottom: 17px;
+        }
+
+        /* کارت انتخاب گیاه */
+        .plant-picture {
+            background: #edf6ec;
+            border-radius: 16px;
+            text-align: center;
+            padding: 22px 10px;
+            margin-bottom: 18px;
+        }
+
+        .plant-emoji {
+            font-size: 75px;
+            display: block;
+        }
+
+        .plant-name {
+            color: #285e3c;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 14px;
+            margin: 15px 0 7px;
+            color: #526456;
+        }
+
+        select, input {
+            width: 100%;
+            border: 1px solid #dce6db;
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 11px;
+            font-size: 14px;
+            outline: none;
+            color: #26382b;
+        }
+
+        select:focus, input:focus {
+            border-color: #42945d;
+        }
+
+        .side-tip {
+            background: #f4f8f1;
+            border-radius: 13px;
+            padding: 14px;
+            margin-top: 20px;
+            color: #5d705f;
+            font-size: 13px;
+        }
+
+        /* بخش گفت و گو */
+        .chat-card {
+            min-width: 0;
+            overflow: hidden;
+        }
+        .chat-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #edf1eb;
+        }
+
+        .online-status {
+            color: #31834a;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .online-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #48ad63;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        .chat-messages {
+            height: 350px;
+            overflow-y: auto;
+            padding: 18px 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 88%;
+            padding: 13px 16px;
+            border-radius: 15px;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: #edf5e9;
+            border-bottom-right-radius: 4px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: #287649;
+            color: #ffffff;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-author {
+            font-size: 11px;
+            opacity: 0.75;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* پیشنهادهای آماده */
+        .suggestion-title {
+            font-size: 13px;
+            color: #718074;
+            margin: 5px 0 10px;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .suggestion {
+            border: 1px solid #dce9da;
+            background: #f7faf5;
+            color: #356b43;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+
+        .suggestion:hover {
+            background: #e5f2e3;
+        }
+
+        /* محل نوشتن پیام */
+        .chat-form {
+            display: flex;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #edf1eb;
+        }
+
+        .chat-form input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .send-button {
+            border: none;
+            background: #287649;
+            color: white;
+            padding: 0 20px;
+            border-radius: 11px;
+            font-size: 14px;
+        }
+
+        .send-button:hover {
+            background: #1d5d37;
+        }
+
+        .clear-button {
+            background: transparent;
+            border: 1px solid #dce6db;
+            color: #647466;
+            border-radius: 9px;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        
+
+        /* تنظیم صفحه برای موبایل */
+        @media (max-width: 760px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 0 14px 30px;
+            }
+
+            .navbar {
+                padding: 13px 5%;
+            }
+
+            .hero {
+                padding-top: 27px;
+            }
+
+            .chat-messages {
+                height: 320px;
+            }
+
+            .card {
+                padding: 17px;
+            }
+
+            .message {
+                max-width: 95%;
+            }
+
+            .send-button {
+                padding: 0 14px;
+            }
+        }
+        
+    </style>
+<link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+     
+</head>
+
+<body>
+
+    <!-- نوار بالای سایت -->
+    <div id="site-header"></div>
+    <!-- معرفی صفحه -->
+    <section class="hero">
+        
+        <h1>با گیاه گفت‌وگو کن</h1>
+        <p>
+            درباره حال گیاهت بگو، سؤال بپرس و راهنمایی‌های مراقبتی دریافت کن.
+            گیاه‌یار اینجاست تا در نگهداری بهتر از گیاهانت کمکت کند.
+        </p>
+    </section>
+
+    <main class="main-container">
+
+        <!-- بخش اطلاعات گیاه -->
+        <aside class="card">
+            <h2>🌱 گیاه من</h2>
+
+            <div class="plant-picture">
+                <span class="plant-emoji" id="plantEmoji">🪴</span>
+                <div class="plant-name" id="plantName">پتوس</div>
+            </div>
+
+            <label class="field-label" for="plantSelect">
+                گیاه مورد نظرت را انتخاب کن
+            </label>
+
+            <select id="plantSelect">
+                <option value="pothos">پتوس</option>
+                <option value="rose">گل رز</option>
+                <option value="cactus">کاکتوس</option>
+                <option value="tomato">گوجه‌فرنگی</option>
+                <option value="mint">نعناع</option>
+                <option value="orchid">ارکیده</option>
+            </select>
+
+            <div class="side-tip">
+                <strong>💡 راهنمایی</strong>
+                <p>
+                    هرچه درباره شرایط گیاهت دقیق‌تر توضیح بدهی،
+                    انتخاب راهکار مناسب آسان‌تر می‌شود.
+                </p>
+            </div>
+
+            <div class="side-tip">
+                <strong>🌿 چه چیزهایی بپرسم؟</strong>
+                <p>
+                    زرد شدن برگ‌ها، آبیاری، نور، خاک، رشد کم و آفت‌های گیاهی.
+                </p>
+            </div>
+        </aside>
+
+        <!-- بخش چت -->
+        <section class="card chat-card">
+
+            <div class="chat-heading">
+                <h2>💬 گفت‌وگوی من و گیاه‌یار</h2>
+                <span class="online-status">
+                    <span class="online-dot"></span>
+                    آماده گفت‌وگو
+                </span>
+            </div>
+
+            <div class="chat-messages" id="chatMessages" aria-live="polite">
+                <div class="message bot-message">
+                    <span class="message-author">🌿 همراه گیاه‌یار</span>
+                    سلام! خوش اومدی 🌱
+                    من همراه مراقبت از گیاهان هستم.
+                    نوع گیاهت رو انتخاب کن و هر سؤالی درباره نگهداریش داری بپرس.
+                </div>
+            </div>
+
+            <p class="suggestion-title">برای شروع یکی از این سؤال‌ها را انتخاب کن:</p>
+
+            <div class="suggestions">
+                <button class="suggestion" type="button" data-question="چرا برگ‌های گیاه من زرد شده؟">
+                    🍂 چرا برگ‌ها زرد شده؟
+                </button>
+
+                <button class="suggestion" type="button" data-question="چقدر باید به گیاه آب بدهم؟">
+                    💧 میزان آبیاری
+                </button>
+
+                <button class="suggestion" type="button" data-question="گیاه من به چه مقدار نور نیاز دارد؟">
+                    ☀️ نور مناسب
+                </button>
+
+                <button class="suggestion" type="button" data-question="چرا گیاه من رشد نمی‌کند؟">
+                    🌱 رشد کم گیاه
+                </button>
+            </div>
+
+            <form class="chat-form" id="chatForm">
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="سؤالت را اینجا بنویس..."
+                    autocomplete="off"
+                    aria-label="متن پیام"
+                    required
+                >
+
+                <button class="send-button" type="submit">
+                    ارسال ➤
+                </button>
+            </form>
+
+        </section>
+
+    </main>
+
+    <div id="site-footer"></div>
+    <script>
+        // اطلاعات گیاهان
+        const plantData = {
+            pothos: {
+                name: "پتوس",
+                emoji: "🪴",
+                light: "نور غیرمستقیم و روشن",
+                water: "پس از خشک شدن سطح خاک"
+            },
+            rose: {
+                name: "گل رز",
+                emoji: "🌹",
+                light: "نور کافی و معمولاً چند ساعت آفتاب",
+                water: "با توجه به رطوبت خاک و گرمای هوا"
+            },
+            cactus: {
+                name: "کاکتوس",
+                emoji: "🌵",
+                light: "نور زیاد و متناسب با نوع کاکتوس",
+                water: "پس از خشک شدن خاک"
+            },
+            tomato: {
+                name: "گوجه‌فرنگی",
+                emoji: "🍅",
+                light: "نور مستقیم و کافی",
+                water: "آبیاری منظم متناسب با رطوبت خاک"
+            },
+            mint: {
+                name: "نعناع",
+                emoji: "🌿",
+                light: "نور مناسب و ترجیحاً غیرسوزان",
+                water: "حفظ رطوبت ملایم خاک بدون غرقابی شدن"
+            },
+            orchid: {
+                name: "ارکیده",
+                emoji: "🌸",
+                light: "نور روشن و غیرمستقیم",
+                water: "با توجه به نوع ارکیده و خشک شدن بستر"
+            }
+        };
+
+        // گرفتن بخش‌های صفحه
+        const plantSelect = document.getElementById("plantSelect");
+        const plantEmoji = document.getElementById("plantEmoji");
+        const plantName = document.getElementById("plantName");
+        const chatMessages = document.getElementById("chatMessages");
+        const chatForm = document.getElementById("chatForm");
+        const messageInput = document.getElementById("messageInput");
+
+        // تغییر نام و تصویر گیاه انتخاب‌شده
+        plantSelect.addEventListener("change", function () {
+            const selectedPlant = plantData[plantSelect.value];
+
+            plantEmoji.textContent = selectedPlant.emoji;
+            plantName.textContent = selectedPlant.name;
+
+            addBotMessage(
+                "گیاه انتخاب‌شده: " + selectedPlant.name +
+                "\nنور پیشنهادی: " + selectedPlant.light +
+                "\nآبیاری: " + selectedPlant.water +
+                "\n\nاین اطلاعات کلی هستند و ممکن است با شرایط محیط و نوع دقیق گیاه تفاوت داشته باشند."
+            );
+        });
+
+        // افزودن پیام به صفحه
+        function addMessage(text, isUser) {
+            const messageBox = document.createElement("div");
+            messageBox.classList.add("message");
+
+            if (isUser) {
+                messageBox.classList.add("user-message");
+            } else {
+                messageBox.classList.add("bot-message");
+            }
+
+            const author = document.createElement("span");
+            author.classList.add("message-author");
+
+            if (isUser) {
+                author.textContent = "شما";
+            } else {
+                author.textContent = "🌿 همراه گیاه‌یار";
+            }
+
+            const content = document.createElement("div");
+            content.textContent = text;
+
+            messageBox.appendChild(author);
+            messageBox.appendChild(content);
+            chatMessages.appendChild(messageBox);
+
+            // رفتن به آخرین پیام
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // پاسخ‌های نمونه و ساده
+        function getPlantAnswer(question) {
+            const text = question.toLowerCase();
+            const selectedPlant = plantData[plantSelect.value];
+
+            if (
+                text.includes("زرد") ||
+                text.includes("زردی")
+            ) {
+                return "زرد شدن برگ‌های " + selectedPlant.name +
+                    " می‌تواند به آبیاری نامناسب، نور، زهکشی یا مشکلات ریشه مربوط باشد. رطوبت خاک و وضعیت برگ‌های دیگر را بررسی کن. اگر بگویی زردی از کدام برگ‌ها شروع شده، بهتر می‌توان راهنمایی کرد.";
+            }
+            if (
+                text.includes("آب") ||
+                text.includes("آبیاری") ||
+                text.includes("آبدهی")
+            ) {
+                return "میزان آب مورد نیاز " + selectedPlant.name +
+                    " به نوع گیاه، اندازه گلدان، دما و خاک بستگی دارد. قبل از آبیاری، رطوبت خاک را بررسی کن و اجازه نده آب اضافی در زیرگلدانی بماند. راهنمای کلی این گیاه: " +
+                    selectedPlant.water + ".";
+            }
+
+            if (
+                text.includes("نور") ||
+                text.includes("آفتاب")
+            ) {
+                return "برای " + selectedPlant.name +
+                    " معمولاً این شرایط نور مناسب است: " +
+                    selectedPlant.light +
+                    ". نور خیلی شدید یا تغییر ناگهانی محل ممکن است به بعضی گیاهان آسیب بزند.";
+            }
+
+            if (
+                text.includes("رشد") ||
+                text.includes("بزرگ") ||
+                text.includes("قد نمی‌کشد")
+            ) {
+                return "رشد کم " + selectedPlant.name +
+                    " ممکن است به نور ناکافی، فصل رشد، تغذیه، ریشه یا شرایط محیط مربوط باشد. اول نور و وضعیت آبیاری را بررسی کن و بدون شناخت مشکل، کود زیادی استفاده نکن.";
+            }
+
+            if (
+                text.includes("آفت") ||
+                text.includes("حشره") ||
+                text.includes("کرم")
+            ) {
+                return "زیر و روی برگ‌های " + selectedPlant.name +
+                    " و محل اتصال برگ‌ها را بررسی کن. اگر حشره، تار یا لکه‌های غیرعادی دیدی، یک عکس واضح تهیه کن. برای انتخاب روش کنترل آفت باید نوع آن مشخص شود.";
+            }
+
+            if (
+                text.includes("خاک") ||
+                text.includes("گلدان")
+            ) {
+                return "خاک مناسب " + selectedPlant.name +
+                    " باید با نیاز ریشه و شرایط آبیاری آن هماهنگ باشد و زهکشی خوبی داشته باشد. نوع گیاه و خیس ماندن طولانی خاک در انتخاب بستر اهمیت دارد.";
+            }
+
+            if (
+                text.includes("سلام") ||
+                text.includes("درود")
+            ) {
+                return "سلام دوست گیاه‌دوست! 🌱 گیاه " +
+                    selectedPlant.name +
+                    " را انتخاب کرده‌ای. درباره برگ‌ها، نور، آب یا رشدش از من سؤال بپرس.";
+            }
+
+            return "ممنون که درباره " + selectedPlant.name +
+                " توضیح دادی. برای راهنمایی دقیق‌تر، بگو مشکل از چه زمانی شروع شده، گیاه کجا قرار دارد و هر چند وقت یک‌بار به آن آب می‌دهی. این پاسخ فعلاً نمونه است و هنوز به هوش مصنوعی متصل نیست.";
+        }
+
+        // پاسخ همراه گیاه‌یار
+        function addBotMessage(text) {
+            addMessage(text, false);
+        }
+
+        // ارسال پیام کاربر
+        function sendMessage(text) {
+            const question = text.trim();
+
+            if (question.length === 0) {
+                return;
+            }
+
+            addMessage(question, true);
+
+            const answer = getPlantAnswer(question);
+            addBotMessage(answer);
+
+            messageInput.value = "";
+            messageInput.focus();
+        }
+
+        // ارسال پیام با دکمه یا کلید Enter
+        chatForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            sendMessage(messageInput.value);
+        });
+
+        // ارسال سؤال با کلیک روی پیشنهادها
+        const suggestionButtons = document.querySelectorAll(".suggestion");
+
+        suggestionButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                const question = button.getAttribute("data-question");
+                sendMessage(question);
+            });
+        });
+    </script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به گیاه‌یار</title>
+
+    <style>
+        /* تنظیمات اصلی صفحه */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green-dark: #173f2d;
+            --green-main: #39865a;
+            --green-light: #eaf5e9;
+            --lime: #c8ef8b;
+            --text-dark: #203b2d;
+            --text-muted: #7b8d80;
+            --white: #ffffff;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Tahoma, Arial, sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, #dff1d9, transparent 35%),
+                linear-gradient(135deg, #f7faf4, #edf5e9);
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+        }
+
+        /* قاب اصلی صفحه ورود */
+        .login-wrapper {
+            width: 100%;
+            max-width: 1050px;
+            min-height: 620px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--white);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(31, 78, 48, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        /* بخش تصویری سمت صفحه */
+        .visual-panel {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 38px;
+            color: white;
+            background:
+                linear-gradient(180deg, rgba(13, 49, 31, 0.25), rgba(13, 49, 31, 0.95)),
+                url("https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1200&q=85");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            background: var(--lime);
+            color: var(--green-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .brand-name {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .brand-caption {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d9eadc;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 25px;
+        }
+
+        .welcome-label {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 9px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            margin-bottom: 22px;
+            backdrop-filter: blur(8px);
+        }
+
+        .visual-content h1 {
+            font-size: clamp(30px, 3.5vw, 43px);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .visual-content p {
+            font-size: 14px;
+            line-height: 2.2;
+            color: #e0eee2;
+            max-width: 360px;
+        }
+
+        .visual-footer {
+            position: relative;
+            z-index: 1;
+            font-size: 12px;
+            color: #d9eadc;
+        }
+
+        /* بخش فرم ورود */
+        .form-panel {
+            padding: 55px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mobile-brand {
+            display: none;
+        }
+
+        .form-heading {
+            margin-bottom: 32px;
+        }
+        .form-heading h2 {
+            font-size: 29px;
+            margin-bottom: 12px;
+            color: var(--green-dark);
+        }
+
+        .form-heading p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        /* ورودی‌های فرم */
+        .input-group {
+            margin-bottom: 21px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 54px;
+            padding: 0 16px;
+            border: 1px solid #dce7dc;
+            border-radius: 13px;
+            background: #fbfdf9;
+            color: var(--text-dark);
+            outline: none;
+            font-family: inherit;
+            font-size: 13px;
+            transition: 0.25s;
+        }
+
+        .input-box input:focus {
+            border-color: var(--green-main);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(57, 134, 90, 0.09);
+        }
+
+        .input-box input::placeholder {
+            color: #a8b5a9;
+        }
+
+        .password-input {
+            padding-left: 75px !important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: var(--green-main);
+            font-family: inherit;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* گزینه‌های زیر فرم */
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 3px 0 25px;
+            font-size: 12px;
+        }
+
+        .remember-option {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .remember-option input {
+            accent-color: var(--green-main);
+            width: 15px;
+            height: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--green-main);
+        }
+
+        a:hover {
+            color: var(--green-dark);
+        }
+
+        /* دکمه ورود */
+        .login-button {
+            width: 100%;
+            height: 55px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #479765, #236a43);
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 22px rgba(43, 119, 72, 0.18);
+            transition: 0.25s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 27px rgba(43, 119, 72, 0.25);
+        }
+
+        .login-button:active {
+            transform: scale(0.99);
+        }
+
+        /* پیام نتیجه فرم */
+        .form-message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        .form-message.show {
+            display: block;
+        }
+
+        .form-message.info {
+            color: #285e3c;
+            background: #edf7ed;
+        }
+
+        .form-message.error {
+            color: #a52e2e;
+            background: #fff0ef;
+        }
+
+        .register-text {
+            margin-top: 27px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .register-text a {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .security-note {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #edf1eb;
+            text-align: center;
+            color: #93a194;
+            font-size: 11px;
+            line-height: 2;
+        }
+
+        /* سازگاری با موبایل */
+        @media (max-width: 760px) {
+            body {
+                padding: 15px;
+                align-items: flex-start;
+            }
+
+            .login-wrapper {
+                grid-template-columns: 1fr;
+                max-width: 460px;
+                min-height: auto;
+                border-radius: 24px;
+                margin: auto;
+            }
+
+            .visual-panel {
+                display: none;
+            }
+
+            .form-panel {
+                padding: 32px 23px;
+            }
+
+            .mobile-brand {
+                display: flex;
+                align-items: center;
+                gap: 11px;
+                margin-bottom: 35px;
+            }
+
+            .mobile-brand .brand-name {
+                font-size: 22px;
+                color: var(--green-dark);
+            }
+
+            .mobile-brand .brand-caption {
+                color: var(--text-muted);
+            }
+
+            .form-heading h2 {
+                font-size: 25px;
+            }
+
+            .form-heading {
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .form-panel {
+                padding: 25px 17px;
+            }
+
+            .form-options {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="login-wrapper">
+
+        <!-- بخش تصویری و معرفی گیاه‌یار -->
+        <section class="visual-panel">
+
+            <div class="brand">
+                <div class="brand-icon">🌱</div>
+
+                <div>
+                    <div class="brand-name">گیاه‌یار</div>
+                    <div class="brand-caption">همراه هوشمند گیاهان شما</div>
+                </div>
+            </div>
+
+            <div class="visual-content">
+                <div class="welcome-label">
+                    🌿 مراقبت هوشمند، رشد سالم
+                </div>
+
+                <h1>
+                    به دنیای سبز
+                    <br>
+                    خودت برگرد!
+                </h1>
+
+                <p>
+                    گیاهانت رو بهتر بشناس، نشانه‌های بیماری رو بررسی کن
+                    و با برنامه مراقبتی مناسب، به رشدشون کمک کن.
+                </p>
+            </div>
+
+            <div class="visual-footer">
+                هر برگ، داستانی برای رشد دارد 💚
+            </div>
+
+        </section>
+
+        <!-- بخش اصلی فرم ورود -->
+        <section class="form-panel">
+
+            <!-- لوگوی مخصوص نمایش موبایل -->
+            <div class="mobile-brand">
+                <div class="brand-icon">🌱</div>
+
+                <div>
+                    <div class="brand-name">گیاه‌یار</div>
+                    <div class="brand-caption">همراه هوشمند گیاهان شما</div>
+                </div>
+            </div>
+
+            <div class="form-heading">
+                <h2>خوش برگشتی! 👋</h2>
+                <p>
+                    برای ورود به حساب کاربری، اطلاعاتت رو وارد کن.
+                </p>
+            </div>
+
+            <form id="loginForm">
+
+                <!-- فیلد ایمیل -->
+                <div class="input-group">
+                    <label for="email">آدرس ایمیل</label>
+
+                    <div class="input-box">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- فیلد رمز عبور -->
+                <div class="input-group">
+                    <label for="password">رمز عبور</label>
+                    <div class="input-box">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="password-input"
+                            placeholder="رمز عبورت رو وارد کن"
+                            autocomplete="current-password"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                            aria-label="نمایش رمز عبور"
+                        >
+                            نمایش
+                        </button>
+                    </div>
+                </div>
+
+                <!-- تنظیمات اختیاری ورود -->
+                <div class="form-options">
+
+                    <label class="remember-option">
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                            name="rememberMe"
+                        >
+                        مرا به خاطر بسپار
+                    </label>
+
+                    <a href="forgot-password.html">
+                        فراموشی رمز عبور؟
+                    </a>
+
+                </div>
+
+                <!-- دکمه ارسال فرم -->
+                <button type="submit" class="login-button">
+                    ورود به حساب کاربری ←
+                </button>
+
+                <!-- نمایش پیام فرم -->
+                <div
+                    class="form-message"
+                    id="formMessage"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+            </form>
+
+            <!-- مسیر ثبت نام -->
+            <div class="register-text">
+                هنوز حساب نداری؟
+                <a href="register.html">ثبت‌نام کن</a>
+            </div>
+
+            <div class="security-note">
+                🌿 گیاه‌یار؛ همراهی برای مراقبت بهتر از گیاهانت
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // انتخاب عناصر موردنیاز صفحه
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+        const loginForm = document.getElementById("loginForm");
+        const formMessage = document.getElementById("formMessage");
+
+        // نمایش یا مخفی کردن رمز عبور
+        togglePassword.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                togglePassword.textContent = "مخفی کردن";
+                togglePassword.setAttribute("aria-label", "مخفی کردن رمز عبور");
+            } else {
+                passwordInput.type = "password";
+                togglePassword.textContent = "نمایش";
+                togglePassword.setAttribute("aria-label", "نمایش رمز عبور");
+            }
+        });
+
+        // بررسی اولیه فرم در نسخه ظاهری
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            formMessage.className = "form-message show info";
+
+            formMessage.textContent =
+                "ظاهر فرم آماده است؛ برای ورود واقعی باید سیستم احراز هویت و دیتابیس به سایت وصل شود.";
+        });
+    </script>
+
+</body>
+</html>

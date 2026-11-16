@@ -1,0 +1,2357 @@
+/* =====================================================
+   پروژه گیاه‌یار
+   فایل: css/style.css
+   وظیفه: طراحی ظاهری، رنگ‌ها، چیدمان و واکنش‌گرایی سایت
+   ===================================================== */
+
+
+/* ---------- 1. تنظیمات پایه و رنگ‌های اصلی ---------- */
+
+:root {
+    /* رنگ‌های اصلی برند */
+    --green-dark: #183c2e;
+    --green: #285b43;
+    --green-light: #e7efe6;
+    --lime: #d6ef8b;
+
+    /* رنگ‌های پس‌زمینه و متن */
+    --cream: #f8f8f1;
+    --white: #ffffff;
+    --text: #20352b;
+    --muted: #788078;
+    --border: #e6e9df;
+
+    /* گردی گوشه‌ها و سایه کارت‌ها */
+    --radius-large: 28px;
+    --radius-medium: 20px;
+    --shadow-soft: 0 18px 55px rgba(30, 59, 42, 0.08);
+}
+
+/* تمام عناصر، اندازه‌گیری یکسانی خواهند داشت */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* حرکت نرم هنگام رفتن به بخش‌های مختلف صفحه */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+/* تنظیمات عمومی صفحه */
+body {
+    font-family: "Vazirmatn", Tahoma, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.9;
+    overflow-x: hidden;
+}
+
+/* حذف خط زیر لینک‌ها */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* یکسان‌سازی فونت دکمه‌ها با فونت سایت */
+button {
+    font: inherit;
+}
+
+/* جلوگیری از بیرون‌زدگی تصاویر از محدوده خود */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* رنگ متن انتخاب‌شده توسط کاربر */
+::selection {
+    background: var(--lime);
+    color: var(--green-dark);
+}
+
+
+/* ---------- 2. شکل‌های تزئینی پس‌زمینه ---------- */
+
+/* شکل‌های محو و بزرگ در پس‌زمینه سایت */
+.ambient {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    filter: blur(85px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* شکل سبز در بالای سمت راست */
+.ambient-one {
+    top: 70px;
+    right: -180px;
+    background: #d9e8c9;
+}
+
+/* شکل روشن در سمت چپ */
+.ambient-two {
+    top: 520px;
+    left: -190px;
+    background: #e8eacb;
+}
+
+
+/* ---------- 3. سربرگ و منوی سایت ---------- */
+
+/* نوار بالایی شامل لوگو، منو و دکمه‌ها */
+.header {
+    position: relative;
+    z-index: 20;
+    width: min(1240px, calc(100% - 64px));
+    min-height: 92px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    border-bottom: 1px solid rgba(40, 91, 67, 0.08);
+}
+
+/* چیدمان لوگو */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    font-size: 23px;
+    font-weight: 900;
+    color: var(--green-dark);
+}
+
+/* نماد کنار لوگو */
+.brand-symbol {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    
+    color: var(--lime);
+    font-size: 24px;
+}
+
+/* نقطه رنگی انتهای نام برند */
+.brand-dot {
+    color: #91b956;
+}
+
+/* چیدمان لینک‌های منو */
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* ظاهر معمولی لینک‌های منو */
+.nav-link {
+    position: relative;
+    padding: 8px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #69746b;
+    transition: color 0.25s ease;
+}
+
+/* تغییر رنگ لینک هنگام قرارگرفتن ماوس */
+.nav-link:hover,
+.nav-link.active {
+    color: var(--green-dark);
+}
+
+/* خط کوچک زیر لینک فعال */
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -2px;
+    width: 18px;
+    height: 2px;
+    background: #91b956;
+    border-radius: 5px;
+}
+
+/* گروه دکمه‌های سمت چپ سربرگ */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* لینک ورود به حساب */
+.login-link {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green-dark);
+}
+
+/* دکمه شروع رایگان */
+.header-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    padding: 11px 17px;
+    border-radius: 13px;
+    background: var(--green-dark);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.25s, transform 0.25s;
+}
+/* افکت دکمه سربرگ */
+.header-cta:hover {
+    background: var(--green);
+    transform: translateY(-2px);
+}
+
+/* دکمه منوی موبایل؛ در دسکتاپ مخفی است */
+.menu-toggle {
+    display: none;
+    border: 0;
+    background: transparent;
+    color: var(--green-dark);
+    font-size: 27px;
+    cursor: pointer;
+}
+
+
+/* ---------- 4. محدوده مرکزی و بخش معرفی ---------- */
+
+/* محدودکردن عرض محتوای اصلی */
+.section-wrap {
+    width: min(1180px, calc(100% - 64px));
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* چیدمان دو ستونه بخش معرفی */
+.hero {
+    min-height: 650px;
+    padding-top: 72px;
+    padding-bottom: 88px;
+    display: grid;
+    grid-template-columns: 1fr 0.94fr;
+    align-items: center;
+    gap: 65px;
+}
+
+/* محتوای متنی معرفی */
+.hero-copy {
+    position: relative;
+    z-index: 2;
+}
+
+/* برچسب بالای تیتر اصلی */
+.eyebrow {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 13px;
+    margin-bottom: 24px;
+    border: 1px solid #e0e8d9;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* نقطه سبز کنار برچسب */
+.live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #87b74e;
+    box-shadow: 0 0 0 4px #eaf2df;
+}
+
+/* تیتر اصلی صفحه */
+.hero h1 {
+    margin-bottom: 22px;
+    color: var(--green-dark);
+    font-size: clamp(37px, 4.2vw, 59px);
+    font-weight: 900;
+    line-height: 1.55;
+    letter-spacing: -1.8px;
+}
+
+/* رنگ متفاوت یک قسمت از تیتر */
+.headline-accent {
+    color: #759d4d;
+}
+
+/* متن توخالی برای ایجاد جلوه گرافیکی */
+.headline-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.4px var(--green);
+}
+
+/* توضیحات زیر تیتر */
+.hero-description {
+    max-width: 490px;
+    margin-bottom: 29px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 2.3;
+}
+
+/* چیدمان دکمه‌های بخش معرفی */
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 13px;
+}
+
+/* ظاهر مشترک دکمه‌های سایت */
+.button {
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 20px;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 800;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* دکمه اصلی سبزرنگ */
+.button-primary {
+    background: var(--green-dark);
+    color: var(--white);
+    box-shadow: 0 10px 24px rgba(24, 60, 46, 0.12);
+}
+
+/* افکت حرکت دکمه اصلی */
+.button-primary:hover {
+    transform: translateY(-3px);
+    background: var(--green);
+    box-shadow: 0 14px 28px rgba(24, 60, 46, 0.17);
+}
+
+/* فلش داخل دکمه */
+.button-arrow {
+    color: var(--lime);
+    font-size: 18px;
+}
+
+/* دکمه دوم با پس‌زمینه روشن */
+.button-secondary {
+    border-color: #dfe5da;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--green-dark);
+}
+
+/* افکت دکمه دوم */
+.button-secondary:hover {
+    border-color: #a9c394;
+    background: var(--white);
+    transform: translateY(-3px);
+}
+
+/* توضیح کوتاه زیر دکمه‌ها */
+.trust-line {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 25px;
+    color: #7c857b;
+    font-size: 11px;
+}
+
+/* نماد کوچک کنار توضیح */
+.trust-icon {
+    color: #84a958;
+    font-size: 19px;
+}
+
+/* سه مرحله خلاصه‌شده */
+.hero-mini-stats {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 38px;
+}
+
+/* هر مورد از آمار */
+.hero-mini-stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* شماره هر مرحله */
+.hero-mini-stats strong {
+    color: var(--green-dark);
+    font-size: 19px;
+    font-weight: 900;
+}
+
+/* عنوان هر مرحله */
+.hero-mini-stats span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* جداکننده مراحل */
+.hero-mini-stats .stat-divider {
+    width: 1px;
+    height: 34px;
+    background: #dfe4d9;
+}
+
+
+/* ---------- 5. تصویر اصلی و کارت‌های شناور ---------- */
+
+/* محدوده تصویر و عناصر تزئینی */
+.hero-visual {
+    position: relative;
+    min-width: 0;
+    padding: 18px;
+}
+/* دایره‌های دور تصویر */
+.visual-orbit {
+    position: absolute;
+    border: 1px solid rgba(81, 119, 77, 0.17);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* دایره بزرگ */
+.orbit-one {
+    inset: -20px -5px 25px 25px;
+    transform: rotate(-13deg);
+}
+
+/* دایره کوچک‌تر */
+.orbit-two {
+    inset: 15px 25px -10px -20px;
+    border-style: dashed;
+    transform: rotate(14deg);
+}
+
+/* قاب تصویر گیاه */
+.hero-photo {
+    position: relative;
+    min-height: 455px;
+    overflow: hidden;
+    border: 7px solid rgba(255, 255, 255, 0.8);
+    border-radius: 48% 48% 24px 24px;
+    background: #dce5d5;
+    box-shadow: var(--shadow-soft);
+}
+
+/* تصویر داخل قاب */
+.hero-photo img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.7s ease;
+    background: #f5faf4;
+}
+/* بزرگ‌نمایی ملایم تصویر هنگام حرکت ماوس */
+.hero-photo:hover img {
+    transform: scale(1.04);
+}
+
+/* لایه گرادیانی روی تصویر */
+.photo-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 45%,
+        rgba(17, 42, 29, 0.7) 100%
+    );
+}
+
+/* نوشته پایین تصویر */
+.photo-caption {
+    position: absolute;
+    right: 25px;
+    bottom: 23px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--white);
+}
+
+/* نماد نوشته روی تصویر */
+.caption-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 24px;
+}
+
+/* متن اصلی کپشن */
+.photo-caption span {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* توضیح کوچک زیر کپشن */
+.photo-caption small {
+    display: block;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 10px;
+}
+
+/* کارت‌های شناور روی تصویر */
+.floating-panel {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 15px 45px rgba(30, 59, 42, 0.12);
+    backdrop-filter: blur(15px);
+    animation: float-card 5s ease-in-out infinite;
+}
+
+/* کارت بالایی */
+.panel-top {
+    top: 65px;
+    right: -25px;
+}
+
+/* نماد کارت بالایی */
+.panel-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: #edf3e6;
+    color: var(--green);
+    font-size: 26px;
+}
+
+/* نوشته‌های کارت شناور */
+.floating-panel strong {
+    display: block;
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* توضیحات کارت شناور */
+.floating-panel small {
+    display: block;
+    margin-top: 2px;
+    color: #899087;
+    font-size: 10px;
+}
+
+/* نماد درخشش کارت */
+.panel-spark {
+    align-self: flex-start;
+    color: #8eaf61;
+    font-size: 17px;
+}
+
+/* کارت پایینی */
+.panel-bottom {
+    bottom: 45px;
+    left: -28px;
+    animation-delay: -2.5s;
+}
+
+/* دایره آواتار گیاه */
+.plant-avatar {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    background: #edf3e6;
+    font-size: 25px;
+}
+
+/* متن کارت پایینی */
+.plant-panel-copy {
+    min-width: 135px;
+}
+
+/* فلش کارت پایینی */
+.panel-arrow {
+    color: var(--green);
+    font-size: 20px;
+}
+
+/* ستاره‌های تزئینی اطراف تصویر */
+.decor-star {
+    position: absolute;
+    color: #86a956;
+    pointer-events: none;
+}
+
+/* ستاره اول */
+.star-one {
+    top: 15px;
+    left: 45px;
+    font-size: 30px;
+}
+
+/* ستاره دوم */
+.star-two {
+    right: 20px;
+    bottom: 7px;
+    color: #c3d995;
+    font-size: 22px;
+}
+
+/* انیمیشن بالا و پایین رفتن کارت‌ها */
+@keyframes float-card {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-9px);
+    }
+}
+
+
+/* ---------- 6. نوار ارزش‌ها ---------- */
+/* چهار قابلیت کوتاه زیر بخش معرفی */
+.value-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 25px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+/* هر مورد نوار ارزش‌ها */
+.value-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 7px;
+}
+
+/* آیکون هر قابلیت */
+.value-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid #e5eadd;
+    border-radius: 14px;
+    background: #f0f3e8;
+    color: var(--green);
+    font-size: 23px;
+}
+
+/* عنوان قابلیت */
+.value-item strong {
+    display: block;
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* توضیح قابلیت */
+.value-item span:not(.value-icon) {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+
+/* ---------- 7. عنوان بخش امکانات ---------- */
+
+/* فاصله بخش امکانات از قسمت‌های دیگر */
+.features-section {
+    padding-top: 115px;
+    padding-bottom: 120px;
+}
+
+/* عنوان و لینک بالای کارت‌ها */
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 42px;
+}
+
+/* برچسب کوچک عنوان بخش */
+.section-kicker {
+    display: inline-block;
+    margin-bottom: 13px;
+    color: #789b51;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+}
+
+/* تیتر بخش امکانات */
+.section-heading h2,
+.workflow-copy h2,
+.closing-section h2 {
+    color: var(--green-dark);
+    font-size: clamp(27px, 3vw, 39px);
+    font-weight: 900;
+    line-height: 1.65;
+    letter-spacing: -0.8px;
+}
+
+/* قسمت سبزرنگ تیتر */
+.section-heading h2 span,
+.workflow-copy h2 span,
+.closing-section h2 span {
+    color: #789c50;
+}
+
+/* توضیح زیر عنوان */
+.section-heading p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* لینک مشاهده یا شروع بررسی */
+.text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    flex-shrink: 0;
+    padding-bottom: 7px;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.text-link span {
+    font-size: 18px;
+    transition: transform 0.25s ease;
+}
+
+/* حرکت فلش لینک هنگام قرارگرفتن ماوس */
+.text-link:hover span {
+    transform: translateX(-4px);
+}
+
+
+/* ---------- 8. کارت‌های هشت‌گانه امکانات ---------- */
+
+/* ساخت شبکه کارت‌ها */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* ظاهر عمومی کارت‌ها */
+.feature-card {
+    position: relative;
+    min-width: 0;
+    min-height: 390px;
+    display: flex;
+    flex-direction: column;
+    padding: 22px;
+    overflow: hidden;
+    border: 1px solid #e8eadf;
+    border-radius: var(--radius-large);
+    background: rgba(255, 255, 255, 0.72);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+/* حرکت کارت هنگام قرارگرفتن ماوس */
+.feature-card:hover {
+    transform: translateY(-7px);
+    border-color: #d3dfc8;
+    box-shadow: var(--shadow-soft);
+}
+
+/* کارت ویژه با پس‌زمینه متفاوت */
+.feature-featured {
+    background: #edf2e6;
+}
+
+/* شماره و نماد بالای کارت */
+.card-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* شماره انگلیسی هر کارت */
+.card-number {
+    color: #8a9588;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+/* فلش بالای کارت */
+.card-symbol {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #e6eade;
+    border-radius: 10px;
+    color: var(--green);
+    font-size: 17px;
+    transition: transform 0.25s ease;
+}
+
+/* حرکت فلش هنگام هاور کارت */
+.feature-card:hover .card-symbol {
+    transform: translate(-3px, -3px);
+}
+
+/* محدوده تصویرسازی نمادین هر کارت */
+.card-illustration {
+    position: relative;
+    height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0 9px;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #f4f5ec;
+}
+/* برچسب کوچک نوع قابلیت */
+.card-tag {
+    width: fit-content;
+    margin-bottom: 7px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #edf2e6;
+    color: #658348;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+/* عنوان هر کارت */
+.feature-card h3 {
+    margin-bottom: 8px;
+    color: var(--green-dark);
+    font-size: 16px;
+    font-weight: 900;
+}
+
+/* توضیحات هر کارت */
+.feature-card p {
+    margin-bottom: 19px;
+    color: #7c857b;
+    font-size: 11px;
+    line-height: 2.1;
+}
+
+/* نوار انتهای کارت */
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 13px;
+    border-top: 1px solid #e9ece3;
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* رنگ نوار کارت ویژه */
+.feature-featured .card-footer {
+    border-color: #dce5d2;
+}
+
+
+/* ---------- 9. تصویرسازی کارت تشخیص ---------- */
+
+/* نماد مرکزی بررسی تصویر */
+.illustration-image .illustration-main {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dce6cf;
+    border-radius: 50%;
+    background: #e7eedc;
+    color: #527a3e;
+    font-size: 55px;
+}
+
+/* حلقه تزئینی دور نماد */
+.illustration-image .illustration-orbit {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    border: 1px dashed #b5c99e;
+    border-radius: 50%;
+}
+
+/* برگ تزئینی کارت تشخیص */
+.illustration-image .illustration-leaf {
+    position: absolute;
+    right: 25%;
+    bottom: 5px;
+    color: #8ca967;
+    font-size: 29px;
+}
+
+
+/* ---------- 10. تصویرسازی کارت صدا ---------- */
+
+/* چیدمان موج‌های صوتی */
+.illustration-sound {
+    gap: 7px;
+    background: #edf0e8;
+}
+
+/* موج‌های صوتی */
+.illustration-sound > span:not(.sound-center) {
+    width: 5px;
+    height: 24px;
+    border-radius: 10px;
+    background: #9cb77e;
+    animation: sound-wave 1s ease-in-out infinite alternate;
+}
+
+/* ارتفاع متفاوت موج‌ها */
+.illustration-sound > span:nth-child(2) {
+    height: 44px;
+    animation-delay: 0.2s;
+}
+
+.illustration-sound > span:nth-child(3) {
+    height: 33px;
+    animation-delay: 0.4s;
+}
+
+/* نماد موسیقی در وسط موج */
+.sound-center {
+    margin: 0 10px;
+    color: var(--green);
+    font-size: 27px;
+}
+
+/* حرکت موج‌ها */
+@keyframes sound-wave {
+    from {
+        transform: scaleY(0.55);
+    }
+
+    to {
+        transform: scaleY(1.1);
+    }
+}
+
+
+/* ---------- 11. تصویرسازی کارت علائم ---------- */
+
+/* نماد برگ در کارت علائم */
+.symptom-leaf {
+    color: #769951;
+    font-size: 65px;
+    transform: rotate(-20deg);
+}
+
+/* نماد ذره‌بین */
+.symptom-search {
+    position: absolute;
+    right: 53%;
+    bottom: 13px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dce5d3;
+    border-radius: 50%;
+    background: white;
+    color: var(--green);
+    font-size: 27px;
+}
+
+
+/* ---------- 12. تصویرسازی کارت محیط ---------- */
+
+/* نمادهای نور، گیاه و رطوبت */
+.illustration-climate {
+    gap: 20px;
+    background: #f0f1e6;
+    color: #76964f;
+    font-size: 35px;
+}
+
+/* جابه‌جایی جزئی نمادهای محیط */
+.illustration-climate span:nth-child(2) {
+    color: #456e47;
+    font-size: 48px;
+}
+
+.illustration-climate span:nth-child(3) {
+    color: #a7bc7c;
+    font-size: 29px;
+}
+
+
+/* ---------- 13. تصویرسازی کارت دستیار ---------- */
+
+/* پس‌زمینه کارت دستیار */
+.illustration-ai {
+    background: #e9eee2;
+}
+
+/* گوی مرکزی دستیار */
+.ai-orb {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #d2dfc3;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #dce9c8, #f9f9ef);
+    color: #668d49;
+    box-shadow: 0 0 0 12px rgba(198, 218, 174, 0.18);
+    font-size: 42px;
+    animation: orb-pulse 3s ease-in-out infinite;
+}
+
+/* ستاره کوچک کنار گوی */
+.ai-orb-small {
+    position: absolute;
+    top: 15px;
+    right: 25%;
+    color: #7a9e52;
+    font-size: 22px;
+}
+
+/* درخشش آرام گوی */
+@keyframes orb-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+
+/* ---------- 14. تصویرسازی کارت تاریخچه ---------- */
+
+/* خط روند تغییرات */
+.history-line {
+    color: #7d9e5c;
+    font-size: 55px;
+    letter-spacing: 2px;
+}
+
+/* نقطه‌های روی خط */
+.history-dot {
+    position: absolute;
+    top: 31px;
+    left: 29%;
+    width: 11px;
+    height: 11px;
+    border: 3px solid #f4f5ec;
+    border-radius: 50%;
+    background: #5b8248;
+}
+
+/* نقطه دوم */
+.history-dot.second {
+    top: 57px;
+    left: 67%;
+    background: #a6c17e;
+}
+
+
+/* ---------- 15. تصویرسازی کارت مراقبت ---------- */
+/* تقویم نمادین */
+.care-calendar {
+    width: 62px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dbe4d0;
+    border-radius: 14px;
+    background: #fbfcf6;
+    color: #65874a;
+    font-size: 43px;
+}
+
+/* علامت انجام‌شدن کار */
+.care-check {
+    position: absolute;
+    top: 17px;
+    right: 53%;
+    width: 29px;
+    height: 29px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #6d9650;
+    color: white;
+    font-size: 17px;
+}
+
+
+/* ---------- 16. تصویرسازی کارت نقشه ---------- */
+
+/* پس‌زمینه نقشه */
+.illustration-map {
+    background:
+        linear-gradient(35deg, transparent 47%, #d9e4ce 48%, #d9e4ce 51%, transparent 52%),
+        linear-gradient(-25deg, transparent 47%, #d9e4ce 48%, #d9e4ce 51%, transparent 52%),
+        #f0f2e9;
+}
+
+/* نقطه‌های مکانی روی نقشه */
+.map-pin {
+    position: absolute;
+    top: 30px;
+    right: 28%;
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    border: 5px solid #e0e9d4;
+    border-radius: 50%;
+    background: #527e43;
+    color: transparent;
+}
+
+/* نقطه دوم نقشه */
+.map-pin.pin-two {
+    top: 56px;
+    right: 57%;
+    width: 19px;
+    height: 19px;
+    border-width: 4px;
+    background: #90ae6b;
+}
+
+/* نقطه سوم نقشه */
+.map-pin.pin-three {
+    top: 19px;
+    right: 67%;
+    width: 16px;
+    height: 16px;
+    border-width: 3px;
+    background: #a7be84;
+}
+
+/* خط تزئینی مسیر نقشه */
+.map-path {
+    color: #91aa75;
+    font-size: 45px;
+}
+
+
+/* ---------- 17. بخش مراحل استفاده از سایت ---------- */
+/* پس‌زمینه تیره بخش مراحل */
+.workflow-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--green-dark);
+    color: var(--white);
+}
+
+/* چیدمان دو ستون در بخش مراحل */
+.workflow-inner {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 95px;
+    align-items: center;
+    padding-top: 90px;
+    padding-bottom: 90px;
+}
+
+/* برچسب عنوان در پس‌زمینه تیره */
+.workflow-copy .section-kicker {
+    color: var(--lime);
+}
+
+/* تیتر بخش مراحل */
+.workflow-copy h2 {
+    color: var(--white);
+    font-size: clamp(28px, 3vw, 38px);
+}
+
+/* توضیح بخش مراحل */
+.workflow-copy p {
+    max-width: 420px;
+    margin-top: 14px;
+    margin-bottom: 26px;
+    color: #c3d1c3;
+    font-size: 13px;
+    line-height: 2.3;
+}
+
+/* دکمه روشن برای پس‌زمینه تیره */
+.button-light {
+    background: var(--lime);
+    color: var(--green-dark);
+}
+
+/* افکت دکمه روشن */
+.button-light:hover {
+    transform: translateY(-3px);
+    background: #e5f5b9;
+}
+
+/* فلش دکمه روشن */
+.button-light span {
+    font-size: 18px;
+}
+
+/* ستون مراحل */
+.workflow-steps {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* هر ردیف از مراحل */
+.workflow-step {
+    display: grid;
+    grid-template-columns: 45px 1fr 35px;
+    align-items: center;
+    gap: 17px;
+    padding: 23px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* شماره مرحله */
+.step-index {
+    align-self: start;
+    padding-top: 3px;
+    color: var(--lime);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+/* عنوان هر مرحله */
+.workflow-step h3 {
+    margin-bottom: 5px;
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* توضیح هر مرحله */
+.workflow-step p {
+    color: #bdcbbf;
+    font-size: 11px;
+}
+
+/* نماد سمت چپ هر مرحله */
+.step-symbol {
+    width: 35px;
+    height: 35px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    border-radius: 12px;
+    color: var(--lime);
+    font-size: 22px;
+}
+
+
+/* ---------- 18. بخش دعوت پایانی ---------- */
+
+/* چیدمان و فاصله بخش پایانی */
+.closing-section {
+    position: relative;
+    padding-top: 110px;
+    padding-bottom: 110px;
+    text-align: center;
+}
+
+/* نماد تزئینی بزرگ */
+.closing-decoration {
+    margin-bottom: 12px;
+    color: #94b16c;
+    font-size: 43px;
+}
+
+/* تیتر بخش پایانی */
+.closing-section h2 {
+    margin-bottom: 12px;
+}
+
+/* توضیح بخش پایانی */
+.closing-section p {
+    max-width: 510px;
+    margin: 0 auto 27px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+
+/* ---------- 19. پاورقی سایت ---------- */
+
+/* پس‌زمینه پاورقی */
+.footer {
+    background: #eef1e7;
+}
+
+/* چیدمان ستون‌های پاورقی */
+.footer-main {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 50px;
+    padding-top: 65px;
+    padding-bottom: 50px;
+}
+
+/* توضیح زیر لوگو */
+.footer-brand p {
+    max-width: 270px;
+    margin-top: 16px;
+    color: #7b8579;
+    font-size: 11px;
+    line-height: 2.3;
+}
+
+/* عنوان ستون‌های پاورقی */
+.footer-column h3 {
+    margin-bottom: 17px;
+    color: var(--green-dark);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+/* لینک‌های پاورقی */
+.footer-column a {
+    width: fit-content;
+    display: block;
+    margin-bottom: 10px;
+    color: #778176;
+    font-size: 11px;
+    transition: color 0.2s ease;
+}
+
+/* تغییر رنگ لینک‌ها */
+.footer-column a:hover {
+    color: var(--green);
+}
+
+/* نوار انتهایی پاورقی */
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid #dfe4d7;
+    color: #7b8579;
+    font-size: 10px;
+}
+/* نماد کوچک کنار متن پایانی */
+.footer-bottom b {
+    color: #7d9e52;
+}
+
+
+/* ---------- 20. انیمیشن ورود عناصر به صفحه ---------- */
+
+/* حالت اولیه عناصر انیمیشنی */
+.reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+/* حالت نمایان عناصر پس از فعال‌شدن کلاس show */
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ---------- 21. تنظیم نمایش در تبلت ---------- */
+
+@media (max-width: 1050px) {
+
+    /* کوچک‌ترکردن فاصله‌های سربرگ */
+    .header {
+        width: calc(100% - 40px);
+        gap: 17px;
+    }
+
+    /* کم‌کردن فاصله لینک‌های منو */
+    .navbar {
+        gap: 17px;
+    }
+
+    /* کوچک‌ترکردن فضای اصلی صفحه */
+    .section-wrap {
+        width: calc(100% - 48px);
+    }
+
+    /* فاصله کمتر بین متن و تصویر معرفی */
+    .hero {
+        gap: 35px;
+    }
+
+    /* کوچک‌ترکردن تصویر معرفی */
+    .hero-photo {
+        min-height: 400px;
+    }
+
+    /* دو کارت در هر ردیف */
+    .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* کوتاه‌ترکردن کارت‌ها */
+    .feature-card {
+        min-height: 355px;
+    }
+
+    /* کم‌کردن فاصله ستون‌های مراحل */
+    .workflow-inner {
+        gap: 45px;
+    }
+
+    /* کم‌کردن فاصله پاورقی */
+    .footer-main {
+        gap: 30px;
+    }
+}
+/* ---------- 22. تنظیم نمایش در موبایل ---------- */
+
+@media (max-width: 760px) {
+
+    /* سربرگ در موبایل جمع‌وجورتر می‌شود */
+    .header {
+        width: calc(100% - 32px);
+        min-height: 75px;
+    }
+
+    /* کوچک‌ترشدن لوگو */
+    .brand {
+        font-size: 20px;
+    }
+
+    /* مخفی‌شدن منوی معمولی تا زمان بازشدن */
+    .navbar {
+        position: absolute;
+        top: 66px;
+        right: 0;
+        left: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: #fffef9;
+        box-shadow: var(--shadow-soft);
+    }
+
+    /* نمایش منو هنگام فعال‌شدن کلاس open */
+    .navbar.open {
+        display: flex;
+    }
+
+    /* بزرگ‌ترشدن محدوده کلیک لینک‌های موبایل */
+    .nav-link {
+        padding: 10px 12px;
+        border-radius: 9px;
+    }
+
+    /* حذف خط زیر لینک در موبایل */
+    .nav-link.active::after {
+        display: none;
+    }
+
+    /* پس‌زمینه لینک هنگام حرکت ماوس */
+    .nav-link:hover,
+    .nav-link.active {
+        background: #eef3e8;
+    }
+
+    /* دکمه ورود در موبایل مخفی می‌شود */
+    .login-link {
+        display: none;
+    }
+
+    /* کوچک‌ترشدن دکمه شروع */
+    .header-cta {
+        padding: 9px 12px;
+        font-size: 10px;
+    }
+
+    /* نمایش دکمه منوی موبایل */
+    .menu-toggle {
+        display: block;
+        order: 3;
+    }
+
+    /* فضای اطراف محتوای اصلی */
+    .section-wrap {
+        width: calc(100% - 36px);
+    }
+
+    /* بخش معرفی به یک ستون تبدیل می‌شود */
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding-top: 48px;
+        padding-bottom: 55px;
+    }
+
+    /* تیتر معرفی در موبایل */
+    .hero h1 {
+        font-size: clamp(34px, 8vw, 47px);
+        letter-spacing: -1px;
+    }
+
+    /* خواناترشدن توضیح معرفی */
+    .hero-description {
+        font-size: 13px;
+    }
+
+    /* جمع‌وجورترشدن آمار */
+    .hero-mini-stats {
+        gap: 17px;
+    }
+
+    /* کوچک‌ترشدن نوشته آمار */
+    .hero-mini-stats span {
+        font-size: 9px;
+    }
+
+    /* اندازه تصویر معرفی در موبایل */
+    .hero-visual {
+        width: 100%;
+        max-width: 510px;
+        margin: 0 auto;
+        padding: 14px;
+    }
+
+    /* کوتاه‌ترشدن قاب تصویر */
+    .hero-photo {
+        min-height: 390px;
+        border-radius: 45% 45% 22px 22px;
+    }
+
+    /* کارت بالایی داخل محدوده تصویر قرار می‌گیرد */
+    .panel-top {
+        top: 45px;
+        right: -2px;
+    }
+
+    /* کارت پایینی داخل محدوده تصویر قرار می‌گیرد */
+    .panel-bottom {
+        bottom: 30px;
+        left: -2px;
+    }
+
+    /* کاهش فاصله نوار ارزش‌ها */
+    .value-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 8px;
+        padding: 22px 0;
+    }
+
+    /* کوچک‌ترشدن آیکون‌های نوار ارزش‌ها */
+    .value-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+    }
+
+    /* کوچک‌ترشدن نوشته قابلیت‌ها */
+    .value-item strong {
+        font-size: 11px;
+    }
+
+    .value-item span:not(.value-icon) {
+        font-size: 9px;
+    }
+
+    /* فاصله بخش امکانات در موبایل */
+    .features-section {
+        padding-top: 75px;
+        padding-bottom: 80px;
+    }
+
+    /* عنوان امکانات در موبایل */
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 27px;
+    }
+
+    /* اندازه عنوان‌ها در موبایل */
+    .section-heading h2,
+    .workflow-copy h2,
+    .closing-section h2 {
+        font-size: 29px;
+    }
+
+    /* فاصله کارت‌ها در موبایل */
+    .feature-grid {
+        gap: 12px;
+    }
+
+    /* کم‌کردن فضای داخلی کارت‌ها */
+    .feature-card {
+        min-height: 360px;
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    /* کوتاه‌ترشدن تصویرسازی کارت‌ها */
+    .card-illustration {
+        height: 85px;
+    }
+
+    /* کوچک‌ترشدن عنوان کارت‌ها */
+    .feature-card h3 {
+        font-size: 13px;
+    }
+
+    /* خوانایی متن کارت‌ها */
+    .feature-card p {
+        font-size: 10px;
+    }
+    /* مخفی‌کردن بخشی از شماره‌های انگلیسی برای خلوتی */
+    .card-number {
+        font-size: 8px;
+        letter-spacing: 0;
+    }
+
+    /* بخش مراحل در موبایل */
+    .workflow-inner {
+        grid-template-columns: 1fr;
+        gap: 38px;
+        padding-top: 65px;
+        padding-bottom: 65px;
+    }
+
+    /* فاصله بخش پایانی در موبایل */
+    .closing-section {
+        padding-top: 75px;
+        padding-bottom: 75px;
+    }
+
+    /* پاورقی دو ستونه می‌شود */
+    .footer-main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 35px 20px;
+        padding-top: 45px;
+        padding-bottom: 35px;
+    }
+
+    /* معرفی برند تمام عرض را می‌گیرد */
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    /* پاورقی انتهایی به حالت ستونی درمی‌آید */
+    .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+
+/* ---------- 23. تنظیم نمایش در گوشی‌های کوچک ---------- */
+
+@media (max-width: 390px) {
+
+    /* کاهش حاشیه اطراف صفحه */
+    .header {
+        width: calc(100% - 24px);
+    }
+
+    .section-wrap {
+        width: calc(100% - 28px);
+    }
+
+    /* کوچک‌ترشدن دکمه‌ها */
+    .button {
+        gap: 10px;
+        padding: 11px 14px;
+        font-size: 11px;
+    }
+
+    /* کاهش فاصله آمار */
+    .hero-mini-stats {
+        gap: 10px;
+    }
+
+    /* کارت‌ها همچنان دو ستونه می‌مانند */
+    .feature-grid {
+        gap: 9px;
+    }
+
+    /* فضای داخلی کارت در گوشی کوچک */
+    .feature-card {
+        padding: 11px;
+    }
+
+    /* تیتر کارت در گوشی کوچک */
+    .feature-card h3 {
+        font-size: 12px;
+    }
+
+    /* کارت شناور فشرده‌تر می‌شود */
+    .floating-panel {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    /* متن کارت شناور در گوشی کوچک */
+    .floating-panel strong {
+        font-size: 10px;
+    }
+
+    .floating-panel small {
+        font-size: 9px;
+    }
+}
+
+
+/* ---------- 24. رعایت تنظیم کاهش حرکت دستگاه ---------- */
+
+/* اگر کاربر حرکت‌های انیمیشنی را محدود کرده باشد */
+@media (prefers-reduced-motion: reduce) {
+
+    /* حذف حرکت‌های غیرضروری */
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* اصلاح ظاهر دکمه انتخاب تصویر */
+.upload-area {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+}
+
+.upload-area .choose-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 46px;
+    padding: 12px 24px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 12px;
+    background-color: #2d7044;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.upload-area:hover .choose-button {
+    background-color: #245c37;
+}
+/* وسط‌چین کردن عکس انتخاب‌شده */
+#previewContainer {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 100%;
+text-align: center;
+}
+
+#imagePreview {
+display: block;
+max-width: 100%;
+width: auto;
+max-height: 350px;
+height: auto;
+object-fit: contain;
+margin: 20px auto;
+border-radius: 14px;
+}
+
+.photo-guide {
+    background: #f0f8f0;
+    border: 1px solid #d8ead9;
+    border-radius: 14px;
+    padding: 15px;
+    margin-top: 18px;
+    color: #315b3b;
+    text-align: right;
+    line-height: 1.9;
+}
+
+.photo-guide p {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.photo-guide ul {
+    padding-right: 22px;
+    margin-bottom: 0;
+}
+
+.photo-guide li {
+    font-size: 14px;
+}
+
+/* بخش انیمیشن بررسی گیاه */
+.analysis-loading {
+    display: none;
+    text-align: center;
+    padding: 22px 12px;
+    margin-top: 20px;
+    background: #f0f8f0;
+    border: 1px solid #d8ead9;
+    border-radius: 16px;
+    color: #315b3b;
+}
+
+.analysis-loading.active {
+    display: block;
+}
+
+.plant-spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid #d8ead9;
+    border-top-color: #34834b;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    animation: plant-spin 0.9s linear infinite;
+}
+
+@keyframes plant-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.analysis-loading p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.8;
+}
+/* پنجره چت همراه هوشمند */
+.plant-chat {
+    display: none;
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    width: 350px;
+    max-width: calc(100% - 40px);
+    height: 500px;
+    max-height: 75vh;
+    background: #ffffff;
+    border: 1px solid #dcebdc;
+    border-radius: 20px;
+    box-shadow: 0 8px 35px rgba(30, 80, 40, 0.18);
+    z-index: 9999;
+    overflow: hidden;
+    flex-direction: column;
+    direction: rtl;
+    font-family: inherit;
+}
+
+.plant-chat.open {
+    display: flex;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: #287744;
+    color: white;
+}
+
+.chat-avatar {
+    font-size: 28px;
+}
+
+.chat-title {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.chat-title span {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+.chat-close {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bot-message,
+.user-message {
+    padding: 11px 13px;
+    border-radius: 14px;
+    max-width: 88%;
+    line-height: 1.9;
+    font-size: 13px;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background: #edf6ed;
+    color: #294d32;
+}
+
+.user-message {
+    align-self: flex-end;
+    background: #287744;
+    color: white;
+}
+
+.quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px;
+}
+
+.quick-questions button {
+    border: 1px solid #cfe3d1;
+    border-radius: 15px;
+    background: #f5faf5;
+    color: #287744;
+    padding: 7px 9px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid #e5eee5;
+}
+
+.chat-input-area input {
+    min-width: 0;
+    flex: 1;
+    border: 1px solid #d6e4d6;
+    border-radius: 12px;
+    padding: 10px;
+    outline-color: #287744;
+    font-family: inherit;
+}
+
+.chat-input-area button {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 13px;
+    background: #287744;
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+@media (max-width: 480px) {
+    .plant-chat {
+        left: 10px;
+        bottom: 10px;
+        max-width: calc(100% - 20px);
+        width: 380px;
+        height: 470px;
+    }
+}
+/* نشان دادن دست روی همراه هوشمند */
+.smart-assistant-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.smart-assistant-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(40, 119, 68, 0.15);
+}
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+}
+
+.plant-animation {
+    position: relative;
+    width: 220px;
+    height: 280px;
+    animation: plantMove 3s ease-in-out infinite;
+}
+
+.plant-stem {
+    position: absolute;
+    width: 9px;
+    height: 130px;
+    background: #39834a;
+    border-radius: 10px;
+    left: 105px;
+    top: 65px;
+}
+
+.leaf {
+    position: absolute;
+    width: 65px;
+    height: 35px;
+    background: linear-gradient(135deg, #a5df75, #27834b);
+    border-radius: 100% 0 100% 0;
+}
+
+.leaf-1 {
+    left: 45px;
+    top: 85px;
+    transform: rotate(15deg);
+}
+
+.leaf-2 {
+    left: 108px;
+    top: 60px;
+    transform: rotate(75deg);
+}
+
+.leaf-3 {
+    left: 35px;
+    top: 130px;
+    transform: rotate(10deg);
+}
+
+.plant-pot {
+    position: absolute;
+    left: 65px;
+    top: 190px;
+    width: 90px;
+    height: 65px;
+    background: #e58a58;
+    border-radius: 8px 8px 25px 25px;
+    border-top: 10px solid #bd6840;
+}
+
+@keyframes plantMove {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+.hero-visual {
+    width: 100%;
+    min-width: 0;
+    transform: scale(1.08);
+}
+
+.hero-photo {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.hero-photo img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 768px) {
+    .hero-visual {
+        transform: none;
+    }
+
+    .hero-photo {
+        height: 380px;
+    }
+}
+.hero-photo {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    height: 500px;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0 !important;
+}
+
+.hero-visual {
+    padding: 0;
+    transform: none;
+}
+
+.photo-shade {
+    border-radius: 0;
+}
+
+@media (max-width: 768px) {
+    .hero-photo {
+        height: 380px;
+    }
+}
+.hero-photo {
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+}
+
+.hero-photo {
+    -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 2%, black 98%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    -webkit-mask-composite: source-in;
+
+    mask-image:
+        linear-gradient(to bottom, transparent 0%, black 2%, black 98%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    mask-composite: intersect;
+}
+/* اصلاح فاصله‌های اضافی صفحه اصلی گیاه‌یار */
+.hero-section {
+    padding-top: 45px;
+    padding-bottom: 55px;
+}
+
+.hero-layout {
+    gap: 35px;
+}
+
+.hero-visual {
+    min-height: 380px;
+}
+
+.hero-photo {
+    max-width: 100%;
+}
+
+/* حذف فاصله‌های غیرضروری عنوان‌ها */
+.section-heading {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.section-heading h2 {
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+.section-heading p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* مرتب کردن کارت‌ها و فاصله بین آن‌ها */
+.features-grid {
+    gap: 18px;
+}
+
+.feature-card {
+    min-height: 0;
+}
+
+.feature-card h3 {
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
+
+.feature-card p {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* جمع‌وجور کردن بخش‌های پایین صفحه */
+.start-section {
+    padding-top: 0;
+    padding-bottom: 55px;
+}
+
+.start-panel {
+    gap: 24px;
+}
+
+/* جلوگیری از فاصله‌های اضافی در موبایل */
+@media (max-width: 760px) {
+    .hero-section {
+        padding-top: 30px;
+        padding-bottom: 35px;
+    }
+
+    .hero-layout {
+        gap: 15px;
+    }
+
+    .hero-visual {
+        min-height: 320px;
+    }
+
+    .section-padding {
+        padding-top: 45px;
+        padding-bottom: 45px;
+    }
+
+    .section-heading {
+        margin-bottom: 22px;
+    }
+
+    .features-grid {
+        gap: 12px;
+    }
+
+    .start-section {
+        padding-bottom: 40px;
+    }
+}
+/* آزمایش نمایش محتوای صفحه اصلی گیاه‌یار */
+html,
+body {
+    min-height: 100%;
+    background-color: #f7faf5 !important;
+}
+
+body {
+    color: #183d29 !important;
+}
+
+body > * {
+    visibility: visible;
+}
+
+.home-page {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #183d29;
+}
+
+.home-page main,
+.home-page section,
+.home-page h1,
+.home-page h2,
+.home-page h3,
+.home-page p,
+.home-page a {
+    visibility: visible;
+    opacity: 1;
+}
+.illustration-diagnosis {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.diagnosis-magnifier {
+    font-size: 76px;
+    color: #16a34a;
+    transform: rotate(-20deg);
+}
+
+.diagnosis-cross {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 23px;
+    color: #86c99b;
+}
+
+.diagnosis-dot {
+    position: absolute;
+    bottom: 8px;
+    left: 15px;
+    font-size: 24px;
+    color: #16a34a;
+}
+.bot-message.typing { opacity: .6; animation: typing-blink 1s ease-in-out infinite; }
+@keyframes typing-blink { 50% { opacity: .25; } }

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<!-- lang زبان صفحه را فارسی و dir جهت نوشتار را راست‌چین می‌کند -->
+
+<head>
+    <!-- تعیین کدگذاری برای نمایش صحیح حروف فارسی -->
+    <meta charset="UTF-8">
+
+    <!-- سازگاری صفحه با اندازه نمایشگر موبایل و کامپیوتر -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- عنوانی که در تب مرورگر نمایش داده می‌شود -->
+    <title>گیاه‌یار | همراه هوشمند گیاهان</title>
+
+    <!-- توضیح کوتاه صفحه برای موتورهای جست‌وجو -->
+    <meta name="description"
+          content="گیاه‌یار؛ سامانه هوشمند بررسی علائم و مراقبت از گیاهان">
+
+    <!-- اتصال فونت فارسی وزیرمتن از اینترنت -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- اتصال فایل CSS برای طراحی ظاهری سایت -->
+    <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+    <!-- بافت‌های تزئینی پس‌زمینه؛ ظاهر آن‌ها در CSS طراحی می‌شود -->
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <div id="site-header"></div>
+
+    <!-- محتوای اصلی صفحه -->
+    <main>
+
+      <!-- بخش معرفی اصلی سایت -->
+<section class="hero section-wrap">
+
+    <!-- متن معرفی و دکمه‌های اصلی -->
+    <div class="hero-copy reveal">
+
+        <!-- برچسب کوچک معرفی پروژه -->
+        <div class="eyebrow">
+            <span class="live-dot"></span>
+            <span>نسل جدید مراقبت هوشمند از گیاهان</span>
+        </div>
+
+        <!-- تیتر اصلی صفحه -->
+        <h1>
+            گیاهت رو بهتر
+            <br>
+            <span class="headline-accent">بشناس،</span>
+            <span class="headline-outline">زنده‌تر</span>
+            نگه دار.
+        </h1>
+
+        <!-- توضیح هدف سایت برای بازدیدکننده -->
+        <p class="hero-description">
+            از اولین لکه روی برگ تا برنامه روزانه مراقبت؛
+            گیاه‌یار کمک می‌کنه نشانه‌ها رو بررسی کنی،
+            شرایط گیاهت رو بشناسی و آگاهانه‌تر ازش مراقبت کنی.
+        </p>
+
+        <!-- دکمه‌های هدایت کاربر به بخش‌های دیگر -->
+        <div class="hero-actions">
+            <a href="diagnosis.html" class="button button-primary">
+                <span>بررسی گیاه من</span>
+              
+            </a>
+
+            <a href="#features" class="button button-secondary">
+                کشف امکانات
+                <span>↓</span>
+            </a>
+        </div>
+
+        <!-- کارت دستیار هوشمند -->
+        <div class="value-item smart-assistant-card"
+             onclick="openPlantAssistant()"
+             role="button"
+             tabindex="0">
+
+            <span class="value-icon">🌿</span>
+            <div>
+                <strong>همراه هوشمند</strong>
+                <span>گفت‌وگو با دستیار گیاه‌یار</span>
+            </div>
+            <span class="assistant-arrow">←</span>
+        </div>
+
+    </div>
+
+    <!-- تصویر سمت چپ -->
+    <div class="hero-visual">
+       
+
+        <div class="hero-photo">
+            <img
+                src="./images/plant-ai-hero-left.png"
+                alt="تصویر گیاه برای معرفی سایت گیاه‌یار"
+            >
+
+            <div class="photo-shade"></div>
+
+            
+        </div>
+    </div>
+
+</section>
+       
+        <!-- بخش کارت‌های امکانات سایت -->
+        <section class="features-section section-wrap" id="features">
+
+            <!-- عنوان و توضیح بخش امکانات -->
+            <div class="section-heading reveal">
+                <div>
+                    <span class="section-kicker">دنیای گیاه‌یار</span>
+
+                    <h2>
+                        همه‌چیز برای
+                        <span>حال خوب گیاهت</span>
+                    </h2>
+
+                    <p>
+                        از بررسی یک برگ تا ساختن یک برنامه مراقبتی،
+                        ابزارهای موردنیازت رو یک‌جا پیدا کن.
+                    </p>
+                </div>
+
+                
+            </div>
+
+            <!-- شبکه کارت‌های امکانات -->
+            <div class="feature-grid">
+
+                <!-- امکان اول: تشخیص تصویری -->
+                <a href="diagnosis.html"
+                   class="feature-card feature-featured reveal">
+
+                    <div class="card-topline">
+                        <span class="card-number">01 / VISION</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+
+                    <div class="card-illustration illustration-image">
+                        <span class="illustration-main">◉</span>
+                        <span class="illustration-orbit">✳</span>
+                        <span class="illustration-leaf">❧</span>
+                    </div>
+
+                    <span class="card-tag">تحلیل تصویر</span>
+                    <h3>تشخیص از روی عکس</h3>
+
+                    <p>
+                        تصویر برگ رو بررسی کن تا نشانه‌های مشکوک
+                        و احتمال‌های مرتبط با بیماری یا آفت شناسایی بشن.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>ورود به تشخیص</span>
+                        <span>←</span>
+                    </div>
+                </a>
+
+                <!-- امکان دوم: آزمایشگاه صدا -->
+                <a href="plant-sound.html" class="feature-card reveal">
+
+                    <div class="card-topline">
+                        <span class="card-number">02 / SOUND</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+
+                    <div class="card-illustration illustration-sound">
+                        <span>∿</span>
+                        <span>∿</span>
+                        <span>∿</span>
+                        <span class="sound-center">♫</span>
+                    </div>
+
+                    <span class="card-tag">آزمایشگاه صوت</span>
+                    <h3>صدا و فرکانس</h3>
+
+                    <p>
+                        صدا رو ضبط کن یا بارگذاری کن و شکل موج
+                        و طیف فرکانسی اون رو ببین.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>ورود به آزمایشگاه</span>
+                        <span>←</span>
+                    </div>
+                </a>
+
+                <!-- امکان سوم: بررسی علائم -->
+                <a href="symptoms.html" class="feature-card reveal">
+                    <div class="card-topline">
+                        <span class="card-number">03 / DIAGNOSIS</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+                     
+       
+               
+                <div class="card-illustration illustration-diagnosis">
+                    <span class="diagnosis-magnifier">⌕</span>
+                   <span class="diagnosis-cross">✳</span>
+                    <span class="diagnosis-dot">＋</span>
+                </div>
+                  <span class="card-tag">آزمایشگاه تشخیص بیماری</span>
+                 <h3>کارآگاه بیماری</h3>
+                  <p>عکس، علائم و شرایط محیطی؛ در یک مسیر هوشمند</P>
+                
+                 <div class="card-footer">
+                        <span> شروع بررسی بیماری </span>
+                        <span>←</span>
+                    </div>
+</a>
+                
+        </section>
+        <!-- نوار معرفی ارزش‌ها و قابلیت‌های کلی -->
+<section class="value-strip section-wrap reveal">
+                <!-- امکان چهارم: شرایط محیطی -->
+                <a href="environment.html" class="feature-card reveal">
+
+                    <div class="card-topline">
+                        <span class="card-number">04 / CLIMATE</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+
+                    <div class="card-illustration illustration-climate">
+                        <span>☼</span>
+                        <span>♧</span>
+                        <span>◌</span>
+                    </div>
+
+                    <span class="card-tag">شرایط محیطی</span>
+                    <h3>محیط مناسب رشد</h3>
+
+                    <p>
+                        دما، نور، رطوبت و آبیاری رو ثبت کن
+                        تا شرایط نگهداری رو بهتر ارزیابی کنی.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>ثبت شرایط</span>
+                        <span>←</span>
+                    </div>
+                </a>
+
+                <!-- امکان پنجم: دستیار هوشمند -->
+                <a href="assistant.html" class="feature-card reveal">
+
+                    <div class="card-topline">
+                        <span class="card-number">05 / AI GUIDE</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+
+                    <div class="card-illustration illustration-ai">
+                        <span class="ai-orb">✳</span>
+                        <span class="ai-orb-small">✦</span>
+                    </div>
+
+                    <span class="card-tag">دستیار هوشمند</span>
+                    <h3>با گیاه‌یار گفت‌وگو کن</h3>
+
+                    <p>
+                        سؤال بپرس، درباره نگهداری یاد بگیر
+                        و راهکارهای مناسب رو بررسی کن.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>گفت‌وگو با دستیار</span>
+                        <span>←</span>
+                    </div>
+                </a>
+
+                <!-- امکان ششم: تاریخچه سلامت -->
+                <a href="history.html" class="feature-card reveal">
+
+                    <div class="card-topline">
+                        <span class="card-number">06 / HISTORY</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+
+                    <div class="card-illustration illustration-history">
+                        <span class="history-line">⌁⌁⌁</span>
+                        <span class="history-dot"></span>
+                        <span class="history-dot second"></span>
+                    </div>
+
+                    <span class="card-tag">پایش سلامت</span>
+                    <h3>داستان رشد گیاهت</h3>
+
+                    <p>
+                        عکس‌ها و نتایج بررسی رو ثبت کن
+                        و تغییرات رو در گذر زمان مقایسه کن.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>مشاهده تاریخچه</span>
+                        <span>←</span>
+                    </div>
+                </a>
+
+                <!-- امکان هفتم: برنامه مراقبت -->
+                <a href="care.html" class="feature-card reveal">
+
+                    <div class="card-topline">
+                        <span class="card-number">07 / CARE PLAN</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+
+                    <div class="card-illustration illustration-care">
+                        <span class="care-calendar">▦</span>
+                        <span class="care-check">✓</span>
+                    </div>
+
+                    <span class="card-tag">برنامه‌ریزی</span>
+                    <h3>مراقبت در زمان مناسب</h3>
+       <p>
+                        برای آبیاری و رسیدگی یادآوری تنظیم کن
+                        و کارهای مراقبتی رو مدیریت کن.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>ساخت برنامه</span>
+                        <span>←</span>
+                    </div>
+                </a>
+
+                <!-- امکان هشتم: نقشه گزارش‌ها -->
+                <a href="map.html" class="feature-card reveal">
+
+                    <div class="card-topline">
+                        <span class="card-number">08 / PLANT MAP</span>
+                        <span class="card-symbol">↗</span>
+                    </div>
+
+                    <div class="card-illustration illustration-map">
+                        <span class="map-pin">●</span>
+                        <span class="map-pin pin-two">●</span>
+                        <span class="map-pin pin-three">●</span>
+                        <span class="map-path">⌁</span>
+                    </div>
+
+                    <span class="card-tag">گزارش‌های مکانی</span>
+                    <h3>نقشه سلامت گیاهان</h3>
+
+                    <p>
+                        گزارش‌های مکانی ثبت‌شده رو ببین
+                        و وضعیت تأیید هر گزارش رو بررسی کن.
+                    </p>
+
+                    <div class="card-footer">
+                        <span>مشاهده نقشه</span>
+                        <span>←</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+       
+
+        <!-- دعوت پایانی برای شروع کار با سایت -->
+        <section class="closing-section section-wrap reveal">
+            <div class="closing-decoration">❧</div>
+
+            <span class="section-kicker">یک شروع سبز</span>
+
+            <h2>
+                هر گیاه، شایسته
+                <span>مراقبت بهتره.</span>
+            </h2>
+            <p>
+                اولین قدم رو بردار؛ گیاهت رو بهتر بشناس
+                و با آگاهی بیشتری ازش مراقبت کن.
+            </p>
+            </a>
+        </section>
+
+    </main>
+
+ <!-- پاورقی سایت -->
+<footer class="footer">
+
+    <div class="footer-main section-wrap">
+
+        <!-- ستون برند -->
+        <div class="footer-brand">
+            <a class="brand" href="index.html">
+               <div class="caption-icon">🌿</div>
+            <span>گیاه‌یار<span class="brand-dot"></span></span>
+        </a>
+            <p>تشخیص بیماری گیاهان با هوش مصنوعی</p>
+        </div>
+
+        <!-- ستون ابزارها -->
+        <div class="footer-column">
+            <h3>ابزارها</h3>
+            <a href="diagnosis.html">تشخیص از روی عکس</a>
+            <a href="detective.html">کارآگاه بیماری</a>
+            <a href="assistant.html">دستیار هوشمند</a>
+            <a href="care.html">برنامه مراقبت</a>
+        </div>
+
+        <!-- ستون حساب کاربری -->
+        <div class="footer-column">
+            <h3>حساب کاربری</h3>
+            <a href="account.html">ورود و ثبت‌نام</a>
+            <a href="history.html">تاریخچه سلامت</a>
+        </div>
+
+    </div>
+
+    <!-- نوار پایین -->
+    <div class="footer-bottom section-wrap">
+        <span>پروژه پایانی کارشناسی نرم افزار کامپیوتر | دانشگاه [دختران نجف آباد] | ساخته‌شده توسط [عارفه یزدانیان . سارا دیان]</span>
+        <span>تصاویر فقط برای تشخیص استفاده می‌شوند. نتایج آموزشی‌اند و جایگزین نظر متخصص نیستند.</span>
+    </div>
+</footer>
+
+    <!-- اتصال JavaScript برای منوی موبایل و انیمیشن‌ها -->
+   
+
+   
+    <!-- پنجره همراه هوشمند گیاه‌یار -->
+<div class="plant-chat" id="plantChat">
+    <div class="chat-header">
+        <div class="chat-avatar">🌿</div>
+        <div class="chat-title">
+            <strong>همراه هوشمند گیاه‌یار</strong>
+            <span>دستیار مراقبت از گیاهان</span>
+        </div>
+        <button type="button" class="chat-close" onclick="closePlantAssistant()">×</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+        <div class="bot-message">
+            سلام! 🌱 من همراه هوشمند گیاه‌یارم.
+            <br>
+            درباره گیاهت چه سؤالی داری؟
+        </div>
+    </div>
+
+    <div class="quick-questions">
+        <button type="button" onclick="askPlantQuestion('چرا برگ گیاه من زرد شده؟')">
+            🍃 زرد شدن برگ
+        </button>
+        <button type="button" onclick="askPlantQuestion('چطور از گیاه آپارتمانی نگهداری کنم؟')">
+            🪴 نگهداری گیاه
+        </button>
+        <button type="button" onclick="askPlantQuestion('چرا گیاه من پژمرده شده؟')">
+            🌿 پژمرده شدن گیاه
+        </button>
+    </div>
+
+    <form class="chat-input-area" id="plantChatForm">
+        <input
+            type="text"
+            id="plantChatInput"
+            placeholder="سؤالت رو بنویس..."
+            autocomplete="off"
+        >
+        <button type="submit">ارسال</button>
+    </form>
+</div>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

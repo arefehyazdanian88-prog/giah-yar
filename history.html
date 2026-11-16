@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داستان رشد گیاهت | گیاه‌یار</title>
+
+    <style>
+        /* تنظیمات کلی */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f8f2;
+            color: #26392d;
+            line-height: 1.9;
+        }
+
+        button, input, textarea, select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* نوار بالای سایت */
+        .navbar {
+            background: #ffffff;
+            padding: 15px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e4ece2;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #287447;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #287447;
+            background: #edf6ed;
+            padding: 9px 16px;
+            border-radius: 11px;
+            font-size: 13px;
+        }
+
+        /* بخش معرفی */
+        .hero {
+            text-align: center;
+            padding: 35px 20px 28px;
+        }
+
+        .hero-icon {
+            font-size: 48px;
+        }
+
+        .hero h1 {
+            font-size: clamp(25px, 4vw, 36px);
+            color: #245e3b;
+            margin: 8px 0;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: auto;
+            color: #738174;
+            font-size: 14px;
+        }
+
+        /* محتوای اصلی */
+        .container {
+            max-width: 1120px;
+            margin: auto;
+            padding: 0 20px 45px;
+        }
+
+        .section-title {
+            font-size: 21px;
+            color: #285e3c;
+            margin: 25px 0 15px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5ede3;
+            border-radius: 19px;
+            padding: 22px;
+            box-shadow: 0 7px 22px rgba(35, 75, 42, 0.04);
+        }
+
+        /* خلاصه داستان */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .summary-card {
+            background: #ffffff;
+            border: 1px solid #e5ede3;
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .summary-icon {
+            font-size: 27px;
+        }
+
+        .summary-label {
+            color: #788779;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+        .summary-value {
+            font-size: 20px;
+            color: #287447;
+            font-weight: bold;
+            margin-top: 3px;
+        }
+
+        /* فرم ثبت وضعیت */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 17px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            font-size: 13px;
+            color: #526456;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dce6da;
+            border-radius: 11px;
+            font-size: 14px;
+            color: #26392d;
+            background: #ffffff;
+            outline: none;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: #39905a;
+        }
+
+        .field textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+        .photo-preview {
+            display: none;
+            max-width: 220px;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-top: 10px;
+            border: 1px solid #e0e9dd;
+        }
+
+        .primary-button {
+            border: none;
+            background: #287447;
+            color: #ffffff;
+            border-radius: 11px;
+            padding: 12px 20px;
+            font-size: 14px;
+            margin-top: 17px;
+        }
+
+        .primary-button:hover {
+            background: #1f5d38;
+        }
+
+        /* فهرست سوابق */
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .history-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .history-item {
+            border: 1px solid #e5ede3;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .history-item img {
+            display: block;
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #edf4e9;
+        }
+
+        .history-content {
+            padding: 15px;
+        }
+
+        .history-date {
+            color: #6c806e;
+            font-size: 12px;
+        }
+
+        .history-content h3 {
+            font-size: 16px;
+            color: #285e3c;
+            margin: 6px 0;
+        }
+
+        .history-content p {
+            font-size: 13px;
+            color: #687669;
+            overflow-wrap: anywhere;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 13px;
+        }
+
+        .small-button {
+            border: 1px solid #dce8d9;
+            background: #f5f9f2;
+            color: #306a41;
+            padding: 7px 10px;
+            border-radius: 9px;
+            font-size: 12px;
+        }
+
+        .delete-button {
+            color: #a33b3b;
+            background: #fff5f3;
+            border-color: #f0d8d4;
+        }
+
+        .empty-state {
+            background: #f7faf5;
+            border: 1px dashed #d1dfcf;
+            border-radius: 14px;
+            padding: 30px 15px;
+            text-align: center;
+            color: #788779;
+            font-size: 14px;
+            grid-column: 1 / -1;
+        }
+
+        /* بخش مقایسه */
+        .compare-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .compare-panel {
+            background: #f7faf5;
+            border-radius: 14px;
+            padding: 13px;
+            min-width: 0;
+        }
+
+        .compare-panel h3 {
+            font-size: 14px;
+            color: #326743;
+            margin-bottom: 10px;
+        }
+
+        .compare-panel img {
+            width: 100%;
+            height: 230px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #eaf1e7;
+        }
+
+        .compare-note {
+            font-size: 12px;
+            color: #6e7d6f;
+            margin-top: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .notice {
+            background: #fff8e8;
+            color: #7b6128;
+            border: 1px solid #f0e3bd;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-top: 18px;
+            font-size: 12px;
+        }
+
+       
+
+        /* نمایش مناسب در موبایل */
+        @media (max-width: 760px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .history-list {
+                grid-template-columns: 1fr;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+
+            .compare-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .compare-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 13px 5%;
+            }
+
+            .container {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .compare-panel img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+ <link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+<body>
+
+    <!-- نوار بالای صفحه -->
+      <div id="site-header"></div>
+
+
+
+    <!-- معرفی -->
+    <section class="hero">
+        <div class="hero-icon">📖🌱</div>
+        <h1>داستان رشد گیاهت</h1>
+        <p>
+            عکس‌ها و نتایج بررسی گیاهت را ثبت کن و تغییراتش را
+            در گذر زمان کنار هم ببین.
+        </p>
+    </section>
+
+    <main class="container">
+        <!-- خلاصه وضعیت -->
+        <h2 class="section-title">داستان گیاه من</h2>
+
+        <section class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-icon">🪴</div>
+                <div class="summary-label">نام گیاه</div>
+                <div class="summary-value" id="summaryPlant">پتوس</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon">📸</div>
+                <div class="summary-label">تعداد ثبت‌ها</div>
+                <div class="summary-value" id="summaryCount">۰</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon">🗓️</div>
+                <div class="summary-label">آخرین ثبت</div>
+                <div class="summary-value" id="summaryDate">هنوز ثبت نشده</div>
+            </div>
+        </section>
+
+        <!-- فرم ثبت جدید -->
+        <h2 class="section-title">ثبت یک خاطره جدید</h2>
+
+        <section class="card">
+            <form id="recordForm">
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label for="plantInput">نام گیاه</label>
+                        <select id="plantInput" required>
+                            <option value="پتوس">پتوس</option>
+                            <option value="گل رز">گل رز</option>
+                            <option value="کاکتوس">کاکتوس</option>
+                            <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+                            <option value="نعناع">نعناع</option>
+                            <option value="ارکیده">ارکیده</option>
+                            <option value="سایر گیاهان">سایر گیاهان</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="recordDate">تاریخ ثبت</label>
+                        <input type="date" id="recordDate" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="recordTitle">عنوان این مرحله</label>
+                        <input
+                            type="text"
+                            id="recordTitle"
+                            placeholder="مثلاً رشد برگ‌های جدید"
+                            maxlength="80"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="recordResult">وضعیت گیاه</label>
+                        <select id="recordResult" required>
+                            <option value="سالم به نظر می‌رسد">سالم به نظر می‌رسد</option>
+                            <option value="زردی برگ‌ها">زردی برگ‌ها</option>
+                            <option value="لکه روی برگ‌ها">لکه روی برگ‌ها</option>
+                            <option value="رشد کم">رشد کم</option>
+                            <option value="در حال بهبود">در حال بهبود</option>
+                            <option value="نیازمند بررسی بیشتر">نیازمند بررسی بیشتر</option>
+                        </select>
+                    </div>
+
+                    <div class="field full">
+                        <label for="recordPhoto">عکس گیاه</label>
+                        <input
+                            type="file"
+                            id="recordPhoto"
+                            accept="image/*"
+                            required
+                        >
+                        <img
+                            id="photoPreview"
+                            class="photo-preview"
+                            alt="پیش‌نمایش عکس گیاه"
+                        >
+                    </div>
+
+                    <div class="field full">
+                        <label for="recordNotes">توضیحات و تغییرات</label>
+                        <textarea
+                            id="recordNotes"
+                            placeholder="مثلاً دو برگ جدید رشد کرده و خاک را دیروز آبیاری کردم..."
+                            maxlength="1000"
+                        ></textarea>
+                    </div>
+
+                </div>
+
+                <button class="primary-button" type="submit">
+                    + ثبت در داستان گیاه
+                </button>
+
+            </form>
+        </section>
+
+        <!-- تاریخچه -->
+        <div class="history-header">
+            <h2 class="section-title">آلبوم و تاریخچه رشد</h2>
+        </div>
+
+        <section class="history-list" id="historyList">
+            <div class="empty-state">
+                🌱 هنوز خاطره‌ای ثبت نکرده‌ای.
+                اولین عکس گیاهت را ثبت کن تا داستانش شروع شود.
+            </div>
+        </section>
+
+        <!-- مقایسه عکس ها -->
+        <h2 class="section-title">مقایسه در گذر زمان</h2>
+
+        <section class="card">
+
+            <p style="font-size: 13px; color: #708071; margin-bottom: 16px;">
+                دو ثبت از یک گیاه را انتخاب کن تا عکس‌ها و توضیحاتشان کنار هم نمایش داده شوند.
+            </p>
+
+            <div class="compare-controls">
+                <div class="field">
+                    <label for="olderRecord">ثبت اول</label>
+                    <select id="olderRecord">
+                        <option value="">ابتدا خاطره ثبت کن</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="newerRecord">ثبت دوم</label>
+                    <select id="newerRecord">
+                        <option value="">ابتدا خاطره ثبت کن</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="primary-button" type="button" id="compareButton">
+                مقایسه عکس‌ها
+            </button>
+
+            <div class="compare-grid" id="compareResult" style="margin-top: 20px;">
+                <div class="empty-state">
+                    پس از ثبت حداقل دو خاطره، می‌توانی آن‌ها را مقایسه کنی.
+                </div>
+            </div>
+
+            <div class="notice">
+                توجه: مقایسه این صفحه فعلاً عکس‌ها و اطلاعات ثبت‌شده را کنار هم نشان می‌دهد.
+                تشخیص خودکار بیماری یا اندازه‌گیری میزان بهبود هنوز فعال نیست.
+            </div>
+
+        </section>
+
+    </main>
+
+      <div id="site-footer"></div>
+
+
+    <script>
+        // گرفتن عناصر صفحه
+        const recordForm = document.getElementById("recordForm");
+        const plantInput = document.getElementById("plantInput");
+        const recordDate = document.getElementById("recordDate");
+        const recordTitle = document.getElementById("recordTitle");
+        const recordResult = document.getElementById("recordResult");
+        const recordPhoto = document.getElementById("recordPhoto");
+        const recordNotes = document.getElementById("recordNotes");
+        const photoPreview = document.getElementById("photoPreview");
+        const historyList = document.getElementById("historyList");
+        const olderRecord = document.getElementById("olderRecord");
+        const newerRecord = document.getElementById("newerRecord");
+        const compareButton = document.getElementById("compareButton");
+        const compareResult = document.getElementById("compareResult");
+
+        // نگهداری خاطره ها در حافظه موقت صفحه
+        const records = [];
+        let nextId = 1;
+        let selectedPhotoUrl = "";
+
+        // تنظیم تاریخ امروز
+        const today = new Date();
+        const localToday = new Date(
+            today.getTime() - today.getTimezoneOffset() * 60000
+        ).toISOString().slice(0, 10);
+
+        recordDate.value = localToday;
+        recordDate.max = localToday;
+
+        // پیش نمایش عکس انتخاب شده
+        recordPhoto.addEventListener("change", function () {
+            const file = recordPhoto.files[0];
+
+            if (selectedPhotoUrl) {
+                URL.revokeObjectURL(selectedPhotoUrl);
+                selectedPhotoUrl = "";
+            }
+
+            if (!file) {
+                photoPreview.removeAttribute("src");
+                photoPreview.style.display = "none";
+                return;
+            }
+
+            if (!file.type.startsWith("image/")) {
+                alert("لطفاً یک فایل تصویری انتخاب کن.");
+                recordPhoto.value = "";
+                photoPreview.style.display = "none";
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert("حجم عکس باید کمتر از ۵ مگابایت باشد.");
+                recordPhoto.value = "";
+                photoPreview.style.display = "none";
+                return;
+            }
+
+            selectedPhotoUrl = URL.createObjectURL(file);
+            photoPreview.src = selectedPhotoUrl;
+            photoPreview.style.display = "block";
+        });
+
+        // به روز رسانی خلاصه داستان
+        function updateSummary() {
+            document.getElementById("summaryCount").textContent =
+                String(records.length);
+
+            document.getElementById("summaryPlant").textContent =
+                plantInput.value;
+
+            if (records.length === 0) {
+                document.getElementById("summaryDate").textContent =
+                    "هنوز ثبت نشده";
+                return;
+            }
+
+            const sorted = records.slice().sort(function (a, b) {
+                return b.date.localeCompare(a.date);
+            });
+
+            document.getElementById("summaryDate").textContent =
+                sorted[0].date;
+        }
+
+        // ساخت کارت یک خاطره
+        function createHistoryCard(record) {
+            const card = document.createElement("article");
+            card.className = "history-item";
+
+            const image = document.createElement("img");
+            image.src = record.photo;
+            image.alt = "عکس " + record.plant;
+            card.appendChild(image);
+
+            const content = document.createElement("div");
+            content.className = "history-content";
+
+            const date = document.createElement("div");
+            date.className = "history-date";
+            date.textContent = "📅 " + record.date;
+
+            const title = document.createElement("h3");
+            title.textContent = record.title;
+
+            const plant = document.createElement("p");
+            plant.textContent = "🌱 گیاه: " + record.plant;
+
+            const result = document.createElement("p");
+            result.textContent = "وضعیت: " + record.result;
+
+            const notes = document.createElement("p");
+            notes.textContent = record.notes || "توضیحی ثبت نشده است.";
+            const actions = document.createElement("div");
+            actions.className = "history-actions";
+
+            const compare = document.createElement("button");
+            compare.type = "button";
+            compare.className = "small-button";
+            compare.textContent = "انتخاب برای مقایسه";
+
+            compare.addEventListener("click", function () {
+                if (!olderRecord.value) {
+                    olderRecord.value = String(record.id);
+                } else {
+                    newerRecord.value = String(record.id);
+                }
+
+                compareRecords();
+                document.getElementById("olderRecord").scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            });
+
+            const remove = document.createElement("button");
+            remove.type = "button";
+            remove.className = "small-button delete-button";
+            remove.textContent = "حذف";
+
+            remove.addEventListener("click", function () {
+                const confirmed = confirm("این خاطره حذف شود؟");
+
+                if (!confirmed) {
+                    return;
+                }
+
+                const index = records.findIndex(function (item) {
+                    return item.id === record.id;
+                });
+
+                if (index !== -1) {
+                    records.splice(index, 1);
+                }
+
+                renderHistory();
+            });
+
+            actions.appendChild(compare);
+            actions.appendChild(remove);
+
+            content.appendChild(date);
+            content.appendChild(title);
+            content.appendChild(plant);
+            content.appendChild(result);
+            content.appendChild(notes);
+            content.appendChild(actions);
+
+            card.appendChild(content);
+
+            return card;
+        }
+
+        // نمایش تمام خاطره ها
+        function renderHistory() {
+            historyList.replaceChildren();
+
+            if (records.length === 0) {
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+                empty.textContent =
+                    "🌱 هنوز خاطره‌ای ثبت نکرده‌ای. اولین عکس گیاهت را ثبت کن.";
+                historyList.appendChild(empty);
+            } else {
+                const sorted = records.slice().sort(function (a, b) {
+                    return b.date.localeCompare(a.date);
+                });
+
+                sorted.forEach(function (record) {
+                    historyList.appendChild(createHistoryCard(record));
+                });
+            }
+
+            updateSummary();
+            updateCompareOptions();
+        }
+
+        // به روز رسانی فهرست انتخاب برای مقایسه
+        function updateCompareOptions() {
+            const previousOlder = olderRecord.value;
+            const previousNewer = newerRecord.value;
+
+            olderRecord.replaceChildren();
+            newerRecord.replaceChildren();
+
+            const placeholderOlder = document.createElement("option");
+            placeholderOlder.value = "";
+            placeholderOlder.textContent = "ثبت اول را انتخاب کن";
+
+            const placeholderNewer = document.createElement("option");
+            placeholderNewer.value = "";
+            placeholderNewer.textContent = "ثبت دوم را انتخاب کن";
+
+            olderRecord.appendChild(placeholderOlder);
+            newerRecord.appendChild(placeholderNewer);
+
+            const sorted = records.slice().sort(function (a, b) {
+                return a.date.localeCompare(b.date);
+            });
+
+            sorted.forEach(function (record) {
+                const optionOne = document.createElement("option");
+                optionOne.value = String(record.id);
+                optionOne.textContent =
+                    record.plant + " - " + record.date + " - " + record.title;
+                    const optionTwo = document.createElement("option");
+                optionTwo.value = String(record.id);
+                optionTwo.textContent =
+                    record.plant + " - " + record.date + " - " + record.title;
+
+                olderRecord.appendChild(optionOne);
+                newerRecord.appendChild(optionTwo);
+            });
+
+            if (records.some(function (item) {
+                return String(item.id) === previousOlder;
+            })) {
+                olderRecord.value = previousOlder;
+            }
+
+            if (records.some(function (item) {
+                return String(item.id) === previousNewer;
+            })) {
+                newerRecord.value = previousNewer;
+            }
+        }
+
+        // نمایش دو عکس کنار هم
+        function compareRecords() {
+            compareResult.replaceChildren();
+
+            const first = records.find(function (record) {
+                return String(record.id) === olderRecord.value;
+            });
+
+            const second = records.find(function (record) {
+                return String(record.id) === newerRecord.value;
+            });
+
+            if (!first || !second) {
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+                empty.textContent =
+                    "برای مقایسه، دو ثبت را انتخاب کن.";
+                compareResult.appendChild(empty);
+                return;
+            }
+
+            if (first.id === second.id) {
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+                empty.textContent =
+                    "برای مقایسه، دو ثبت متفاوت انتخاب کن.";
+                compareResult.appendChild(empty);
+                return;
+            }
+
+            if (first.plant !== second.plant) {
+                const warning = document.createElement("div");
+                warning.className = "empty-state";
+                warning.textContent =
+                    "توجه: این دو ثبت مربوط به دو نوع گیاه متفاوت هستند.";
+                compareResult.appendChild(warning);
+            }
+
+            addComparePanel(first, "ثبت اول");
+            addComparePanel(second, "ثبت دوم");
+        }
+
+        // ساخت بخش مقایسه هر عکس
+        function addComparePanel(record, heading) {
+            const panel = document.createElement("div");
+            panel.className = "compare-panel";
+
+            const title = document.createElement("h3");
+            title.textContent = heading + " - " + record.date;
+
+            const image = document.createElement("img");
+            image.src = record.photo;
+            image.alt = "مقایسه " + record.plant;
+
+            const details = document.createElement("div");
+            details.className = "compare-note";
+            details.textContent =
+                record.plant + " | " + record.title +
+                " | وضعیت: " + record.result +
+                " | " + (record.notes || "بدون توضیح");
+
+            panel.appendChild(title);
+            panel.appendChild(image);
+            panel.appendChild(details);
+
+            compareResult.appendChild(panel);
+        }
+
+        // ثبت خاطره جدید
+        recordForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const file = recordPhoto.files[0];
+
+            if (!file || !selectedPhotoUrl) {
+                alert("لطفاً یک عکس از گیاه انتخاب کن.");
+                return;
+            }
+
+            if (recordDate.value > localToday) {
+                alert("تاریخ ثبت نمی‌تواند در آینده باشد.");
+                return;
+            }
+
+            // خواندن عکس برای نگهداری در همین صفحه
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                const record = {
+                    id: nextId,
+                    plant: plantInput.value,
+                    date: recordDate.value,
+                    title: recordTitle.value.trim(),
+                    result: recordResult.value,
+                    notes: recordNotes.value.trim(),
+                    photo: reader.result
+                };
+
+                nextId = nextId + 1;
+                records.push(record);
+
+                renderHistory();
+
+                recordForm.reset();
+                recordDate.value = localToday;
+
+                if (selectedPhotoUrl) {
+                    URL.revokeObjectURL(selectedPhotoUrl);
+                    selectedPhotoUrl = "";
+                }
+
+                photoPreview.removeAttribute("src");
+                photoPreview.style.display = "none";
+
+                alert("خاطره گیاهت با موفقیت ثبت شد.");
+            };
+
+            reader.onerror = function () {
+                alert("خواندن عکس با مشکل مواجه شد. لطفاً دوباره امتحان کن.");
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // اجرای مقایسه با دکمه
+        compareButton.addEventListener("click", function () {
+            compareRecords();
+        });
+
+        // به روز رسانی نام گیاه در خلاصه
+        plantInput.addEventListener("change", function () {
+            updateSummary();
+        });
+
+        // نمایش اولیه صفحه
+        renderHistory();
+    </script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محیط مناسب رشد گیاه | گیاه‌یار</title>
+
+    <style>
+        /* تنظیمات اصلی صفحه */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f5f8f2;
+            color: #24392c;
+            line-height: 1.9;
+        }
+
+        button, select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+       
+
+        /* بخش معرفی صفحه */
+        .hero {
+            margin-top: 28px;
+            padding: 38px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #e1f3df, #f4f8e9);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            overflow: hidden;
+        }
+
+        .hero-text {
+            max-width: 650px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #ffffff;
+            color: #287547;
+            border-radius: 30px;
+            padding: 5px 14px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            color: #205b37;
+        }
+
+        .hero p {
+            color: #526b56;
+            font-size: 15px;
+        }
+
+        .hero-icon {
+            font-size: 100px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        /* عنوان بخش‌ها */
+        .section {
+            margin-top: 32px;
+        }
+
+        .section-title {
+            font-size: 21px;
+            color: #245e39;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: #758276;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        /* کادر انتخاب گیاه */
+        .select-box {
+            background: #ffffff;
+            border: 1px solid #e5ede0;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 5px 22px rgba(35, 75, 45, 0.04);
+        }
+
+        .field-label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .plant-select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d5e3d1;
+            border-radius: 12px;
+            background: #fbfdf9;
+            color: #24392c;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .plant-select:focus {
+            border-color: #4b9b62;
+            box-shadow: 0 0 0 3px rgba(75, 155, 98, 0.12);
+        }
+
+        /* مشخصات گیاه انتخاب شده */
+        .plant-profile {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-top: 22px;
+            padding: 18px;
+            background: #f5faf1;
+            border-radius: 16px;
+        }
+        .plant-picture {
+            width: 95px;
+            height: 95px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e3f1db;
+            border-radius: 18px;
+            font-size: 55px;
+        }
+
+        .plant-profile h3 {
+            color: #28623b;
+            margin-bottom: 5px;
+            font-size: 19px;
+        }
+
+        .plant-profile p {
+            color: #68776a;
+            font-size: 13px;
+        }
+
+        /* کارت‌های شرایط رشد */
+        .conditions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .condition-card {
+            background: #ffffff;
+            border: 1px solid #e7ede3;
+            border-radius: 18px;
+            padding: 22px 15px;
+            min-width: 0;
+            box-shadow: 0 4px 18px rgba(35, 75, 45, 0.035);
+        }
+
+        .condition-icon {
+            font-size: 29px;
+            margin-bottom: 8px;
+        }
+
+        .condition-card h3 {
+            color: #536b54;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .condition-value {
+            font-size: 17px;
+            font-weight: bold;
+            color: #247345;
+            overflow-wrap: anywhere;
+        }
+
+        .condition-note {
+            color: #849084;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        /* راهنمای رشد گیاه */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .tip-card {
+            padding: 21px;
+            background: #ffffff;
+            border: 1px solid #e6ece2;
+            border-radius: 17px;
+        }
+
+        .tip-card h3 {
+            font-size: 15px;
+            color: #2b7045;
+            margin-bottom: 8px;
+        }
+
+        .tip-card p {
+            color: #718071;
+            font-size: 13px;
+        }
+
+        /* دکمه بررسی شرایط */
+        .action-area {
+            text-align: center;
+            margin-top: 28px;
+        }
+
+        .main-button {
+            background: #287b49;
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .main-button:hover {
+            background: #1c6238;
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #e9f5e5;
+            border: 1px solid #cde5c5;
+            border-radius: 16px;
+            text-align: right;
+        }
+
+        .result-box h3 {
+            color: #24683c;
+            margin-bottom: 8px;
+        }
+
+        .result-box p {
+            font-size: 14px;
+            color: #526b56;
+        }
+
+        /* پیام معرفی اطلاعات نمایشی */
+        .demo-note {
+            margin-top: 24px;
+            padding: 14px 17px;
+            background: #fff9e8;
+            color: #816a32;
+            border: 1px solid #f1e5bd;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        
+
+        /* تنظیم ظاهر صفحه برای موبایل */
+        @media (max-width: 800px) {
+            .conditions-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero-icon {
+                font-size: 75px;
+                min-width: 75px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                width: 94%;
+            }
+
+            .hero {
+                padding: 20px;
+                gap: 8px;
+            }
+
+            .hero h1 {
+                font-size: 20px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .hero-icon {
+                font-size: 53px;
+                min-width: 50px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .nav-link {
+                font-size: 12px;
+            }
+
+            .select-box {
+                padding: 16px;
+            }
+
+            .plant-profile {
+                align-items: flex-start;
+                padding: 13px;
+                gap: 12px;
+            }
+
+            .plant-picture {
+                width: 65px;
+                height: 65px;
+                font-size: 37px;
+            }
+
+            .plant-profile h3 {
+                font-size: 16px;
+            }
+
+            .condition-card {
+                padding: 16px 11px;
+            }
+
+            .condition-value {
+                font-size: 15px;
+            }
+
+            .section-title {
+                font-size: 19px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/header.css">
+     <link rel="stylesheet" href="css/footer.css">
+     
+     
+</head>
+
+<body>
+<div id="site-header"></div>
+
+    <main class="container">
+
+        <!-- معرفی صفحه -->
+        <section class="hero">
+            <div class="hero-text">
+                <span class="tag">🌱 راهنمای هوشمند رشد</span>
+                <h1>محیط مناسب رشد گیاه</h1>
+                <p>
+                    هر گیاه برای رشد بهتر به شرایط خاصی نیاز دارد.
+                    گیاهت را انتخاب کن و با شرایط مناسب نور، دما،
+                    رطوبت و خاک آن آشنا شو.
+                </p>
+            </div>
+            <div class="hero-icon" aria-hidden="true">🪴</div>
+        </section>
+
+        <!-- انتخاب گیاه -->
+        <section class="section">
+            <h2 class="section-title">گیاهت را انتخاب کن</h2>
+            <p class="section-description">
+                از فهرست زیر، گیاهی را که می‌خواهی درباره‌اش اطلاعات بگیری انتخاب کن.
+            </p>
+
+            <div class="select-box">
+                <label class="field-label" for="plantSelect">
+                    نوع گیاه
+                </label>
+
+                <select class="plant-select" id="plantSelect">
+                    <option value="rose">گل رز</option>
+                    <option value="cactus">کاکتوس</option>
+                    <option value="pothos">پتوس</option>
+                    <option value="tomato">گوجه‌فرنگی</option>
+                    <option value="mint">نعناع</option>
+                </select>
+
+                <div class="plant-profile">
+                    <div class="plant-picture" id="plantEmoji">🌹</div>
+                    <div>
+                        <h3 id="plantName">گل رز</h3>
+                        <p id="plantDescription">
+                            گیاهی گل‌دار که برای رشد خوب به نور کافی و خاک مناسب نیاز دارد.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- شرایط مناسب رشد -->
+        <section class="section">
+            <h2 class="section-title">شرایط مناسب رشد</h2>
+            <p class="section-description">
+                راهنمای کلی شرایط محیطی گیاه انتخاب‌شده
+            </p>
+
+            <div class="conditions-grid">
+
+                <article class="condition-card">
+                    <div class="condition-icon">☀️</div>
+                    <h3>نور مناسب</h3>
+                    <div class="condition-value" id="lightValue">نور زیاد</div>
+                    <p class="condition-note">میزان نور مورد نیاز</p>
+                </article>
+                <article class="condition-card">
+                    <div class="condition-icon">🌡️</div>
+                    <h3>دمای مناسب</h3>
+                    <div class="condition-value" id="temperatureValue">۱۸ تا ۲۷ درجه</div>
+                    <p class="condition-note">دمای تقریبی بر حسب سانتی‌گراد</p>
+                </article>
+
+                <article class="condition-card">
+                    <div class="condition-icon">💧</div>
+                    <h3>آبیاری</h3>
+                    <div class="condition-value" id="waterValue">متوسط</div>
+                    <p class="condition-note">بر اساس نیاز گیاه و خاک</p>
+                </article>
+
+                <article class="condition-card">
+                    <div class="condition-icon">🪴</div>
+                    <h3>خاک مناسب</h3>
+                    <div class="condition-value" id="soilValue">خاک غنی و زهکش‌دار</div>
+                    <p class="condition-note">خاک باید متناسب با گیاه باشد</p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- راهنمای نگهداری -->
+        <section class="section">
+            <h2 class="section-title">نکات مهم برای رشد بهتر</h2>
+            <p class="section-description">
+                چند نکته کاربردی برای نگهداری از گیاه انتخاب‌شده
+            </p>
+
+            <div class="tips-grid" id="tipsContainer"></div>
+        </section>
+
+        <!-- دکمه بررسی شرایط -->
+        <section class="action-area">
+            <button class="main-button" id="checkButton" type="button">
+                بررسی شرایط رشد گیاه 🌱
+            </button>
+
+            <div class="result-box" id="resultBox" aria-live="polite">
+                <h3 id="resultTitle">راهنمای شرایط رشد</h3>
+                <p id="resultText"></p>
+            </div>
+
+            <div class="demo-note">
+                توجه: اطلاعات این صفحه فعلاً نمونه و نمایشی هستند.
+                این دکمه شرایط واقعی محیط را اندازه‌گیری نمی‌کند.
+                در مراحل بعدی می‌توانیم اطلاعات گیاه را به دیتابیس
+                و امکانات هوشمند گیاه‌یار متصل کنیم.
+            </div>
+        </section>
+
+    </main>
+
+  <div id="site-footer"></div>
+
+    <script>
+        // اطلاعات نمونه گیاهان برای نمایش در صفحه
+        const plants = {
+            rose: {
+                name: "گل رز",
+                emoji: "🌹",
+                description: "گیاهی گل‌دار که برای رشد خوب به نور کافی و خاک مناسب نیاز دارد.",
+                light: "نور زیاد",
+                temperature: "۱۸ تا ۲۷ درجه",
+                water: "متوسط",
+                soil: "خاک غنی و زهکش‌دار",
+                tips: [
+                    {
+                        title: "☀️ نور کافی",
+                        text: "گل رز معمولاً برای گل‌دهی خوب به چند ساعت نور مستقیم خورشید نیاز دارد."
+                    },
+                    {
+                        title: "💧 آبیاری اصولی",
+                        text: "خاک را بررسی کن و از خیس ماندن طولانی‌مدت ریشه‌ها جلوگیری کن."
+                    },
+                    {
+                        title: "🌱 خاک مناسب",
+                        text: "از خاک حاصلخیز با زهکشی مناسب استفاده کن تا آب اضافی خارج شود."
+                    }
+                ],
+                advice: "نور کافی، خاک زهکش‌دار و آبیاری متناسب با خشکی خاک را در اولویت قرار بده."
+            },
+
+            cactus: {
+                name: "کاکتوس",
+                emoji: "🌵",
+                description: "گیاهی سازگار با خشکی که به خاک با زهکشی بسیار خوب نیاز دارد.",
+                light: "روشن و پرنور",
+                temperature: "۱۸ تا ۳۰ درجه",
+                water: "کم",
+                soil: "خاک مخصوص کاکتوس",
+                tips: [
+                    {
+                        title: "☀️ نور مناسب",
+                        text: "بیشتر کاکتوس‌ها نور زیادی می‌خواهند؛ گیاه را به نور شدید به‌تدریج عادت بده."
+                    },
+                    {
+                        title: "💧 آبیاری با فاصله",
+                        text: "قبل از آبیاری دوباره، اجازه بده خاک متناسب با نوع کاکتوس خشک شود."
+                    },
+                    {
+                        title: "🪴 زهکشی خاک",
+                        text: "گلدانی با سوراخ خروج آب و خاک سبک انتخاب کن."
+                    }
+                ],
+                advice: "مهم‌ترین نکته برای بیشتر کاکتوس‌ها نور کافی و جلوگیری از ماندن آب در خاک است."
+            },
+
+            pothos: {
+                name: "پتوس",
+                emoji: "🍃",
+                description: "گیاهی آپارتمانی که در نور غیرمستقیم مناسب به‌خوبی رشد می‌کند.",
+                light: "نور غیرمستقیم",
+                temperature: "۱۸ تا ۲۹ درجه",
+                water: "متوسط",
+                soil: "خاک سبک و زهکش‌دار",
+                tips: [
+                    {
+                        title: "🌤️ نور غیرمستقیم",
+                        text: "پتوس را در محیط روشن و دور از آفتاب مستقیم شدید نگهداری کن."
+                    },
+                    {
+                        title: "💧 بررسی خاک",
+                        text: "وقتی سطح خاک خشک شد، رطوبت داخل خاک را هم بررسی کن و سپس آبیاری کن."
+                    },
+                    {
+                        title: "🌿 برگ‌های سالم",
+                        text: "برگ‌ها را مرتب بررسی کن تا تغییر رنگ یا علائم غیرعادی را زودتر ببینی."
+                    }
+                ],
+                advice: "برای پتوس، نور غیرمستقیم مناسب و آبیاری پس از بررسی خاک اهمیت زیادی دارد."
+            },
+
+            tomato: {
+                name: "گوجه‌فرنگی",
+                emoji: "🍅",
+                description: "گیاهی خوراکی که برای رشد و میوه‌دهی به نور و آب کافی نیاز دارد.",
+                light: "آفتاب مستقیم",
+                temperature: "۲۰ تا ۲۸ درجه",
+                water: "منظم",
+                soil: "خاک حاصلخیز و زهکش‌دار",
+                tips: [
+                    {
+                        title: "☀️ نور روزانه",
+                        text: "گوجه‌فرنگی معمولاً برای رشد و میوه‌دهی به چندین ساعت نور مستقیم نیاز دارد."
+                    },
+                    {
+                        title: "💧 رطوبت یکنواخت",
+                        text: "از خشک شدن شدید و سپس خیس شدن بیش از حد خاک جلوگیری کن."
+                    },
+                    {
+                        title: "🌱 تغذیه گیاه",
+                        text: "از خاک حاصلخیز استفاده کن و کوددهی را بر اساس مرحله رشد انجام بده."
+                    }
+                ],
+                advice: "نور کافی، آبیاری منظم و جلوگیری از نوسان شدید رطوبت خاک به رشد بهتر کمک می‌کند."
+            },
+
+            mint: {
+                name: "نعناع",
+                emoji: "🌿",
+                description: "گیاهی معطر که معمولاً خاک کمی مرطوب و نور مناسب را دوست دارد.",
+                light: "نور ملایم تا زیاد",
+                temperature: "۱۵ تا ۲۵ درجه",
+                water: "نسبتاً منظم",
+                soil: "خاک غنی و مرطوب",
+                tips: [
+                    {
+                        title: "🌤️ نور متعادل",
+                        text: "نعناع را در محیط روشن قرار بده و در هوای گرم مراقب آفتاب شدید باش."
+                    },
+                    {
+                        title: "💧 حفظ رطوبت",
+                        text: "خاک را بررسی کن و نگذار برای مدت طولانی کاملاً خشک بماند."
+                    },
+                    {
+                        title: "✂️ هرس ملایم",
+                        text: "برداشت و هرس ملایم ساقه‌ها می‌تواند به پرپشت شدن گیاه کمک کند."
+                    }
+                ],
+                advice: "خاک با رطوبت مناسب، نور کافی و هرس ملایم به رشد بهتر نعناع کمک می‌کند."
+            }
+        };
+        // گرفتن عناصر صفحه
+        const plantSelect = document.getElementById("plantSelect");
+        const plantEmoji = document.getElementById("plantEmoji");
+        const plantName = document.getElementById("plantName");
+        const plantDescription = document.getElementById("plantDescription");
+
+        const lightValue = document.getElementById("lightValue");
+        const temperatureValue = document.getElementById("temperatureValue");
+        const waterValue = document.getElementById("waterValue");
+        const soilValue = document.getElementById("soilValue");
+
+        const tipsContainer = document.getElementById("tipsContainer");
+        const checkButton = document.getElementById("checkButton");
+        const resultBox = document.getElementById("resultBox");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultText = document.getElementById("resultText");
+
+        // ساخت کارت نکته‌ها بدون استفاده از بک‌تیک یا innerHTML
+        function createTipCard(tip) {
+            const card = document.createElement("article");
+            card.className = "tip-card";
+
+            const title = document.createElement("h3");
+            title.textContent = tip.title;
+
+            const description = document.createElement("p");
+            description.textContent = tip.text;
+
+            card.appendChild(title);
+            card.appendChild(description);
+
+            return card;
+        }
+
+        // نمایش اطلاعات گیاه انتخاب‌شده
+        function updatePlant() {
+            const selectedPlant = plants[plantSelect.value];
+
+            if (!selectedPlant) {
+                return;
+            }
+
+            // به‌روزرسانی مشخصات گیاه
+            plantEmoji.textContent = selectedPlant.emoji;
+            plantName.textContent = selectedPlant.name;
+            plantDescription.textContent = selectedPlant.description;
+
+            // به‌روزرسانی کارت‌های شرایط رشد
+            lightValue.textContent = selectedPlant.light;
+            temperatureValue.textContent = selectedPlant.temperature;
+            waterValue.textContent = selectedPlant.water;
+            soilValue.textContent = selectedPlant.soil;
+
+            // پاک کردن نکته‌های گیاه قبلی
+            tipsContainer.replaceChildren();
+
+            // ساخت نکته‌های مخصوص گیاه جدید
+            selectedPlant.tips.forEach(function (tip) {
+                const card = createTipCard(tip);
+                tipsContainer.appendChild(card);
+            });
+
+            // مخفی کردن نتیجه قبلی بعد از تغییر گیاه
+            resultBox.style.display = "none";
+        }
+
+        // تغییر اطلاعات با انتخاب گیاه جدید
+        plantSelect.addEventListener("change", updatePlant);
+
+        // نمایش راهنمای نمونه برای گیاه انتخاب‌شده
+        checkButton.addEventListener("click", function () {
+            const selectedPlant = plants[plantSelect.value];
+
+            if (!selectedPlant) {
+                return;
+            }
+
+            resultTitle.textContent = "راهنمای رشد " + selectedPlant.name;
+            resultText.textContent = selectedPlant.advice;
+
+            resultBox.style.display = "block";
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        });
+
+        // نمایش اطلاعات گیاه اول هنگام باز شدن صفحه
+        updatePlant();
+    </script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
